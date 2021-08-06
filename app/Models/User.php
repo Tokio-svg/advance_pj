@@ -40,4 +40,15 @@ class User extends Authenticatable
     protected $casts = [
         // 'email_verified_at' => 'datetime',
     ];
+
+    // リレーション設定
+    public function reservations()
+    {
+        return $this->hasMany('App\Models\Reservation');
+    }
+
+    public function favorites()
+    {
+        return $this->hasMany('App\Models\Favorite');
+    }
 }
