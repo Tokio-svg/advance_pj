@@ -49,9 +49,11 @@
   <div class="card_wrap">
     <p>{{$shop->image_url}}</p>
     <p>{{$shop->name}}</p>
-    <p>{{$shop->area->name}}</p>
-    <p>{{$shop->genre->name}}</p>
-    <p>詳しく見る</p>
+    <p>#{{$shop->area->name}}</p>
+    <p>#{{$shop->genre->name}}</p>
+    <p>
+      <a href="/detail/{{$shop->id}}">詳しく見る</a>
+    </p>
     <p>♥</p>
   </div>
   @endforeach

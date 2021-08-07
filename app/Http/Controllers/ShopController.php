@@ -53,4 +53,20 @@ class ShopController extends Controller
             'genres' => $genres,
         ]);
     }
+
+    // 飲食店詳細ページ
+    public function detail(Request $request, $shop_id)
+    {
+        $shop = Shop::find($shop_id);
+        // $shop = Shop::with('area')->with('genre')->find($shop_id);
+        return view('detail', [
+            'shop' => $shop,
+        ]);
+    }
+
+    // 予約完了ページ
+    public function done(Request $request)
+    {
+        return view('done');
+    }
 }

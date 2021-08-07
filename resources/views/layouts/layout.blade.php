@@ -27,11 +27,16 @@
       <li>めにゅぅ項目3</li>
     </ul>
   </div>
-  <header>
-    <h1 id="open">ろご</h1>
-    @yield('header_content')
-  </header>
-  @yield('content')
+  <div class="flex_container">
+    <div class="content_wrap">
+      <header>
+        <h1 id="open">ろご</h1>
+        @yield('header_content')
+      </header>
+      @yield('content')
+    </div>
+    @yield('reservation')
+  </div>
   <script>
     // メニュー開閉
     const menu = document.getElementById('menu');

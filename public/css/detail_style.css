@@ -1,0 +1,15 @@
+.flex_container {
+    display: flex;
+    width: 80%;
+    margin: auto;
+    justify-content: space-between;
+}
+header {
+    position: unset;
+    width: 100%;
+}
+main,
+.reservation_wrap {
+    width: 90%;
+    background: cornflowerblue;
+}
