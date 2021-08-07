@@ -30,13 +30,19 @@
   <div class="flex_container">
     <div class="content_wrap">
       <header>
-        <h1 id="open">ろご</h1>
-        @yield('header_content')
+        <div class="header_content">
+          <div class="logo_wrap">
+            <p id="open">開</p>
+            <h1>Rese</h1>
+          </div>
+          @yield('header_content')
+        </div>
       </header>
       @yield('content')
     </div>
     @yield('reservation')
   </div>
+
   <script>
     // メニュー開閉
     const menu = document.getElementById('menu');

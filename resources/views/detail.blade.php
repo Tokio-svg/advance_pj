@@ -12,10 +12,17 @@
 
 @section('content')
 <main>
-  <h1>{{$shop->name}}</h1>
-  <p>{{$shop->image_url}}</p>
-  <p>#{{$shop->area->name}}</p>
-  <p>#{{$shop->genre->name}}</p>
+  <div style="display: flex;">
+    <a href="/">＜</a>
+    <h1>{{$shop->name}}</h1>
+  </div>
+  <div class="image">
+    <p>{{$shop->image_url}}</p>
+  </div>
+  <div class="tag">
+    #{{$shop->area->name}}
+    #{{$shop->genre->name}}
+  </div>
   <p>{{$shop->overview}}</p>
 </main>
 @endsection
