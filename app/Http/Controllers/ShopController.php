@@ -11,29 +11,8 @@ use function PHPUnit\Framework\isNull;
 
 class ShopController extends Controller
 {
-    // 飲食店一覧ページ
+    // 飲食店一覧、検索結果表示ページ
     public function index(Request $request)
-    {
-        $shops = Shop::with('area')->with('genre')->get();
-        $areas = Area::has('shops')->get();
-        $genres = Genre::has('shops')->get();
-        // 検索フォーム初期値
-        $inputs = [
-            'area_id' => '',
-            'genre_id' => '',
-            'shop_name' => '',
-        ];
-
-        return view('index', [
-            'shops' => $shops,
-            'inputs' => $inputs,
-            'areas' => $areas,
-            'genres' => $genres,
-        ]);
-    }
-
-    // 検索結果表示
-    public function search(Request $request)
     {
         // 入力情報を格納
         $inputs = [
@@ -63,7 +42,7 @@ class ShopController extends Controller
         // レコード取得
         $shops = $query->get();
 
-        // 検索フォーム用レコード取得
+        // 検索フォーム項目用レコード取得
         $areas = Area::has('shops')->get();
         $genres = Genre::has('shops')->get();
 

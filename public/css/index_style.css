@@ -1,5 +1,6 @@
-body {
-    background: rgb(226, 226, 226);
+header {
+    display: flex;
+    justify-content: space-between;
 }
 main {
     display: flex;
@@ -7,7 +8,7 @@ main {
     justify-content: space-between;
     width: 80%;
     min-width: 1300px;
-    margin: auto;
+    margin: 70px auto 0;
 }
 .card_wrap {
     width: 300px;
