@@ -72,9 +72,15 @@ class ShopController extends Controller
         ]);
     }
 
+    // テスト用（後で消すこと）
     // 予約完了ページ
     public function done(Request $request)
     {
         return view('done');
+    }
+    // サンクスページ
+    public function thanks(Request $request)
+    {
+        return view('thanks');
     }
 }

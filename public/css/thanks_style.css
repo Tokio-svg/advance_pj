@@ -1,0 +1,30 @@
+.content_wrap {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+main {
+    position: absolute;
+    width: 400px;
+    height: 280px;
+    background: white;
+    border-radius: 5px;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+.thanks_wrap {
+    padding: 100px 0;
+}
+p {
+    font-size: 21px;
+    margin-bottom: 50px;
+}
+.thanks_button {
+    background: blue;
+    border-radius: 3px;
+    color: white;
+    font-size: 12px;
+    padding: 4px 14px;
+}
