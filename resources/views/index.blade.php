@@ -65,12 +65,24 @@
           <a href="/detail/{{$shop->id}}">詳しく見る</a>
         </div>
         @if (Auth::check())
-        @if (empty($shop->favorites->items))
+        @if (empty($shop->favorites[0]))
         <!-- メモ：POST送信でfavoritesレコードを挿入後現在のURLにリダイレクト -->
-        <p>♡</p>
+        <p onclick="event.preventDefault(); document.getElementById('shop_{{$shop->id}}').submit();">♡</p>
+        <form id="shop_{{$shop->id}}" action="/favorite/add" method="POST" style="display: none;">
+          @csrf
+          <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+          <input type="hidden" name="shop_id" value="{{$shop->id}}">
+          <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
+        </form>
         @else
         <!-- メモ：POST送信でfavoritesレコードを削除後現在のURLにリダイレクト -->
-        <p>♥</p>
+        <p onclick="event.preventDefault(); document.getElementById('shop_{{$shop->id}}').submit();">♥</p>
+        <form id="shop_{{$shop->id}}" action="/favorite/delete" method="POST" style="display: none;">
+          @csrf
+          <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+          <input type="hidden" name="shop_id" value="{{$shop->id}}">
+          <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
+        </form>
         @endif
         @endif
       </div>
