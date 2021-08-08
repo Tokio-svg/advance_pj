@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Shop;
 use App\Models\Area;
 use App\Models\Genre;
+use Illuminate\Support\Facades\Auth;
 
 use function PHPUnit\Framework\isNull;
 
@@ -46,11 +47,15 @@ class ShopController extends Controller
         $areas = Area::has('shops')->get();
         $genres = Genre::has('shops')->get();
 
+        // ユーザー情報取得
+        $user = Auth::user();
+
         return view('index', [
             'shops' => $shops,
             'inputs' => $inputs,
             'areas' => $areas,
             'genres' => $genres,
+            'user' => $user,
         ]);
     }
 

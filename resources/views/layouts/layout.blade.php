@@ -22,9 +22,15 @@
   <div id="menu" class="menu">
     <p id="close">×</p>
     <ul>
-      <li>めにゅぅ項目1</li>
-      <li>めにゅぅ項目2</li>
-      <li>めにゅぅ項目3</li>
+      <li><a href="/">Home</a></li>
+      <!-- ログイン状態で表示を変更する -->
+      @if (Auth::check())
+      <li>Logout</li>
+      <li>Mypage</li>
+      @else
+      <li><a href="/register">Registration</a></li>
+      <li>Login</li>
+      @endif
     </ul>
   </div>
   <div class="flex_container">
