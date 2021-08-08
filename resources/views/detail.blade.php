@@ -74,7 +74,11 @@
       </table>
     </div>
     <div>
+      @if (Auth::check())
       <button type="submit">予約する</button>
+      @else
+      <p>予約をご希望の方はログインしてください</p>
+      @endif
     </div>
   </form>
 </div>

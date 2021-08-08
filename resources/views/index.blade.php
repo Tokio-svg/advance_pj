@@ -49,6 +49,7 @@
 @section('content')
 <main>
   @foreach ($shops as $shop)
+  <!-- 店舗情報カード -->
   <div class="card_wrap">
     <div class="card_image">
       {{$shop->image_url}}
@@ -63,7 +64,15 @@
         <div class="card_detail">
           <a href="/detail/{{$shop->id}}">詳しく見る</a>
         </div>
+        @if (Auth::check())
+        @if (empty($shop->favorites->items))
+        <!-- メモ：POST送信でfavoritesレコードを挿入後現在のURLにリダイレクト -->
+        <p>♡</p>
+        @else
+        <!-- メモ：POST送信でfavoritesレコードを削除後現在のURLにリダイレクト -->
         <p>♥</p>
+        @endif
+        @endif
       </div>
     </div>
   </div>
