@@ -26,7 +26,7 @@ class ReservationController extends Controller
     // 予約レコード削除
     public function delete(Request $request)
     {
-        Reservation::where('user_id', $request->user_id)->where('shop_id', $request->shop_id)->delete();
+        Reservation::where('id', $request->reservation_id)->delete();
 
         $url = $request->input('url');
 
