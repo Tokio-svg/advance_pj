@@ -22,7 +22,7 @@ a {
     color: blue;
 }
 #close {
-    margin: 40px 0 100px 80px;
+    margin: 40px 0 100px 120px;
 }
 #close,
 #open {
@@ -41,9 +41,15 @@ header {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 70px;
+    height: 90px;
     background: rgb(238, 238, 238);
 }
 .logo_wrap {
     display: flex;
+    margin: 40px 0;
+}
+.logo_wrap h1 {
+    color: blue;
+    font-size: 28px;
+    margin-left: 10px;
 }

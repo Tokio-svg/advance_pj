@@ -35,7 +35,7 @@
       @endforeach
     </select>
     <!-- アイコン -->
-    <img src="{{putSource('/img/search.png')}}" alt="no image">
+    <img src="{{putSource('/img/search.png')}}" alt="no image" style="width: 16px;">
     <!-- 店名 -->
     <input type="text" name="shop_name" value="{{$inputs['shop_name']}}" placeholder="Search ...">
     <button type="submit">検索</button>
@@ -64,7 +64,7 @@
         @if (Auth::check())
         @if (empty($shop->favorites[0]))
         <!-- メモ：POST送信でfavoritesレコードを挿入後現在のURLにリダイレクト -->
-        <div onclick="event.preventDefault(); document.getElementById('shop_{{$shop->id}}').submit();">
+        <div onclick="event.preventDefault(); document.getElementById('shop_{{$shop->id}}').submit();" style="cursor: pointer;">
           <img src="{{putSource('/img/heart.png')}}" alt="no image">
         </div>
         <form id="shop_{{$shop->id}}" action="/favorite/add" method="POST" style="display: none;">
@@ -75,7 +75,7 @@
         </form>
         @else
         <!-- メモ：POST送信でfavoritesレコードを削除後現在のURLにリダイレクト -->
-        <div onclick="event.preventDefault(); document.getElementById('shop_{{$shop->id}}').submit();">
+        <div onclick="event.preventDefault(); document.getElementById('shop_{{$shop->id}}').submit();" style="cursor: pointer;">
           <img src="{{putSource('/img/heart_red.png')}}" alt="no image">
         </div>
         <form id="shop_{{$shop->id}}" action="/favorite/delete" method="POST" style="display: none;">

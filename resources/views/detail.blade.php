@@ -16,8 +16,8 @@
     <p>{{$shop->image_url}}</p>
   </div>
   <div class="tag">
-    #{{$shop->area->name}}
-    #{{$shop->genre->name}}
+    <a href="/?area_id={{$shop->area_id}}">#{{$shop->area->name}}</a>
+    <a href="/?genre_id={{$shop->genre_id}}">#{{$shop->genre->name}}</a>
   </div>
   <p>{{$shop->overview}}</p>
 </main>
@@ -66,7 +66,7 @@
         </tr>
       </table>
     </div>
-    <div>
+    <div class="submit">
       @if (Auth::check())
       <button type="submit">予約する</button>
       @else

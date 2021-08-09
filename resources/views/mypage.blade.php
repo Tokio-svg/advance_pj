@@ -8,9 +8,6 @@
 
 @section('content')
 <main>
-  <?php
-  putSource('/img/heart.png');
-  ?>
   <h1 class="user_name">{{$user->name}}さん</h1>
   <div class="mypage_content">
     <div class="reservation_info">
@@ -75,7 +72,6 @@
                 <a href="/detail/{{$favorite->shop->id}}">詳しく見る</a>
               </div>
               <!-- メモ：POST送信でfavoritesレコードを削除後現在のURLにリダイレクト -->
-
               <div onclick="event.preventDefault(); document.getElementById('shop_{{$favorite->shop->id}}').submit();">
                 <img src="{{putSource('/img/heart_red.png')}}" alt="no image">
               </div>
