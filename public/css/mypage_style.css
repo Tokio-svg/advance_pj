@@ -1,0 +1,16 @@
+main {
+    margin-top: 100px;
+}
+.user_name {
+    text-align: center;
+    font-size: 28px;
+}
+.mypage_content {
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+}
+.reservation_info,
+.favorite_info {
+    width: 45%;
+}

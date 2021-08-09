@@ -1,15 +1,31 @@
-<!DOCTYPE html>
-<html lang="ja">
+@extends('layouts.layout')
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>マイページ</title>
-</head>
+@section('title','マイページ')
 
-<body>
+@section('style_local')
+<link rel="stylesheet" href="{{asset('/css/mypage_style.css')}}">
+@endsection
 
-</body>
+@section('style')
+<link rel="stylesheet" href="{{secure_asset('/css/mypage_style.css')}}">
+@endsection
 
-</html>
+@section('content')
+<main>
+  <h1 class="user_name">{{$user->name}}さん</h1>
+  <div class="mypage_content">
+    <div class="reservation_info">
+      <h2>予約状況</h2>
+      @foreach ($reservations as $reservation)
+      {{$reservation}}
+      @endforeach
+    </div>
+    <div class="favorite_info">
+      <h2>お気に入り店舗</h2>
+      @foreach ($favorites as $favorite)
+      {{$favorite->shop}}
+      @endforeach
+    </div>
+  </div>
+</main>
+@endsection

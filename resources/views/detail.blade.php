@@ -26,23 +26,20 @@
   <p>{{$shop->overview}}</p>
 </main>
 @endsection
-
 @section('reservation')
 <div class="reservation_wrap">
   <h1>予約</h1>
-  <form action="/done" method="post">
+  <form action="/reserve" method="post">
     @csrf
+    @if (Auth::check())
+    <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+    @endif
+    <input type="hidden" name="shop_id" value="{{$shop->id}}">
     <div>
       <input type="date" name="date" id="date">
     </div>
     <div>
-      <select name="time" id="time">
-        <?php
-        for ($i = 0; $i < 24; $i++) {
-          echo "<option value='" . $i . "'>" . $i . ":00</option>";
-        }
-        ?>
-      </select>
+      <input type="time" name="time" id="time">
     </div>
     <div>
       <select name="number" id="number">

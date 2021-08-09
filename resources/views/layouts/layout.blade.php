@@ -26,7 +26,7 @@
       <!-- ログイン状態で表示を変更する -->
       @if (Auth::check())
       <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
-      <li>Mypage</li>
+      <li><a href="/mypage">Mypage</a></li>
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
         @csrf
       </form>

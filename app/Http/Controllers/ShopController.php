@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Shop;
 use App\Models\Area;
+use App\Models\Favorite;
 use App\Models\Genre;
+use App\Models\Reservation;
 use Illuminate\Support\Facades\Auth;
 
 use function PHPUnit\Framework\isNull;
@@ -69,6 +71,21 @@ class ShopController extends Controller
         // $shop = Shop::with('area')->with('genre')->find($shop_id);
         return view('detail', [
             'shop' => $shop,
+        ]);
+    }
+
+    // マイページ
+    public function mypage(Request $request)
+    {
+        $user = Auth::user();
+        // 予約情報を取得
+        $reservations = Reservation::where('user_id', $user->id)->get();
+        // お気に入り情報を取得
+        $favorites = Favorite::with('shop')->where('user_id', $user->id)->get();
+        return view('mypage', [
+            'user' => $user,
+            'reservations' => $reservations,
+            'favorites' => $favorites,
         ]);
     }
 
