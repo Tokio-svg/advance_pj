@@ -2,16 +2,15 @@
 
 @section('title','マイページ')
 
-@section('style_local')
-<link rel="stylesheet" href="{{asset('/css/mypage_style.css')}}">
-@endsection
-
 @section('style')
-<link rel="stylesheet" href="{{secure_asset('/css/mypage_style.css')}}">
+<link rel="stylesheet" href="{{putSource('/css/mypage_style.css')}}">
 @endsection
 
 @section('content')
 <main>
+  <?php
+  putSource('/img/heart.png');
+  ?>
   <h1 class="user_name">{{$user->name}}さん</h1>
   <div class="mypage_content">
     <div class="reservation_info">
@@ -19,7 +18,9 @@
       @foreach ($reservations as $reservation)
       <div class="reservation_card">
         <div class="reservation_flex">
-          <p>ICON</p>
+          <div>
+            <img src="{{putSource('/img/clock.png')}}" alt="no image">
+          </div>
           <p>予約</p>
           <p onclick="event.preventDefault(); document.getElementById('reservation_{{$reservation->id}}').submit();">×</p>
           <form id="reservation_{{$reservation->id}}" action="/reserve/delete" method="POST" style="display: none;">
@@ -66,14 +67,24 @@
           <div style="padding: 20px;">
             <h1>{{$favorite->shop->name}}</h1>
             <div class="card_tag">
-              #{{$favorite->shop->area->name}}
-              #{{$favorite->shop->genre->name}}
+              <a href="/?area_id={{$favorite->shop->area_id}}">#{{$favorite->shop->area->name}}</a>
+              <a href="/?genre_id={{$favorite->shop->genre_id}}">#{{$favorite->shop->genre->name}}</a>
             </div>
             <div class="card_flex">
               <div class="card_detail">
                 <a href="/detail/{{$favorite->shop->id}}">詳しく見る</a>
               </div>
-              <!-- ♥ -->
+              <!-- メモ：POST送信でfavoritesレコードを削除後現在のURLにリダイレクト -->
+
+              <div onclick="event.preventDefault(); document.getElementById('shop_{{$favorite->shop->id}}').submit();">
+                <img src="{{putSource('/img/heart_red.png')}}" alt="no image">
+              </div>
+              <form id="shop_{{$favorite->shop->id}}" action="/favorite/delete" method="POST" style="display: none;">
+                @csrf
+                <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                <input type="hidden" name="shop_id" value="{{$favorite->shop->id}}">
+                <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
+              </form>
             </div>
           </div>
         </div>

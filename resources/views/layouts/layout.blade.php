@@ -7,15 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@yield('title')</title>
   <!-- スタイルシート読み込み -->
-  @if(app('env')=='local')
-  <link rel="stylesheet" href="{{asset('/css/reset.css')}}">
-  <link rel="stylesheet" href="{{asset('/css/common_style.css')}}">
-  @yield('style_local')
-  @else
-  <link rel="stylesheet" href="{{secure_asset('/css/reset.css')}}">
-  <link rel="stylesheet" href="{{secure_asset('/css/common_style.css')}}">
+  <link rel="stylesheet" href="{{putSource('/css/reset.css')}}">
+  <link rel="stylesheet" href="{{putSource('/css/common_style.css')}}">
   @yield('style')
-  @endif
 </head>
 
 <body>
@@ -52,6 +46,7 @@
     @yield('reservation')
   </div>
 
+
   <script>
     // メニュー開閉
     const menu = document.getElementById('menu');
@@ -64,6 +59,7 @@
       menu.style.left = '-100%';
     });
   </script>
+  @yield('script')
 </body>
 
 </html>

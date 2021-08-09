@@ -30,13 +30,13 @@ main {
 .favorite_flex {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: left;
 }
 .card_wrap {
     width: 280px;
     height: 280px;
     background: rgb(255, 255, 255);
-    margin: 10px 0;
+    margin: 5px;
     border-radius: 5px;
 }
 .card_image {

@@ -2,12 +2,8 @@
 
 @section('title','サンクスページ')
 
-@section('style_local')
-<link rel="stylesheet" href="{{asset('/css/thanks_style.css')}}">
-@endsection
-
 @section('style')
-<link rel="stylesheet" href="{{secure_asset('/css/thanks_style.css')}}">
+<link rel="stylesheet" href="{{putSource('/css/thanks_style.css')}}">
 @endsection
 
 @section('content')

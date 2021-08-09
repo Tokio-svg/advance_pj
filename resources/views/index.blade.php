@@ -2,12 +2,8 @@
 
 @section('title','飲食店一覧ページ')
 
-@section('style_local')
-<link rel="stylesheet" href="{{asset('/css/index_style.css')}}">
-@endsection
-
 @section('style')
-<link rel="stylesheet" href="{{secure_asset('/css/index_style.css')}}">
+<link rel="stylesheet" href="{{putSource('/css/index_style.css')}}">
 @endsection
 
 @section('header_content')
@@ -38,7 +34,8 @@
       @endif
       @endforeach
     </select>
-    <span>◎</span>
+    <!-- アイコン -->
+    <img src="{{putSource('/img/search.png')}}" alt="no image">
     <!-- 店名 -->
     <input type="text" name="shop_name" value="{{$inputs['shop_name']}}" placeholder="Search ...">
     <button type="submit">検索</button>
@@ -57,8 +54,8 @@
     <div style="padding: 20px;">
       <h1>{{$shop->name}}</h1>
       <div class="card_tag">
-        #{{$shop->area->name}}
-        #{{$shop->genre->name}}
+        <a href="/?area_id={{$shop->area_id}}">#{{$shop->area->name}}</a>
+        <a href="/?genre_id={{$shop->genre_id}}">#{{$shop->genre->name}}</a>
       </div>
       <div class="card_flex">
         <div class="card_detail">
@@ -67,7 +64,9 @@
         @if (Auth::check())
         @if (empty($shop->favorites[0]))
         <!-- メモ：POST送信でfavoritesレコードを挿入後現在のURLにリダイレクト -->
-        <p onclick="event.preventDefault(); document.getElementById('shop_{{$shop->id}}').submit();">♡</p>
+        <div onclick="event.preventDefault(); document.getElementById('shop_{{$shop->id}}').submit();">
+          <img src="{{putSource('/img/heart.png')}}" alt="no image">
+        </div>
         <form id="shop_{{$shop->id}}" action="/favorite/add" method="POST" style="display: none;">
           @csrf
           <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
@@ -76,7 +75,9 @@
         </form>
         @else
         <!-- メモ：POST送信でfavoritesレコードを削除後現在のURLにリダイレクト -->
-        <p onclick="event.preventDefault(); document.getElementById('shop_{{$shop->id}}').submit();">♥</p>
+        <div onclick="event.preventDefault(); document.getElementById('shop_{{$shop->id}}').submit();">
+          <img src="{{putSource('/img/heart_red.png')}}" alt="no image">
+        </div>
         <form id="shop_{{$shop->id}}" action="/favorite/delete" method="POST" style="display: none;">
           @csrf
           <input type="hidden" name="user_id" value="{{Auth::user()->id}}">

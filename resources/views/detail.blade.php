@@ -2,12 +2,8 @@
 
 @section('title','飲食店詳細ページ')
 
-@section('style_local')
-<link rel="stylesheet" href="{{asset('/css/detail_style.css')}}">
-@endsection
-
 @section('style')
-<link rel="stylesheet" href="{{secure_asset('/css/detail_style.css')}}">
+<link rel="stylesheet" href="{{putSource('/css/detail_style.css')}}">
 @endsection
 
 @section('content')
@@ -36,13 +32,13 @@
     @endif
     <input type="hidden" name="shop_id" value="{{$shop->id}}">
     <div>
-      <input type="date" name="date" id="date">
+      <input type="date" name="date" id="date" onchange="changeDate(this.value)">
     </div>
     <div>
-      <input type="time" name="time" id="time">
+      <input type="time" name="time" id="time" onchange="changeTime(this.value)">
     </div>
     <div>
-      <select name="number" id="number">
+      <select name="number" id="number" onchange="changeNumber(this.value)">
         <?php
         for ($i = 1; $i < 11; $i++) {
           echo "<option value='" . $i . "'>" . $i . "人</option>";
@@ -58,15 +54,15 @@
         </tr>
         <tr>
           <th>Date</th>
-          <td>2021-08-07</td>
+          <td><span id="date_display"></span></td>
         </tr>
         <tr>
           <th>Time</th>
-          <td>00:00</td>
+          <td><span id="time_display"></span></td>
         </tr>
         <tr>
           <th>Number</th>
-          <td>1人</td>
+          <td><span id="number_display">1人</span></td>
         </tr>
       </table>
     </div>
@@ -79,4 +75,21 @@
     </div>
   </form>
 </div>
+@endsection
+
+@section('script')
+<script>
+  // 関数：name=dateの値を対応するタグに反映する
+  function changeDate(value) {
+    document.getElementById('date_display').textContent = value;
+  }
+  // 関数：name=timeの値を対応するタグに反映する
+  function changeTime(value) {
+    document.getElementById('time_display').textContent = value;
+  }
+  // 関数：name=numberの値を対応するタグに反映する
+  function changeNumber(value) {
+    document.getElementById('number_display').textContent = value + '人';
+  }
+</script>
 @endsection
