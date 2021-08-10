@@ -53,3 +53,8 @@ header {
     font-size: 28px;
     margin-left: 10px;
 }
+.error {
+    color: red;
+    font-size: 12px;
+    line-height: 1em;
+}

@@ -55,12 +55,18 @@ class ShopController extends Controller
         // 検索フォーム項目用レコード取得
         $areas = Area::has('shops')->get();
         $genres = Genre::has('shops')->get();
+        if ($request->input('position')) {
+            $position = $request->input('position');
+        } else {
+            $position = 0;
+        }
 
         return view('index', [
             'shops' => $shops,
             'inputs' => $inputs,
             'areas' => $areas,
             'genres' => $genres,
+            'position' => $position,
         ]);
     }
 

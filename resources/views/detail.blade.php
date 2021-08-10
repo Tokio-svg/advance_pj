@@ -32,16 +32,26 @@
     @endif
     <input type="hidden" name="shop_id" value="{{$shop->id}}">
     <div>
-      <input type="date" name="date" id="date" onchange="changeDate(this.value)">
+      <input type="date" name="date" id="date" onchange="changeDate(this.value)" value="{{old('date')}}">
+      @error('date')
+      <p class="error">{{$message}}</p>
+      @enderror
     </div>
     <div>
-      <input type="time" name="time" id="time" onchange="changeTime(this.value)">
+      <input type="time" name="time" id="time" onchange="changeTime(this.value)" value="{{old('time')}}">
+      @error('time')
+      <p class="error">{{$message}}</p>
+      @enderror
     </div>
     <div>
       <select name="number" id="number" onchange="changeNumber(this.value)">
         <?php
         for ($i = 1; $i < 11; $i++) {
-          echo "<option value='" . $i . "'>" . $i . "人</option>";
+          if (old('number') == $i) {
+            echo "<option value='" . $i . "' selected>" . $i . "人</option>";
+          } else {
+            echo "<option value='" . $i . "'>" . $i . "人</option>";
+          }
         }
         ?>
       </select>
@@ -54,15 +64,21 @@
         </tr>
         <tr>
           <th>Date</th>
-          <td><span id="date_display"></span></td>
+          <td><span id="date_display">{{old('date')}}</span></td>
         </tr>
         <tr>
           <th>Time</th>
-          <td><span id="time_display"></span></td>
+          <td><span id="time_display">{{old('time')}}</span></td>
         </tr>
         <tr>
           <th>Number</th>
-          <td><span id="number_display">1人</span></td>
+          <td><span id="number_display">
+              @if (old('number'))
+              {{old('number')}}人
+              @else
+              1人
+              @endif
+            </span></td>
         </tr>
       </table>
     </div>

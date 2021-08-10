@@ -9,9 +9,9 @@
 @section('header_content')
 <!-- 検索フォーム -->
 <div class="search_wrap">
-  <form action="/" method="get">
+  <form action="/" method="get" id="search">
     <!-- 地域 -->
-    <select name="area_id" id="area">
+    <select name="area_id" id="area" onchange="document.getElementById('search').submit();">
       <option value="">All area</option>
       @foreach ($areas as $area)
       <!-- IDが入力値と同じ場合は初期値に設定 -->
@@ -23,7 +23,7 @@
       @endforeach
     </select>
     <!-- ジャンル -->
-    <select name="genre_id" id="genre">
+    <select name="genre_id" id="genre" onchange="document.getElementById('search').submit();">
       <option value="">All genre</option>
       @foreach ($genres as $genre)
       <!-- IDが入力値と同じ場合は初期値に設定 -->
@@ -37,8 +37,7 @@
     <!-- アイコン -->
     <img src="{{putSource('/img/search.png')}}" alt="no image" style="width: 16px;">
     <!-- 店名 -->
-    <input type="text" name="shop_name" value="{{$inputs['shop_name']}}" placeholder="Search ...">
-    <button type="submit">検索</button>
+    <input type="text" name="shop_name" value="{{$inputs['shop_name']}}" placeholder="Search ..." onchange="document.getElementById('search').submit();">
   </form>
 </div>
 @endsection
@@ -64,7 +63,7 @@
         @if (Auth::check())
         @if (empty($shop->favorites[0]))
         <!-- メモ：POST送信でfavoritesレコードを挿入後現在のURLにリダイレクト -->
-        <div onclick="event.preventDefault(); document.getElementById('shop_{{$shop->id}}').submit();" style="cursor: pointer;">
+        <div onclick="event.preventDefault(); setPosition(); document.getElementById('shop_{{$shop->id}}').submit();" style="cursor: pointer;">
           <img src="{{putSource('/img/heart.png')}}" alt="no image">
         </div>
         <form id="shop_{{$shop->id}}" action="/favorite/add" method="POST" style="display: none;">
@@ -72,10 +71,11 @@
           <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
           <input type="hidden" name="shop_id" value="{{$shop->id}}">
           <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
+          <input type="hidden" name="position" value="0" id="position">
         </form>
         @else
         <!-- メモ：POST送信でfavoritesレコードを削除後現在のURLにリダイレクト -->
-        <div onclick="event.preventDefault(); document.getElementById('shop_{{$shop->id}}').submit();" style="cursor: pointer;">
+        <div onclick="event.preventDefault(); setPosition(); document.getElementById('shop_{{$shop->id}}').submit();" style="cursor: pointer;">
           <img src="{{putSource('/img/heart_red.png')}}" alt="no image">
         </div>
         <form id="shop_{{$shop->id}}" action="/favorite/delete" method="POST" style="display: none;">
@@ -83,6 +83,7 @@
           <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
           <input type="hidden" name="shop_id" value="{{$shop->id}}">
           <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
+          <input type="hidden" name="position" value="0" id="position">
         </form>
         @endif
         @endif
@@ -91,4 +92,18 @@
   </div>
   @endforeach
 </main>
+@endsection
+
+@section('script')
+<script>
+  // 関数：現在のスクロール位置をinput(id=position)のvalueに格納する
+  function setPosition() {
+    const scroll = document.getElementById('position');
+    scroll.value = window.scrollY;
+  }
+  // 画面読み込み時にpositionのスクロール位置に移動する
+  window.onload = () => {
+    console.log(<?php echo $position; ?>);
+  }
+</script>
 @endsection
