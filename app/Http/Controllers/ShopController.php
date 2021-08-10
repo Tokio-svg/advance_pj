@@ -9,6 +9,7 @@ use App\Models\Favorite;
 use App\Models\Genre;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\Auth;
+// use Log;
 
 use function PHPUnit\Framework\isNull;
 
@@ -17,6 +18,7 @@ class ShopController extends Controller
     // 飲食店一覧、検索結果表示ページ
     public function index(Request $request)
     {
+        // Log::debug($request->all());
         // 入力情報を格納
         $inputs = [
             'area_id' => $request->input('area_id'),

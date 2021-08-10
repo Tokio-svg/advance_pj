@@ -94,5 +94,8 @@
 
 @section('script')
 <script>
+  // window.onload = function() {
+  //   window.scrollTo(0, 500);
+  // }
 </script>
 @endsection
