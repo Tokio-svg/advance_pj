@@ -18,8 +18,10 @@
           <div>
             <img src="{{putSource('/img/clock.png')}}" alt="no image">
           </div>
-          <p>予約</p>
-          <p onclick="event.preventDefault(); document.getElementById('reservation_{{$reservation->id}}').submit();">×</p>
+          <p>予約{{$loop->index + 1}}</p>
+          <div onclick="event.preventDefault(); document.getElementById('reservation_{{$reservation->id}}').submit();">
+            <img src="{{putSource('/img/cross.png')}}" alt="no image">
+          </div>
           <form id="reservation_{{$reservation->id}}" action="/reserve/delete" method="POST" style="display: none;">
             @csrf
             <input type="hidden" name="reservation_id" value="{{$reservation->id}}">
@@ -46,7 +48,7 @@
           </tr>
           <tr>
             <th>Number</th>
-            <td>{{$reservation->number}}</td>
+            <td>{{$reservation->number}}人</td>
           </tr>
         </table>
       </div>

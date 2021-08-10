@@ -45,13 +45,17 @@ header {
     background: rgb(238, 238, 238);
 }
 .logo_wrap {
+    position: absolute;
     display: flex;
-    margin: 40px 0;
+    top: 40px;
+    left: 120px;
+    /* margin: 40px 0; */
 }
 .logo_wrap h1 {
     color: blue;
     font-size: 28px;
     margin-left: 10px;
+    line-height: 40px;
 }
 .error {
     color: red;

@@ -60,3 +60,6 @@ main {
 .card_detail a {
     color: white;
 }
+.card_tag a {
+    color: black;
+}

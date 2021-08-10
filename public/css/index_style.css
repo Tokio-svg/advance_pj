@@ -19,6 +19,9 @@ main {
     margin: 100px auto 0;
 }
 .search_wrap {
+    position: absolute;
+    right: 140px;
+    top: 30px;
     width: 650px;
     height: 50px;
     background: white;
