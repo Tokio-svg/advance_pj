@@ -63,7 +63,7 @@
         @if (Auth::check())
         @if (empty($shop->favorites[0]))
         <!-- メモ：POST送信でfavoritesレコードを挿入後現在のURLにリダイレクト -->
-        <div onclick="event.preventDefault(); setPosition(); document.getElementById('shop_{{$shop->id}}').submit();" style="cursor: pointer;">
+        <div onclick="event.preventDefault(); document.getElementById('shop_{{$shop->id}}').submit();" style="cursor: pointer;">
           <img src="{{putSource('/img/heart.png')}}" alt="no image">
         </div>
         <form id="shop_{{$shop->id}}" action="/favorite/add" method="POST" style="display: none;">
@@ -71,11 +71,10 @@
           <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
           <input type="hidden" name="shop_id" value="{{$shop->id}}">
           <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
-          <input type="hidden" name="position" value="0" id="position">
         </form>
         @else
         <!-- メモ：POST送信でfavoritesレコードを削除後現在のURLにリダイレクト -->
-        <div onclick="event.preventDefault(); setPosition(); document.getElementById('shop_{{$shop->id}}').submit();" style="cursor: pointer;">
+        <div onclick="event.preventDefault(); document.getElementById('shop_{{$shop->id}}').submit();" style="cursor: pointer;">
           <img src="{{putSource('/img/heart_red.png')}}" alt="no image">
         </div>
         <form id="shop_{{$shop->id}}" action="/favorite/delete" method="POST" style="display: none;">
@@ -83,7 +82,6 @@
           <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
           <input type="hidden" name="shop_id" value="{{$shop->id}}">
           <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
-          <input type="hidden" name="position" value="0" id="position">
         </form>
         @endif
         @endif
@@ -96,14 +94,5 @@
 
 @section('script')
 <script>
-  // 関数：現在のスクロール位置をinput(id=position)のvalueに格納する
-  function setPosition() {
-    const scroll = document.getElementById('position');
-    scroll.value = window.scrollY;
-  }
-  // 画面読み込み時にpositionのスクロール位置に移動する
-  window.onload = () => {
-    console.log(<?php echo $position; ?>);
-  }
 </script>
 @endsection

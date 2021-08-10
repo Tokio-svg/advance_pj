@@ -1,15 +1,36 @@
-<!DOCTYPE html>
-<html lang="ja">
+@extends('layouts.layout')
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>会員登録ページ</title>
-</head>
+@section('title','会員登録ページ')
 
-<body>
+@section('style')
+@endsection
 
-</body>
+@section('content')
+<main style="margin-top: 100px;">
+  <h1>Registration</h1>
+  <form method="POST" action="/register">
+    @csrf
+    <!-- Name -->
+    <div>
+      <input id="name" type="text" name="name" value="{{old('name')}}" placeholder="Username" required />
+    </div>
 
-</html>
+    <!-- Email Address -->
+    <div>
+      <input id="email" type="email" name="email" value="{{old('email')}}" placeholder="Email" required />
+    </div>
+
+    <!-- Password -->
+    <div>
+      <input id="password" type="password" name="password" placeholder="Password" required />
+    </div>
+
+    <!-- Confirm Password -->
+    <!-- <div>
+      <input id="password_confirmation" type="password" name="password_confirmation" required />
+    </div> -->
+
+    <button type="submit">登録</button>
+  </form>
+</main>
+@endsection
