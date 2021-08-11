@@ -63,7 +63,7 @@
         @if (Auth::check())
         @if (empty($shop->favorites[0]))
         <!-- メモ：POST送信でfavoritesレコードを挿入後現在のURLにリダイレクト -->
-        <div onclick="event.preventDefault(); document.getElementById('shop_{{$shop->id}}').submit();" style="cursor: pointer;">
+        <div onclick="setPosition('position_{{$shop->id}}'); document.getElementById('shop_{{$shop->id}}').submit();" style="cursor: pointer;">
           <img src="{{putSource('/img/heart.png')}}" alt="no image">
         </div>
         <form id="shop_{{$shop->id}}" action="/favorite/add" method="POST" style="display: none;">
@@ -71,10 +71,11 @@
           <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
           <input type="hidden" name="shop_id" value="{{$shop->id}}">
           <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
+          <input type="hidden" name="position" value="0" id="position_{{$shop->id}}">
         </form>
         @else
         <!-- メモ：POST送信でfavoritesレコードを削除後現在のURLにリダイレクト -->
-        <div onclick="event.preventDefault(); document.getElementById('shop_{{$shop->id}}').submit();" style="cursor: pointer;">
+        <div onclick="setPosition('position_{{$shop->id}}'); document.getElementById('shop_{{$shop->id}}').submit();" style="cursor: pointer;">
           <img src="{{putSource('/img/heart_red.png')}}" alt="no image">
         </div>
         <form id="shop_{{$shop->id}}" action="/favorite/delete" method="POST" style="display: none;">
@@ -82,6 +83,7 @@
           <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
           <input type="hidden" name="shop_id" value="{{$shop->id}}">
           <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
+          <input type="hidden" name="position" value="0" id="position_{{$shop->id}}">
         </form>
         @endif
         @endif
@@ -94,8 +96,16 @@
 
 @section('script')
 <script>
-  // window.onload = function() {
-  //   window.scrollTo(0, 500);
-  // }
+  // 読み込み時にスクロール位置を$positionにセット
+  window.onload = function() {
+    console.log(<?php echo $position ?>);
+    window.scrollTo(0, <?php echo $position ?>);
+  }
+
+  // 関数：指定したid要素のvalueに現在のスクロール位置を格納
+  function setPosition(id) {
+    let input = document.getElementById(id);
+    input.value = window.scrollY;
+  }
 </script>
 @endsection

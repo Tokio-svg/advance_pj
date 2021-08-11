@@ -18,7 +18,6 @@ class ShopController extends Controller
     // 飲食店一覧、検索結果表示ページ
     public function index(Request $request)
     {
-        // Log::debug($request->all());
         // 入力情報を格納
         $inputs = [
             'area_id' => $request->input('area_id'),
@@ -58,11 +57,19 @@ class ShopController extends Controller
         $areas = Area::has('shops')->get();
         $genres = Genre::has('shops')->get();
 
+        // お気に入り操作時のスクロール位置を取得
+        if ($request->old()) {
+            $position = $request->old()['position'];
+        } else {
+            $position = 0;
+        }
+
         return view('index', [
             'shops' => $shops,
             'inputs' => $inputs,
             'areas' => $areas,
             'genres' => $genres,
+            'position' => $position,
         ]);
     }
 
