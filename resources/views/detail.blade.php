@@ -8,9 +8,9 @@
 
 @section('content')
 <main>
-  <div style="display: flex;">
-    <a href="/">＜</a>
-    <h1>{{$shop->name}}</h1>
+  <div class="info_title" style="display: flex;">
+    <a href="/" class="back">＜</a>
+    <h1 class="shop_name">{{$shop->name}}</h1>
   </div>
   <div class="image">
     <p>{{$shop->image_url}}</p>
