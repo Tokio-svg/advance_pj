@@ -16,11 +16,17 @@
       <div>
         <img src="{{putSource('/img/mail.png')}}" alt="no image">
         <input id="email" type="email" name="email" value="{{old('email')}}" placeholder="Email" required />
+        @error('email')
+        <p class="error">{{$message}}</p>
+        @enderror
       </div>
       <!-- Password -->
       <div>
         <img src="{{putSource('/img/key.png')}}" alt="no image">
         <input id="password" type="password" name="password" placeholder="Password" required />
+        @error('password')
+        <p class="error">{{$message}}</p>
+        @enderror
       </div>
       <button type="submit">ログイン</button>
     </form>
