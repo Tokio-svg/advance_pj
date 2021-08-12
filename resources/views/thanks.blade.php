@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-<main>
+<main class="shadow">
   <div class="thanks_wrap">
     <p>会員登録ありがとうございます</p>
     <p><a href="/login" class="thanks_button">ログインする</a></p>

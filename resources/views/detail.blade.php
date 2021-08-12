@@ -9,7 +9,7 @@
 @section('content')
 <main>
   <div class="info_title" style="display: flex;">
-    <a href="/" class="back">＜</a>
+    <a href="/" class="back shadow">＜</a>
     <h1 class="shop_name">{{$shop->name}}</h1>
   </div>
   <div class="image">
@@ -23,7 +23,7 @@
 </main>
 @endsection
 @section('reservation')
-<div class="reservation_wrap">
+<div class="reservation_wrap shadow">
   <h1>予約</h1>
   <form action="/reserve" method="post">
     @csrf

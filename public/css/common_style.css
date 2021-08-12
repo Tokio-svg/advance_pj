@@ -62,3 +62,6 @@ header {
     font-size: 12px;
     line-height: 1em;
 }
+.shadow {
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}

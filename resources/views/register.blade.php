@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-<main>
+<main class="shadow">
   <h1 class="card_title">Registration</h1>
   <div class="form_wrap">
     <form method="POST" action="/register">

@@ -8,7 +8,7 @@
 
 @section('header_content')
 <!-- 検索フォーム -->
-<div class="search_wrap">
+<div class="search_wrap shadow">
   <form action="/" method="get" id="search">
     <!-- 地域 -->
     <select name="area_id" id="area" onchange="document.getElementById('search').submit();">
@@ -46,7 +46,7 @@
 <main>
   @foreach ($shops as $shop)
   <!-- 店舗情報カード -->
-  <div class="card_wrap">
+  <div class="card_wrap shadow">
     <div class="card_image">
       {{$shop->image_url}}
     </div>

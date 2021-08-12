@@ -14,7 +14,7 @@
 
 <body>
   <div id="menu" class="menu">
-    <p id="close">×</p>
+    <p id="close" class="shadow">×</p>
     <ul>
       <li><a href="/">Home</a></li>
       <!-- ログイン状態で表示を変更する -->
@@ -35,7 +35,7 @@
       <header>
         <div class="header_content">
           <div class="logo_wrap">
-            <p id="open">開</p>
+            <p id="open" class="shadow">開</p>
             <h1>Rese</h1>
           </div>
           @yield('header_content')
