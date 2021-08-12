@@ -63,34 +63,39 @@
         @if (Auth::check())
         @if (empty($shop->favorites[0]))
         <!-- メモ：POST送信でfavoritesレコードを挿入後現在のURLにリダイレクト -->
-        <div onclick="setPosition('position_{{$shop->id}}'); document.getElementById('shop_{{$shop->id}}').submit();" style="cursor: pointer;">
+        <div onclick="setPosition('position_add'); setShopId('shop_fav-add', '{{$shop->id}}'); document.getElementById('favorite_add').submit();" style="cursor: pointer;">
           <img src="{{putSource('/img/heart.png')}}" alt="no image">
         </div>
-        <form id="shop_{{$shop->id}}" action="/favorite/add" method="POST" style="display: none;">
-          @csrf
-          <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-          <input type="hidden" name="shop_id" value="{{$shop->id}}">
-          <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
-          <input type="hidden" name="position" value="0" id="position_{{$shop->id}}">
-        </form>
         @else
         <!-- メモ：POST送信でfavoritesレコードを削除後現在のURLにリダイレクト -->
-        <div onclick="setPosition('position_{{$shop->id}}'); document.getElementById('shop_{{$shop->id}}').submit();" style="cursor: pointer;">
+        <div onclick="setPosition('position_delete'); setShopId('shop_fav-delete', '{{$shop->id}}'); document.getElementById('favorite_delete').submit();" style="cursor: pointer;">
           <img src="{{putSource('/img/heart_red.png')}}" alt="no image">
         </div>
-        <form id="shop_{{$shop->id}}" action="/favorite/delete" method="POST" style="display: none;">
-          @csrf
-          <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-          <input type="hidden" name="shop_id" value="{{$shop->id}}">
-          <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
-          <input type="hidden" name="position" value="0" id="position_{{$shop->id}}">
-        </form>
         @endif
         @endif
       </div>
     </div>
   </div>
   @endforeach
+  <!-- お気に入り処理用フォーム -->
+  @if (Auth::check())
+  <!-- 登録用 -->
+  <form id="favorite_add" action="/favorite/add" method="POST" style="display: none;">
+    @csrf
+    <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+    <input type="hidden" name="shop_id" value="" id="shop_fav-add">
+    <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
+    <input type="hidden" name="position" value="0" id="position_add">
+  </form>
+  <!-- 削除用 -->
+  <form id="favorite_delete" action="/favorite/delete" method="POST" style="display: none;">
+    @csrf
+    <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+    <input type="hidden" name="shop_id" value="" id="shop_fav-delete">
+    <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
+    <input type="hidden" name="position" value="0" id="position_delete">
+  </form>
+  @endif
 </main>
 @endsection
 
@@ -98,7 +103,6 @@
 <script>
   // 読み込み時にスクロール位置を$positionにセット
   window.onload = function() {
-    console.log(<?php echo $position ?>);
     window.scrollTo(0, <?php echo $position ?>);
   }
 
@@ -106,6 +110,12 @@
   function setPosition(id) {
     let input = document.getElementById(id);
     input.value = window.scrollY;
+  }
+
+  // 関数：指定したid要素のvalueにshopIdを格納
+  function setShopId(id, shopId) {
+    let input = document.getElementById(id);
+    input.value = shopId;
   }
 </script>
 @endsection
