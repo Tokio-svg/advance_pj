@@ -13,14 +13,14 @@
     <div class="reservation_info">
       <h2>予約状況</h2>
       @foreach ($reservations as $reservation)
-      <div class="reservation_card">
+      <div class="reservation_card shadow">
         <div class="reservation_flex">
           <div>
-            <img src="{{putSource('/img/clock.png')}}" alt="no image">
+            <img src="{{putSource('/img/clock.png')}}" alt="no image" style="width: 28px;">
           </div>
           <p>予約{{$loop->index + 1}}</p>
-          <div onclick="event.preventDefault(); document.getElementById('reservation_{{$reservation->id}}').submit();">
-            <img src="{{putSource('/img/cross.png')}}" alt="no image">
+          <div onclick="event.preventDefault(); document.getElementById('reservation_{{$reservation->id}}').submit();" style="cursor: pointer;">
+            <img src="{{putSource('/img/cross.png')}}" alt="no image" style="width: 28px;">
           </div>
           <form id="reservation_{{$reservation->id}}" action="/reserve/delete" method="POST" style="display: none;">
             @csrf
@@ -28,7 +28,7 @@
             <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
           </form>
         </div>
-        <table>
+        <table class="reservation_table">
           <tr>
             <th>Shop</th>
             <td>{{$reservation->shop->name}}</td>
@@ -59,12 +59,12 @@
       <div class="favorite_flex">
         @foreach ($favorites as $favorite)
         <!-- 店舗情報カード -->
-        <div class="card_wrap">
+        <div class="card_wrap shadow">
           <div class="card_image">
             {{$favorite->shop->image_url}}
           </div>
           <div style="padding: 20px;">
-            <h1>{{$favorite->shop->name}}</h1>
+            <h1 class="card_name">{{$favorite->shop->name}}</h1>
             <div class="card_tag">
               <a href="/?area_id={{$favorite->shop->area_id}}">#{{$favorite->shop->area->name}}</a>
               <a href="/?genre_id={{$favorite->shop->genre_id}}">#{{$favorite->shop->genre->name}}</a>

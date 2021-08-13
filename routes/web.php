@@ -18,9 +18,9 @@ Route::post('/favorite/delete', [FavoriteController::class, 'delete'])->middlewa
 // 予約登録、削除、完了ページ
 Route::post('/reserve', [ReservationController::class, 'create'])->middleware(['auth']);
 Route::post('/reserve/delete', [ReservationController::class, 'delete'])->middleware(['auth']);
-Route::get('/done', [ShopController::class, 'done']);
 
 // テスト用ルーティング（後で消すこと）
+Route::get('/done', [ShopController::class, 'done']);
 Route::get('/thanks', [ShopController::class, 'thanks']);
 
 require __DIR__ . '/auth.php';

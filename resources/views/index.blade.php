@@ -35,7 +35,7 @@
       @endforeach
     </select>
     <!-- アイコン -->
-    <img src="{{putSource('/img/search.png')}}" alt="no image" style="width: 16px;">
+    <img src="{{putSource('/img/search.png')}}" alt="no image" style="width: 14px;">
     <!-- 店名 -->
     <input type="text" name="shop_name" value="{{$inputs['shop_name']}}" placeholder="Search ..." onchange="document.getElementById('search').submit();">
   </form>
@@ -51,7 +51,7 @@
       {{$shop->image_url}}
     </div>
     <div style="padding: 20px;">
-      <h1>{{$shop->name}}</h1>
+      <h1 class="card_name">{{$shop->name}}</h1>
       <div class="card_tag">
         <a href="/?area_id={{$shop->area_id}}">#{{$shop->area->name}}</a>
         <a href="/?genre_id={{$shop->genre_id}}">#{{$shop->genre->name}}</a>

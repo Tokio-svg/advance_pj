@@ -57,7 +57,7 @@
       </select>
     </div>
     <div class="reservation_confirm">
-      <table>
+      <table class="table_reservation">
         <tr>
           <th>Shop</th>
           <td>{{$shop->name}}</td>
@@ -86,7 +86,7 @@
       @if (Auth::check())
       <button type="submit">予約する</button>
       @else
-      <p>予約をご希望の方はログインしてください</p>
+      <p>予約をご希望の方は<a href="/login" style="color: white; text-decoration: underline;">ログイン</a>してください</p>
       @endif
     </div>
   </form>

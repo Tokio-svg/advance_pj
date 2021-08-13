@@ -12,7 +12,7 @@ main {
 .card_title {
     text-align: left;
     color: white;
-    background: blue;
+    background: rgb(53, 96, 246);
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     padding: 18px;
@@ -39,7 +39,8 @@ button {
     border: none;
     font-size: 12px;
     color: white;
-    background: blue;
+    background: rgb(53, 96, 246);
     border-radius: 4px;
     padding: 4px 14px;
+    cursor: pointer;
 }
