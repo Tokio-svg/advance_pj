@@ -58,6 +58,19 @@
     close.addEventListener('click', function() {
       menu.style.left = '-100%';
     });
+
+    // 関数：引数のID要素を表示する
+    function showText(textId, event) {
+      const text = document.getElementById(textId);
+      text.style.display = 'block';
+      text.style.top = `${event.clientY - 30}px`;
+      text.style.left = `${event.clientX}px`;
+    }
+
+    // 関数：引数のID要素を非表示にする
+    function hideText(textId) {
+      document.getElementById(textId).style.display = 'none';
+    }
   </script>
   @yield('script')
 </body>

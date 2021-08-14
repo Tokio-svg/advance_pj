@@ -19,7 +19,7 @@
             <img src="{{putSource('/img/clock.png')}}" alt="no image" style="width: 28px;">
           </div>
           <p>予約{{$loop->index + 1}}</p>
-          <div onclick="event.preventDefault(); document.getElementById('reservation_{{$reservation->id}}').submit();" style="cursor: pointer;">
+          <div onclick="return confirm('予約を取り消してもよろしいですか？'); document.getElementById('reservation_{{$reservation->id}}').submit();" style="cursor: pointer;" onmouseover="showText('popup_delete',event)" onmouseout="hideText('popup_delete')">
             <img src="{{putSource('/img/cross.png')}}" alt="no image" style="width: 28px;">
           </div>
           <form id="reservation_{{$reservation->id}}" action="/reserve/delete" method="POST" style="display: none;">
@@ -53,6 +53,7 @@
         </table>
       </div>
       @endforeach
+      <p id="popup_delete" class="popup">この予約を取り消します</p>
     </div>
     <div class="favorite_info">
       <h2>お気に入り店舗</h2>
@@ -74,7 +75,7 @@
                 <a href="/detail/{{$favorite->shop->id}}">詳しく見る</a>
               </div>
               <!-- メモ：POST送信でfavoritesレコードを削除後現在のURLにリダイレクト -->
-              <div onclick="event.preventDefault(); document.getElementById('shop_{{$favorite->shop->id}}').submit();">
+              <div onclick="event.preventDefault(); document.getElementById('shop_{{$favorite->shop->id}}').submit();" style="cursor: pointer;" onmouseover="showText('favorite_popup-delete',event)" onmouseout="hideText('favorite_popup-delete')">
                 <img src="{{putSource('/img/heart_red.png')}}" alt="no image">
               </div>
               <form id="shop_{{$favorite->shop->id}}" action="/favorite/delete" method="POST" style="display: none;">
@@ -87,8 +88,26 @@
           </div>
         </div>
         @endforeach
+        <p id="favorite_popup-delete" class="popup">お気に入り登録を解除します</p>
       </div>
     </div>
   </div>
 </main>
+@endsection
+
+@section('script')
+<!-- <script>
+  // 関数：引数のID要素を表示する
+  function showText(textId, event) {
+    const text = document.getElementById(textId);
+    text.style.display = 'block';
+    text.style.top = `${event.clientY - 30}px`;
+    text.style.left = `${event.clientX}px`;
+  }
+
+  // 関数：引数のID要素を非表示にする
+  function hideText(textId) {
+    document.getElementById(textId).style.display = 'none';
+  }
+</script> -->
 @endsection

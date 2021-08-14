@@ -65,3 +65,13 @@ header {
 .shadow {
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    background: rgb(255, 252, 234);
+    font-size: 14px;
+    border: 1px solid black;
+    padding: 5px;
+    white-space: nowrap;
+}

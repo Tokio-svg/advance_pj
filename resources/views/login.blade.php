@@ -25,7 +25,9 @@
         <input id="password" type="password" name="password" placeholder="Password" onblur="validateRequire(this.id,'error_password-require')" required />
         <p id="error_password-require" class="error" style="display: none;">パスワードを入力してください</p>
       </div>
-      <button type="submit">ログイン</button>
+      <div class="auth_button">
+        <button type="submit">ログイン</button>
+      </div>
     </form>
   </div>
 </main>

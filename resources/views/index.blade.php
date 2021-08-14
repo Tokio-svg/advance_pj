@@ -63,12 +63,12 @@
         @if (Auth::check())
         @if (empty($shop->favorites[0]))
         <!-- メモ：POST送信でfavoritesレコードを挿入後現在のURLにリダイレクト -->
-        <div onclick="setPosition('position_add'); setShopId('shop_fav-add', '{{$shop->id}}'); document.getElementById('favorite_add').submit();" style="cursor: pointer;">
+        <div onclick="setPosition('position_add'); setShopId('shop_fav-add', '{{$shop->id}}'); document.getElementById('favorite_add').submit();" style="cursor: pointer;" onmouseover="showText('favorite_popup-add',event)" onmouseout="hideText('favorite_popup-add')">
           <img src="{{putSource('/img/heart.png')}}" alt="no image">
         </div>
         @else
         <!-- メモ：POST送信でfavoritesレコードを削除後現在のURLにリダイレクト -->
-        <div onclick="setPosition('position_delete'); setShopId('shop_fav-delete', '{{$shop->id}}'); document.getElementById('favorite_delete').submit();" style="cursor: pointer;">
+        <div onclick="setPosition('position_delete'); setShopId('shop_fav-delete', '{{$shop->id}}'); document.getElementById('favorite_delete').submit();" style="cursor: pointer;" onmouseover="showText('favorite_popup-delete',event)" onmouseout="hideText('favorite_popup-delete')">
           <img src="{{putSource('/img/heart_red.png')}}" alt="no image">
         </div>
         @endif
@@ -77,6 +77,9 @@
     </div>
   </div>
   @endforeach
+  <!-- ポップアップメッセージ -->
+  <p id="favorite_popup-add" class="popup">お気に入りに登録します</p>
+  <p id="favorite_popup-delete" class="popup">お気に入り登録を解除します</p>
   <!-- お気に入り処理用フォーム -->
   @if (Auth::check())
   <!-- 登録用 -->

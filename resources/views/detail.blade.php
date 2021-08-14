@@ -22,79 +22,118 @@
   <p>{{$shop->overview}}</p>
 </main>
 @endsection
+
 @section('reservation')
 <div class="reservation_wrap shadow">
-  <h1>予約</h1>
-  <form action="/reserve" method="post">
-    @csrf
-    @if (Auth::check())
-    <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-    @endif
-    <input type="hidden" name="shop_id" value="{{$shop->id}}">
-    <div>
-      <input type="date" name="date" id="date" onchange="changeDate(this.value)" value="{{old('date')}}">
-      @error('date')
-      <p class="error">{{$message}}</p>
-      @enderror
-    </div>
-    <div>
-      <input type="time" name="time" id="time" onchange="changeTime(this.value)" value="{{old('time')}}">
-      @error('time')
-      <p class="error">{{$message}}</p>
-      @enderror
-    </div>
-    <div>
-      <select name="number" id="number" onchange="changeNumber(this.value)">
-        <?php
-        for ($i = 1; $i < 11; $i++) {
-          if (old('number') == $i) {
-            echo "<option value='" . $i . "' selected>" . $i . "人</option>";
-          } else {
-            echo "<option value='" . $i . "'>" . $i . "人</option>";
-          }
-        }
-        ?>
-      </select>
-    </div>
-    <div class="reservation_confirm">
-      <table class="table_reservation">
-        <tr>
-          <th>Shop</th>
-          <td>{{$shop->name}}</td>
-        </tr>
-        <tr>
-          <th>Date</th>
-          <td><span id="date_display">{{old('date')}}</span></td>
-        </tr>
-        <tr>
-          <th>Time</th>
-          <td><span id="time_display">{{old('time')}}</span></td>
-        </tr>
-        <tr>
-          <th>Number</th>
-          <td><span id="number_display">
-              @if (old('number'))
-              {{old('number')}}人
-              @else
-              1人
-              @endif
-            </span></td>
-        </tr>
-      </table>
-    </div>
-    <div class="submit">
+  <div class="reservation_content">
+    <h1>予約</h1>
+    <form action="/reserve" method="post">
+      @csrf
       @if (Auth::check())
-      <button type="submit">予約する</button>
-      @else
-      <p>予約をご希望の方は<a href="/login" style="color: white; text-decoration: underline;">ログイン</a>してください</p>
+      <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
       @endif
-    </div>
+      <input type="hidden" name="shop_id" value="{{$shop->id}}">
+      <div>
+        <input type="date" name="date" id="date" onblur="validateRequire(this.id,'error_date-require')" onchange="changeDate(this.value)" value="{{old('date')}}" required>
+        <p id="error_date-require" class="error" style="display: none;">日付を選択してください</p>
+      </div>
+      <div>
+        <input type="time" name="time" id="time" onblur="validateRequire(this.id,'error_time-require')" onchange="changeTime(this.value)" value="{{old('time')}}" required>
+        <p id="error_time-require" class="error" style="display: none;">時間を選択してください</p>
+      </div>
+      <div>
+        <select name="number" id="number" onchange="changeNumber(this.value)">
+          <?php
+          for ($i = 1; $i < 11; $i++) {
+            if (old('number') == $i) {
+              echo "<option value='" . $i . "' selected>" . $i . "人</option>";
+            } else {
+              echo "<option value='" . $i . "'>" . $i . "人</option>";
+            }
+          }
+          ?>
+        </select>
+      </div>
+      <div class="reservation_confirm">
+        <table class="table_reservation">
+          <tr>
+            <th>Shop</th>
+            <td>{{$shop->name}}</td>
+          </tr>
+          <tr>
+            <th>Date</th>
+            <td><span id="date_display">{{old('date')}}</span></td>
+          </tr>
+          <tr>
+            <th>Time</th>
+            <td><span id="time_display">{{old('time')}}</span></td>
+          </tr>
+          <tr>
+            <th>Number</th>
+            <td><span id="number_display">
+                @if (old('number'))
+                {{old('number')}}人
+                @else
+                1人
+                @endif
+              </span></td>
+          </tr>
+        </table>
+      </div>
+  </div>
+  <div class="submit">
+    @if (Auth::check())
+    <button type="submit">予約する</button>
+    @else
+    <p>予約をご希望の方は<a href="/login" style="color: white; text-decoration: underline;">ログイン</a>してください</p>
+    @endif
+  </div>
   </form>
 </div>
 @endsection
 
 @section('script')
 <script>
+  // 読み込み時にlaravelエラーメッセージの有無を取得して
+  // 対応するエラーメッセージを表示状態に変更する
+  window.onload = function() {
+    let errors = {
+      date: [],
+      time: [],
+    };
+    // 1.$errorから全エラーメッセージを取得する
+    <?php
+    if ($errors->has('date')) {
+      $tmp = $errors->first('date');
+      echo "errors.date.push('{$tmp}');";
+    }
+    if ($errors->has('time')) {
+      $tmp = $errors->first('time');
+      echo "errors.time.push('{$tmp}');";
+    }
+
+    ?>
+    // 2.各エラーメッセージごとに表示するかどうかチェックする
+    if (errors.date[0]) {
+      document.getElementById('error_date-require').style.display = "block";
+    }
+    if (errors.time[0]) {
+      document.getElementById('error_time-require').style.display = "block";
+    }
+
+  }
+
+  // 関数：入力必須バリデーション
+  function validateRequire(id, errorId) {
+    const errorMessage = document.getElementById(errorId);
+    const input = document.getElementById(id).value;
+    if (!input) {
+      errorMessage.style.display = "block";
+    } else {
+      errorMessage.style.display = "none";
+    }
+  }
+
   // 関数：name=dateの値を対応するタグに反映する
   function changeDate(value) {
     document.getElementById('date_display').textContent = value;

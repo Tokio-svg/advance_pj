@@ -32,7 +32,9 @@
         <input id="password" type="password" name="password" placeholder="Password" onblur="validatePasswordMin()" required />
         <p id="error_password-min" class="error" style="display: none;">パスワードは8文字以上で入力してください</p>
       </div>
-      <button type="submit">登録</button>
+      <div class="auth_button">
+        <button type="submit">登録</button>
+      </div>
     </form>
   </div>
 </main>

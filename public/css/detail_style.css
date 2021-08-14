@@ -21,8 +21,8 @@ main,
     background: rgb(53, 96, 246);
 }
 .reservation_wrap h1 {
-    margin: 20px 0;
     font-size: 22px;
+    margin: 0 0 20px 10px;
 }
 .image {
     width: 100%;
@@ -114,4 +114,7 @@ main p {
 }
 .info_title {
     margin: 40px 0 20px;
+}
+.reservation_content {
+    padding: 40px 20px;
 }

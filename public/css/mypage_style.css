@@ -34,6 +34,9 @@ h2 {
     display: flex;
     justify-content: space-between;
 }
+.reservation_flex p {
+    margin-right: 100px;
+}
 .reservation_table {
     margin-top: 20px;
     text-align: left;
