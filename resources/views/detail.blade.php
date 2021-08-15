@@ -13,7 +13,7 @@
     <h1 class="shop_name">{{$shop->name}}</h1>
   </div>
   <div class="image">
-    <p>{{$shop->image_url}}</p>
+    <img src="{{$shop->image_url}}" alt="no image">
   </div>
   <div class="tag">
     <a href="/?area_id={{$shop->area_id}}">#{{$shop->area->name}}</a>

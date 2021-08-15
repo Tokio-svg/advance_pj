@@ -47,8 +47,7 @@
   @foreach ($shops as $shop)
   <!-- 店舗情報カード -->
   <div class="card_wrap shadow">
-    <div class="card_image">
-      {{$shop->image_url}}
+    <div class="card_image" style="background-image: url({{$shop->image_url}});">
     </div>
     <div style="padding: 20px;">
       <h1 class="card_name">{{$shop->name}}</h1>

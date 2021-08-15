@@ -35,7 +35,9 @@
       <header>
         <div class="header_content">
           <div class="logo_wrap">
-            <p id="open" class="shadow">開</p>
+            <p id="open" class="shadow">
+              <img src="{{putSource('/img/menu.png')}}" alt="no image">
+            </p>
             <h1>Rese</h1>
           </div>
           @yield('header_content')

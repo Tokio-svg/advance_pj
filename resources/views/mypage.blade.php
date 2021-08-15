@@ -61,8 +61,7 @@
         @foreach ($favorites as $favorite)
         <!-- 店舗情報カード -->
         <div class="card_wrap shadow">
-          <div class="card_image">
-            {{$favorite->shop->image_url}}
+          <div class="card_image" style="background-image: url({{$favorite->shop->image_url}});">
           </div>
           <div style="padding: 20px;">
             <h1 class="card_name">{{$favorite->shop->name}}</h1>
@@ -93,21 +92,4 @@
     </div>
   </div>
 </main>
-@endsection
-
-@section('script')
-<!-- <script>
-  // 関数：引数のID要素を表示する
-  function showText(textId, event) {
-    const text = document.getElementById(textId);
-    text.style.display = 'block';
-    text.style.top = `${event.clientY - 30}px`;
-    text.style.left = `${event.clientX}px`;
-  }
-
-  // 関数：引数のID要素を非表示にする
-  function hideText(textId) {
-    document.getElementById(textId).style.display = 'none';
-  }
-</script> -->
 @endsection

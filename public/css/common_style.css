@@ -36,6 +36,10 @@ a {
     line-height: 40px;
     border-radius: 5px;
 }
+#open img {
+    width: 20px;
+    margin: auto;
+}
 header {
     position: fixed;
     top: 0;
