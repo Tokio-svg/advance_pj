@@ -34,11 +34,11 @@
       @endif
       <input type="hidden" name="shop_id" value="{{$shop->id}}">
       <div>
-        <input type="date" name="date" id="date" onblur="validateRequire(this.id,'error_date-require')" onchange="changeDate(this.value)" value="{{old('date')}}" required>
+        <input type="date" name="date" id="date" min="<?php echo date("Y-m-d") ?>" max="<?php echo date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") + 30, date("Y"))); ?>" onblur="validateRequire(this.id,'error_date-require')" onchange="changeDate(this.value)" value="{{old('date')}}" required>
         <p id="error_date-require" class="error" style="display: none;">日付を選択してください</p>
       </div>
       <div>
-        <input type="time" name="time" id="time" onblur="validateRequire(this.id,'error_time-require')" onchange="changeTime(this.value)" value="{{old('time')}}" required>
+        <input type="time" name="time" id="time" min="10:00" max="18:00" step="1800" onblur="validateRequire(this.id,'error_time-require')" onchange="changeTime(this.value)" value="{{old('time')}}" required>
         <p id="error_time-require" class="error" style="display: none;">時間を選択してください</p>
       </div>
       <div>
@@ -120,7 +120,6 @@
     if (errors.time[0]) {
       document.getElementById('error_time-require').style.display = "block";
     }
-
   }
 
   // 関数：入力必須バリデーション
