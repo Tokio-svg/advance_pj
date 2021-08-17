@@ -38,7 +38,7 @@
         <p id="error_date-require" class="error" style="display: none;">日付を選択してください</p>
       </div>
       <div>
-        <input type="time" name="time" id="time" min="10:00" max="18:00" step="1800" onblur="validateRequire(this.id,'error_time-require')" onchange="changeTime(this.value)" value="{{old('time')}}" required>
+        <input type="time" name="time" id="time" min="10:00" max="20:00" step="1800" onblur="validateRequire(this.id,'error_time-require')" onchange="changeTime(this.value)" value="{{old('time')}}" required>
         <p id="error_time-require" class="error" style="display: none;">時間を選択してください</p>
       </div>
       <div>

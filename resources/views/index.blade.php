@@ -82,7 +82,7 @@
   <!-- お気に入り処理用フォーム -->
   @if (Auth::check())
   <!-- 登録用 -->
-  <form id="favorite_add" action="/favorite/add" method="POST" style="display: none;">
+  <form id="favorite_add" action="/favorite" method="POST" style="display: none;">
     @csrf
     <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
     <input type="hidden" name="shop_id" value="" id="shop_fav-add">
