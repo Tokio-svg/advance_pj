@@ -19,7 +19,7 @@
             <img src="{{putSource('/img/clock.png')}}" alt="no image" style="width: 28px;">
           </div>
           <p>予約{{$loop->index + 1}}</p>
-          <div onclick="return confirm('予約を取り消してもよろしいですか？'); document.getElementById('reservation_{{$reservation->id}}').submit();" style="cursor: pointer;" onmouseover="showText('popup_delete',event)" onmouseout="hideText('popup_delete')">
+          <div onclick="document.getElementById('reservation_{{$reservation->id}}').submit();" style="cursor: pointer;" onmouseover="showText('popup_delete',event)" onmouseout="hideText('popup_delete')">
             <img src="{{putSource('/img/cross.png')}}" alt="no image" style="width: 28px;">
           </div>
           <form id="reservation_{{$reservation->id}}" action="/reserve/delete" method="POST" style="display: none;">

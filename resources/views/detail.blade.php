@@ -34,15 +34,25 @@
       @endif
       <input type="hidden" name="shop_id" value="{{$shop->id}}">
       <div>
-        <input type="date" name="date" id="date" min="<?php echo date("Y-m-d") ?>" max="<?php echo date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") + 30, date("Y"))); ?>" onblur="validateRequire(this.id,'error_date-require')" onchange="changeDate(this.value)" value="{{old('date')}}" required>
+        <!-- 当日の1日後～30日後までを選択可能にする（暫定） -->
+        <input type="date" name="date" id="date" min="<?php echo date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") + 1, date("Y"))); ?>" max="<?php echo date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") + 30, date("Y"))); ?>" onblur="validateRequire(this.id,'error_date-require')" onchange="changeDate(this.value)" value="{{old('date')}}" required>
         <p id="error_date-require" class="error" style="display: none;">日付を選択してください</p>
       </div>
       <div>
-        <input type="time" name="time" id="time" min="10:00" max="20:00" step="1800" onblur="validateRequire(this.id,'error_time-require')" onchange="changeTime(this.value)" value="{{old('time')}}" required>
+        <select name="time" id="time" onblur="validateRequire(this.id,'error_time-require')" onchange="changeTime(this.value)" required>
+          <option value="">時間を選択してください</option>
+          <?php
+          for ($i = 10; $i <= 19; $i++) {
+            echo "<option value='" . $i . ":00'>" . $i . ":00</option>";
+            echo "<option value='" . $i . ":30'>" . $i . ":30</option>";
+          }
+          ?>
+        </select>
         <p id="error_time-require" class="error" style="display: none;">時間を選択してください</p>
       </div>
       <div>
-        <select name="number" id="number" onchange="changeNumber(this.value)">
+        <select name="number" id="number" onblur="validateRequire(this.id,'error_number-require')" onchange="changeNumber(this.value)" required>
+          <option value="">人数を選択してください</option>
           <?php
           for ($i = 1; $i < 11; $i++) {
             if (old('number') == $i) {
@@ -53,6 +63,7 @@
           }
           ?>
         </select>
+        <p id="error_number-require" class="error" style="display: none;">人数を選択してください</p>
       </div>
       <div class="reservation_confirm">
         <table class="table_reservation">
@@ -94,12 +105,14 @@
 
 @section('script')
 <script>
-  // 読み込み時にlaravelエラーメッセージの有無を取得して
-  // 対応するエラーメッセージを表示状態に変更する
+  // 読み込み時の処理
   window.onload = function() {
+    // ★laravelエラーメッセージの有無を取得して
+    // 対応するエラーメッセージを表示状態に変更する
     let errors = {
       date: [],
       time: [],
+      number: [],
     };
     // 1.$errorから全エラーメッセージを取得する
     <?php
@@ -111,6 +124,10 @@
       $tmp = $errors->first('time');
       echo "errors.time.push('{$tmp}');";
     }
+    if ($errors->has('number')) {
+      $tmp = $errors->first('number');
+      echo "errors.number.push('{$tmp}');";
+    }
 
     ?>
     // 2.各エラーメッセージごとに表示するかどうかチェックする
@@ -120,6 +137,27 @@
     if (errors.time[0]) {
       document.getElementById('error_time-require').style.display = "block";
     }
+    if (errors.number[0]) {
+      document.getElementById('error_number-require').style.display = "block";
+    }
+
+    // ★timeフォームの初期値をoldから設定する
+    let oldTime = '';
+    // oldの値を取得する
+    <?php
+    echo "oldTime = '" . old('time') . "';";
+    ?>
+    if (!oldTime) {
+      return;
+    }
+    // oldTimeと一致するvalueを持つoptionタグを選択状態にする
+    const time = document.getElementById('time').options;
+    Object.keys(time).forEach((key) => {
+      if (time[key].value === oldTime) {
+        time[key].selected = true;
+        return;
+      }
+    });
   }
 
   // 関数：入力必須バリデーション

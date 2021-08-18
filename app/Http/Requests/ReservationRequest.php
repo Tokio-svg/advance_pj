@@ -26,6 +26,7 @@ class ReservationRequest extends FormRequest
         return [
             'date' => 'required',
             'time' => 'required',
+            'number' => 'required',
         ];
     }
 
@@ -35,6 +36,7 @@ class ReservationRequest extends FormRequest
         return [
             'date.required' => '日付を選択してください',
             'time.required' => '時間を選択してください',
+            'number.required' => '人数を選択してください',
         ];
     }
 }
