@@ -86,3 +86,22 @@ select {
     color: black;
     font-size: 14px;
 }
+
+/* レスポンシブ対応(break point:768px) */
+@media screen and (max-width: 768px) {
+    .header_content {
+        display: block;
+    }
+    .search_wrap {
+        top: 30px;
+        left: 250px;
+    }
+    main {
+        width: 90%;
+        min-width: 400px;
+    }
+    .card_wrap {
+        width: 200px;
+        height: 200px;
+    }
+}

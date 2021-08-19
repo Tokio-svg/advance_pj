@@ -120,3 +120,19 @@ main p {
 .reservation_content {
     padding: 40px 20px;
 }
+
+/* レスポンシブ対応(break point:768px) */
+@media screen and (max-width: 768px) {
+    .flex_container {
+        display: block;
+    }
+    main {
+        margin: auto;
+    }
+    .reservation_wrap {
+        margin: 20px auto;
+    }
+    .reservation_confirm {
+        margin: 10px auto 30px;
+    }
+}

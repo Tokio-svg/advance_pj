@@ -28,3 +28,17 @@ p {
     font-size: 12px;
     padding: 4px 14px;
 }
+
+/* レスポンシブ対応(break point:768px) */
+@media screen and (max-width: 768px) {
+    main {
+        width: 320px;
+        height: 240px;
+    }
+    .thanks_wrap {
+        padding: 80px 0;
+    }
+    p {
+        font-size: 17px;
+    }
+}
