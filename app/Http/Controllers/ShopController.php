@@ -76,7 +76,6 @@ class ShopController extends Controller
     // 飲食店詳細ページ
     public function detail(Request $request, $shop_id)
     {
-        // $shop = Shop::find($shop_id);
         $shop = Shop::with('area')->with('genre')->find($shop_id);
         return view('detail', [
             'shop' => $shop,
