@@ -27,19 +27,22 @@ class ShopControllerTest extends TestCase
         $this->assertEquals(5, count($response['genres'])); // 検索フォーム項目用genreレコード(5件)取得を確認
         $response->assertStatus(200);
 
-        // 検索条件 area_id =13(9件ヒット)
+        // 検索条件 area_id =13
         $response = $this->get('/?area_id=13');
-        $this->assertEquals(9, count($response['shops']));
+        $expected = Shop::where('area_id',13)->count(); // Shops tebleのarea_id=13のレコード数を取得
+        $this->assertEquals($expected, count($response['shops']));
         $response->assertStatus(200);
 
-        // 検索条件 genre_id =3(4件ヒット)
-        $response = $this->get('/?genre_id=3');
-        $this->assertEquals(4, count($response['shops']));
+        // 検索条件 genre_id =1
+        $response = $this->get('/?genre_id=1');
+        $expected = Shop::where('genre_id', 1)->count(); // Shops tebleのgenre_id=1のレコード数を取得
+        $this->assertEquals($expected, count($response['shops']));
         $response->assertStatus(200);
 
-        // 検索条件 shop_name ='仙人'(1件ヒット)
+        // 検索条件 shop_name ='仙人'
         $response = $this->get('/?shop_name=仙人');
-        $this->assertEquals(1, count($response['shops']));
+        $expected = Shop::where('name', 'LIKE', "%仙人%")->count(); // Shops tebleのnameに'仙人'を含むレコード数を取得
+        $this->assertEquals($expected, count($response['shops']));
         $response->assertStatus(200);
     }
 
