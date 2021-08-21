@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 use App\Models\User;
 
+use function Psy\debug;
+
 class ShopControllerTest extends TestCase
 {
     use RefreshDatabase;
@@ -18,7 +20,26 @@ class ShopControllerTest extends TestCase
     // 飲食店一覧ページ表示
     public function test_index()
     {
+        // 検索条件を指定せずにアクセス
         $response = $this->get('/');
+        $this->assertEquals(20,count($response['shops']));  // 全shopレコード(20件)取得を確認
+        $this->assertEquals(3, count($response['areas']));  // 検索フォーム項目用areaレコード(3件)取得を確認
+        $this->assertEquals(5, count($response['genres'])); // 検索フォーム項目用genreレコード(5件)取得を確認
+        $response->assertStatus(200);
+
+        // 検索条件 area_id =13(9件ヒット)
+        $response = $this->get('/?area_id=13');
+        $this->assertEquals(9, count($response['shops']));
+        $response->assertStatus(200);
+
+        // 検索条件 genre_id =3(4件ヒット)
+        $response = $this->get('/?genre_id=3');
+        $this->assertEquals(4, count($response['shops']));
+        $response->assertStatus(200);
+
+        // 検索条件 shop_name ='仙人'(1件ヒット)
+        $response = $this->get('/?shop_name=仙人');
+        $this->assertEquals(1, count($response['shops']));
         $response->assertStatus(200);
     }
 
