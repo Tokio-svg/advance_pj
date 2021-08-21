@@ -11,6 +11,7 @@ class AuthenticationTest extends TestCase
 {
     use RefreshDatabase;
 
+    // create(ログイン画面表示)
     public function test_login_screen_can_be_rendered()
     {
         $response = $this->get('/login');
@@ -18,8 +19,10 @@ class AuthenticationTest extends TestCase
         $response->assertStatus(200);
     }
 
+    // store(ログイン：認証成功 ⇒ ログアウト)
     public function test_users_can_authenticate_using_the_login_screen()
     {
+        // ログイン
         $user = User::factory()->create();
 
         $response = $this->post('/login', [
@@ -28,9 +31,15 @@ class AuthenticationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
+        $response->assertRedirect('/');
+
+        // ログアウト
+        $response = $this->post('/logout');
+        $this->assertGuest();
+        $response->assertRedirect('/');
     }
 
+    // store(ログイン：認証失敗)
     public function test_users_can_not_authenticate_with_invalid_password()
     {
         $user = User::factory()->create();

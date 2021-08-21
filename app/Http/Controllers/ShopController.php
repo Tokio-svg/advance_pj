@@ -77,6 +77,11 @@ class ShopController extends Controller
     public function detail(Request $request, $shop_id)
     {
         $shop = Shop::with('area')->with('genre')->find($shop_id);
+
+        if (!$shop) {
+            abort(404);
+        }
+
         return view('detail', [
             'shop' => $shop,
         ]);
