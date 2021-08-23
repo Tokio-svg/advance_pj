@@ -2,12 +2,15 @@
 
 namespace Tests\Feature;
 
+use App\Http\Controllers\ShopController;
+use App\Models\Favorite;
 use App\Models\Shop;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 use function Psy\debug;
 
@@ -16,6 +19,13 @@ class ShopControllerTest extends TestCase
     use RefreshDatabase;
     // リフレッシュ時のシーディングを有効にする
     private $seed = true;
+
+     // テスト前の準備作業(viewで必要なREQUEST_URIを設定)
+    public function setUp() :void
+    {
+        $_SERVER['REQUEST_URI'] = 'http://www.example.com';
+        parent::setUp();
+    }
 
     // 飲食店一覧ページ表示
     public function test_index()
@@ -44,6 +54,38 @@ class ShopControllerTest extends TestCase
         $expected = Shop::where('name', 'LIKE', "%仙人%")->count(); // Shops tebleのnameに'仙人'を含むレコード数を取得
         $this->assertEquals($expected, count($response['shops']));
         $response->assertStatus(200);
+    }
+
+    // index
+    public function test_index_login()
+    {
+        // ログイン状態でアクセス
+        $user = User::create([  // ユーザーを作成
+            'name' => 'aaa',
+            'email' => 'bbb@ccc.com',
+            'password' => 'test12345'
+        ]);
+        $this->actingAs($user); // ログイン
+
+        // favoriteレコードを2件挿入
+        // user_id = $user->id; shop_id = 1;
+        $favorite = Favorite::create([
+            'user_id' => $user->id,
+            'shop_id' => 1,
+        ]);
+        // user_id = 1000; shop_id = 2;
+        $not_exist_id = 1000;
+        Favorite::create([
+            'user_id' => $not_exist_id,
+            'shop_id' => 2,
+        ]);
+        $this->assertNotEquals($not_exist_id, $user->id);   // テスト用IDがユーザーIDと異なることを確認
+
+        $response = $this->get('/');
+        // id = 1の飲食店のお気に入りレコードが取得されていることを確認
+        $this->assertEquals($favorite->id, $response['shops'][0]->favorites[0]->id);
+        // id = 2の飲食店のお気に入りレコード(user_id = $not_exist_id)が取得されていないことを確認
+        $this->assertEmpty($response['shops'][1]->favorites);
     }
 
     // 飲食店詳細ページ
