@@ -1,5 +1,7 @@
 main {
-    margin-top: 100px;
+    width: 80%;
+    min-width: 900px;
+    margin: 100px auto 0;
 }
 h2 {
     font-size: 20px;
@@ -13,12 +15,15 @@ h2 {
 .mypage_content {
     display: flex;
     justify-content: space-around;
-    width: 80%;
+    width: 100%;
     margin: auto;
 }
 .reservation_info,
 .favorite_info {
-    width: 600px;
+    width: 50%;
+}
+.favorite_info {
+    min-width: 600px;
 }
 .reservation_card {
     width: 340px;
@@ -98,4 +103,24 @@ h2 {
 .card_tag a {
     color: black;
     font-size: 14px;
+}
+
+/* レスポンシブ対応(break point:768px) */
+@media screen and (max-width: 768px) {
+    main {
+        width: 90%;
+        min-width: 360px;
+        margin: 100px auto 0;
+    }
+    .mypage_content {
+        display: block;
+    }
+    .reservation_info,
+    .favorite_info {
+        margin: 20px auto;
+        min-width: 360px;
+    }
+    h2 {
+        text-align: center;
+    }
 }

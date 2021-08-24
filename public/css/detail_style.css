@@ -1,6 +1,7 @@
 .flex_container {
     display: flex;
     width: 80%;
+    min-width: 900px;
     margin: auto;
     justify-content: space-between;
 }
@@ -45,7 +46,7 @@ main p {
     background: rgb(85, 128, 247);
     padding: 20px;
     width: 80%;
-    margin: 20px;
+    margin: 20px auto;
     text-align: left;
     font-size: 14px;
     border-radius: 5px;
@@ -68,6 +69,7 @@ main p {
 }
 #date {
     width: 30%;
+    min-width: 150px;
 }
 #time,
 #number {
@@ -125,6 +127,8 @@ main p {
 @media screen and (max-width: 768px) {
     .flex_container {
         display: block;
+        width: 90%;
+        min-width: 320px;
     }
     main {
         margin: auto;
@@ -134,5 +138,8 @@ main p {
     }
     .reservation_confirm {
         margin: 10px auto 30px;
+    }
+    .submit p {
+        font-size: 12px;
     }
 }

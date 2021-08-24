@@ -84,4 +84,7 @@ header {
     .logo_wrap {
         left: 60px;
     }
+    #close {
+        margin-left: 60px;
+    }
 }
