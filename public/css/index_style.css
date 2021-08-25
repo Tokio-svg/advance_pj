@@ -4,9 +4,10 @@
 }
 .header_content {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row-reverse;
+    vertical-align: middle;
     width: 80%;
-    min-width: 900px;
+    min-width: 980px;
     margin: auto;
 }
 main {
@@ -18,14 +19,12 @@ main {
     margin: 100px auto 0;
 }
 .search_wrap {
-    position: absolute;
-    right: 50px;
-    top: 30px;
     width: 650px;
     height: 50px;
     background: white;
     border-radius: 5px;
     line-height: 50px;
+    margin-top: 30px;
 }
 input,
 select {
@@ -96,9 +95,30 @@ select {
         width: 90%;
         min-width: 360px;
     }
+    .sp_footer {
+        background: rgb(238, 238, 238);
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 70px;
+
+    }
     .search_wrap {
-        top: 90px;
+        position: fixed;
+        bottom: 10px;
         left: 10px;
+        width: 90%;
+    }
+    select {
+        width: 20%;
+    }
+    input {
+        width: 40%;
+    }
+    input,
+    select {
+        padding-left: 5px;
     }
     main {
         width: 90%;

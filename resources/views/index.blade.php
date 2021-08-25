@@ -8,6 +8,7 @@
 
 @section('header_content')
 <!-- 検索フォーム -->
+<div class="sp_footer"></div>
 <div class="search_wrap shadow">
   <form action="/" method="get" id="search">
     <!-- 地域 -->
