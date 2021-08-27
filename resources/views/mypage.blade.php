@@ -54,9 +54,20 @@
             </tr>
           </table>
           <!-- リマインダーボタン -->
-          <div class="reminder_button" onmouseover="showText('popup_reminder-off',event)" onmouseout="hideText('popup_reminder-off')">
-            <img src="{{putSource('/img/bell_on.png')}}" alt="no image" style="width: 28px;">
-          </div>
+          @if($reservation->reminder)
+            <div class="reminder_button" onclick="document.getElementById('reminder_{{$reservation->id}}').submit();" onmouseover="showText('popup_reminder-off',event)" onmouseout="hideText('popup_reminder-off')">
+              <img src="{{putSource('/img/bell_on.png')}}" alt="no image" style="width: 28px;">
+            </div>
+          @else
+            <div class="reminder_button" onclick="document.getElementById('reminder_{{$reservation->id}}').submit();" onmouseover="showText('popup_reminder-on',event)" onmouseout="hideText('popup_reminder-on')">
+              <img src="{{putSource('/img/bell_off.png')}}" alt="no image" style="width: 28px;">
+            </div>
+          @endif
+          <form id="reminder_{{$reservation->id}}" action="/reserve/reminder" method="POST" style="display: none;">
+            @csrf
+            <input type="hidden" name="reservation_id" value="{{$reservation->id}}">
+            <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
+          </form>
         </div>
       </div>
       @endforeach

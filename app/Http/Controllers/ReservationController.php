@@ -34,4 +34,19 @@ class ReservationController extends Controller
 
         return redirect($url);
     }
+
+    // リマインダー設定切り替え
+    public function switch_reminder(Request $request)
+    {
+        $reservation = Reservation::find($request->reservation_id);
+        $reminder_param = !$reservation->reminder;
+
+        $reservation->fill([
+            'reminder' => $reminder_param,
+        ])->save();
+
+        $url = $request->input('url');
+
+        return redirect($url);
+    }
 }

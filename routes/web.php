@@ -15,9 +15,10 @@ Route::get('/mypage', [ShopController::class, 'mypage'])->middleware(['auth']);
 // お気に入り登録、削除
 Route::post('/favorite', [FavoriteController::class, 'create'])->middleware(['auth']);
 Route::post('/favorite/delete', [FavoriteController::class, 'delete'])->middleware(['auth']);
-// 予約登録、削除、完了ページ
+// 予約登録、削除、変更
 Route::post('/reserve', [ReservationController::class, 'create'])->middleware(['auth']);
 Route::post('/reserve/delete', [ReservationController::class, 'delete'])->middleware(['auth']);
+Route::post('/reserve/reminder', [ReservationController::class, 'switch_reminder'])->middleware(['auth']);
 
 // テスト用ルーティング（後で消すこと）
 Route::get('/done', [ShopController::class, 'done']);
