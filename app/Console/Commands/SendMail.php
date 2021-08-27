@@ -46,9 +46,9 @@ class SendMail extends Command
         $today = date("Y-m-d");
 
         $users = User::whereHas('reservations' , function ($query) use ($today) {
-            $query->where('date', $today);
+            $query->where('reminder', 1)->where('date', $today);
         })->with(['reservations' => function ($query) use ($today) {
-            $query->with('shop')->where('date', $today)->orderby('time', 'asc');
+            $query->with('shop')->where('reminder', 1)->where('date', $today)->orderby('time', 'asc');
         }])->get();
 
         // 2)foreachで各ユーザーごとに$dataを設定し、メールを送信する

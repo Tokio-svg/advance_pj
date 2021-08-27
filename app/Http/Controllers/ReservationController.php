@@ -18,6 +18,7 @@ class ReservationController extends Controller
             'date' => $request->date,
             'time' => $request->time,
             'number' => $request->number,
+            'reminder' => 1,
         ]);
         $reservation->save();
 
