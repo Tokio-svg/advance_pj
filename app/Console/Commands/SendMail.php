@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Reservation;
+use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
 class SendMail extends Command
@@ -41,18 +42,24 @@ class SendMail extends Command
     // メールを送信
     public function handle()
     {
-        // 1) 当日の予約レコードを取得
+        // 1)当日の予約情報を持つユーザーレコードを予約レコードと共に取得
         $today = date("Y-m-d");
-        $items = Reservation::with('user')->with('shop')->where('date',$today)->get();
 
-        // 2)foreachで各レコードごとに$dataを設定、メールを送信する
-        foreach ($items as $item) {
+        $users = User::whereHas('reservations' , function ($query) use ($today) {
+            $query->where('date', $today);
+        })->with(['reservations' => function ($query) use ($today) {
+            $query->with('shop')->where('date', $today)->orderby('time', 'asc');
+        }])->get();
+
+        // 2)foreachで各ユーザーごとに$dataを設定し、メールを送信する
+        foreach ($users as $user) {
             $data = [
-                'item' => $item,
-            ];
+                        'user' => $user,
+                        'reservations' => $user->reservations,
+                    ];
 
-            Mail::send('emails.reminder', $data, function ($message) use($item) {
-                $message->to($item->user->email, $item->user->name . '様')->subject('本日の予約があります');
+            Mail::send('emails.reminder', $data, function ($message) use($user) {
+                $message->to($user->email, $user->name . '様')->subject('本日の予約があります');
             });
         }
     }
