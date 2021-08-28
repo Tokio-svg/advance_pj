@@ -19,6 +19,8 @@ Route::post('/favorite/delete', [FavoriteController::class, 'delete'])->middlewa
 Route::post('/reserve', [ReservationController::class, 'create'])->middleware(['auth']);
 Route::post('/reserve/delete', [ReservationController::class, 'delete'])->middleware(['auth']);
 Route::post('/reserve/reminder', [ReservationController::class, 'switch_reminder'])->middleware(['auth']);
+Route::get('/reserve/{reservation_id}', [ReservationController::class, 'change'])->middleware(['auth']);
+Route::post('/reserve/{reservation_id}', [ReservationController::class, 'update'])->middleware(['auth']);
 
 // テスト用ルーティング（後で消すこと）
 Route::get('/done', [ShopController::class, 'done']);

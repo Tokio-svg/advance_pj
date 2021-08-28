@@ -53,6 +53,8 @@
               <td>{{$reservation->number}}人</td>
             </tr>
           </table>
+          <!-- 予約情報変更ボタン -->
+          <a href="/reserve/{{$reservation->id}}" class="change_button">変更</a>
           <!-- リマインダーボタン -->
           @if($reservation->reminder)
             <div class="reminder_button" onclick="document.getElementById('reminder_{{$reservation->id}}').submit();" onmouseover="showText('popup_reminder-off',event)" onmouseout="hideText('popup_reminder-off')">

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 use App\Http\Requests\ReservationRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ReservationController extends Controller
 {
@@ -22,7 +24,9 @@ class ReservationController extends Controller
         ]);
         $reservation->save();
 
-        return redirect('/done');
+        return view('done', [
+            'url' => $request->url,
+        ]);
     }
 
     // 予約レコード削除
@@ -48,5 +52,37 @@ class ReservationController extends Controller
         $url = $request->input('url');
 
         return redirect($url);
+    }
+
+    // 予約情報変更ページ表示
+    public function change(Request $request, $reservation_id)
+    {
+        $user = Auth::user();
+        $reservation = Reservation::with('shop')->find($reservation_id);
+
+        if (!$reservation) {
+            abort(404);
+        }
+
+        return view('change', [
+            'user' => $user,
+            'reservation' => $reservation,
+        ]);
+    }
+
+    // 予約情報変更処理
+    public function update(ReservationRequest $request, $reservation_id)
+    {
+        $reservation = Reservation::find($reservation_id);
+
+        $reservation->fill([
+            'date' => $request->date,
+            'time' => $request->time,
+            'number' => $request->number,
+        ])->save();
+
+        return view('done', [
+            'url' => $request->url,
+        ]);
     }
 }

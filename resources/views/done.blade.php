@@ -10,7 +10,7 @@
   <main>
     <div class="thanks_wrap">
       <p>ご予約ありがとうございます</p>
-      <p><a href="/" class="thanks_button">戻る</a></p>
+      <p><a href="{{$url}}" class="thanks_button">戻る</a></p>
     </div>
   </main>
 @endsection
