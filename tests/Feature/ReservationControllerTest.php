@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Reservation;
+use Illuminate\Support\Facades\Log;
 
 class ReservationControllerTest extends TestCase
 {
@@ -52,18 +53,52 @@ class ReservationControllerTest extends TestCase
             'number' => $number,
         ]);
 
-        $response->assertRedirect('/done');    // /doneにリダイレクトされることを確認
+        $response->assertStatus(200);    // 正常にアクセスできることを確認
+
         $this->assertDatabaseHas('reservations', [ // 想定されるレコードが存在することを確認
             'user_id' => $user->id,
             'shop_id' => $shop_id,
             'date' => $date,
             'time' => $time,
             'number' => $number,
+            'reminder' => 1,
+        ]);
+
+        // switch_reminder(リマインダー設定変更処理)
+        $reservation = Reservation::first();    // 上記で挿入したレコードを取得
+        $response = $this->post('/reserve/reminder', [
+            'reservation_id' => $reservation->id,
+            'url'=> $url,
+        ]);
+        $reservation = Reservation::first();    // 上記で挿入したレコードを再度取得
+        $this->assertEquals(0,$reservation->reminder);
+
+        // change(予約情報変更ページ表示)
+        $reservation = Reservation::first();    // 上記で挿入したレコードを取得
+        $response = $this->get('/reserve/' . $reservation->id);
+        $response->assertStatus(200);    // 正常にアクセスできることを確認
+
+        $response = $this->get('/reserve/-1');  // 存在しないidを指定してアクセス
+        $response->assertStatus(404);    // 404エラーが帰ることを確認
+
+        // update(予約情報変更処理)
+        $reservation = Reservation::first();    // 上記で挿入したレコードを取得
+        $response = $this->post('/reserve/' . $reservation->id, [
+            'date' => '2021-12-31',
+            'time' => '20:00',
+            'number' => 10,
+            'url' => $url,
+        ]);
+        $this->assertDatabaseHas('reservations', [ // 変更後のレコードが存在することを確認
+            'user_id' => $user->id,
+            'shop_id' => $shop_id,
+            'date' => '2021-12-31',
+            'time' => '20:00',
+            'number' => 10,
         ]);
 
         // delete(予約取り消し処理)
         $this->assertCount(1, Reservation::all());  // レコード数が1であることを確認
-        $reservation = Reservation::first();    // 上記で挿入したレコードを取得
         // IDだけが異なるダミーデータを挿入
         Reservation::create([
             'user_id' => $user->id,
@@ -71,6 +106,7 @@ class ReservationControllerTest extends TestCase
             'date' => $date,
             'time' => $time,
             'number' => $number,
+            'reminder' => 1
         ]);
 
         $response = $this->post('/reserve/delete', [
@@ -83,5 +119,6 @@ class ReservationControllerTest extends TestCase
             'id' => $reservation->id,
         ]);
         $this->assertCount(1, Reservation::all());  // レコード数が1であることを確認(ダミーデータが残っていることを確認)
+
     }
 }
