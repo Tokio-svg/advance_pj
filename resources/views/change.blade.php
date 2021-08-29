@@ -3,21 +3,20 @@
 @section('title','予約情報変更ページ')
 
 @section('style')
-<link rel="stylesheet" href="{{putSource('/css/mypage_style.css')}}">
+<link rel="stylesheet" href="{{putSource('/css/change_style.css')}}">
 @endsection
 
 @section('content')
 <main>
-  <h1 class="user_name">{{$user->name}}さん</h1>
-  <div class="mypage_content">
+  <h1 class="change_title">予約情報変更</h1>
+  <div class="change_content">
     <div class="reservation_info">
-      <h2>予約状況</h2>
       <div class="reservation_card shadow">
         <div class="reservation_flex">
           <div>
             <img src="{{putSource('/img/clock.png')}}" alt="no image" style="width: 28px;">
           </div>
-          <p>予約</p>
+          <p>予約状況</p>
         </div>
         <div class="reservation_flex">
           <table class="reservation_table">
@@ -48,7 +47,7 @@
     </div>
     <div class="reservation_wrap shadow">
       <div class="reservation_content">
-        <h1>予約</h1>
+        <h1>予約変更</h1>
         <form action="/reserve/{{$reservation->id}}" method="post">
           @csrf
           @if (Auth::check())
@@ -89,7 +88,7 @@
             <p id="error_number-require" class="error" style="display: none;">人数を選択してください</p>
           </div>
           <div class="reservation_confirm">
-            <p>変更後</p>
+            <h2>変更後</h2>
             <table class="table_reservation">
               <tr>
                 <th>Shop</th>
@@ -167,7 +166,6 @@
     echo "oldTime = '" . $reservation->time . "';";
     ?>
     oldTime = oldTime.substr(0, 5);
-    console.log(oldTime);
     if (!oldTime) {
       return;
     }
