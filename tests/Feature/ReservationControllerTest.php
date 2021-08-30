@@ -26,6 +26,18 @@ class ReservationControllerTest extends TestCase
         // delete(予約取り消し処理)
         $response = $this->post('/reserve/delete');
         $response->assertRedirect('/login');
+
+        // switch_reminder(リマインダー設定変更処理)
+        $response = $this->post('/reserve/reminder');
+        $response->assertRedirect('/login');
+
+        // change(予約情報変更ページ表示)
+        $response = $this->get('/reserve/1');
+        $response->assertRedirect('/login');
+
+        // update(リマインダー設定変更処理)
+        $response = $this->post('/reserve/1');
+        $response->assertRedirect('/login');
     }
 
     // ログイン状態でアクセス
@@ -71,7 +83,8 @@ class ReservationControllerTest extends TestCase
             'url'=> $url,
         ]);
         $reservation = Reservation::first();    // 上記で挿入したレコードを再度取得
-        $this->assertEquals(0,$reservation->reminder);
+        $this->assertEquals(0,$reservation->reminder);  // reminderの値が0に変更されていることを確認
+        $response->assertRedirect($url);    // $urlにリダイレクトされていることを確認
 
         // change(予約情報変更ページ表示)
         $reservation = Reservation::first();    // 上記で挿入したレコードを取得
@@ -96,6 +109,15 @@ class ReservationControllerTest extends TestCase
             'time' => '20:00',
             'number' => 10,
         ]);
+
+        $response = $this->post('/reserve/-1', [  // 存在しないidを指定してアクセス
+            'date' => '2021-12-31',
+            'time' => '20:00',
+            'number' => 10,
+            'url' => $url,
+        ]);
+
+        $response->assertStatus(404);    // 404エラーが帰ることを確認
 
         // delete(予約取り消し処理)
         $this->assertCount(1, Reservation::all());  // レコード数が1であることを確認

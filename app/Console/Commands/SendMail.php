@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\ReminderMail;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Reservation;
@@ -58,9 +59,7 @@ class SendMail extends Command
                         'reservations' => $user->reservations,
                     ];
 
-            Mail::send('emails.reminder', $data, function ($message) use($user) {
-                $message->to($user->email, $user->name . '様')->subject('本日の予約があります');
-            });
+            Mail::to($user->email)->send(new ReminderMail($data));
         }
     }
 }

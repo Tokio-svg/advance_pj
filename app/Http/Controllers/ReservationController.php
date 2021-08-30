@@ -75,6 +75,10 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::find($reservation_id);
 
+        if (!$reservation) {
+            abort(404);
+        }
+
         $reservation->fill([
             'date' => $request->date,
             'time' => $request->time,
