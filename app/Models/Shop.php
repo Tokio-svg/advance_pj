@@ -22,6 +22,11 @@ class Shop extends Model
         return $this->hasMany('App\Models\Favorite');
     }
 
+    public function evaluations()
+    {
+        return $this->hasMany('App\Models\Evaluation');
+    }
+
     public function area()
     {
         return $this->belongsTo('App\Models\Area');
