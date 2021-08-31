@@ -46,12 +46,12 @@ class SendMailTest extends TestCase
         $this->artisan('send:mail')
              ->assertExitCode(0);
 
-        // メッセージが指定したユーザーに届いたことをアサート
+        // メッセージが指定したユーザーに届いたことを確認
         Mail::assertSent(ReminderMail::class, function ($mail) use ($user) {
             return $mail->hasTo($user->email);
         });
 
-        // メールが1回送信されたことをアサート
+        // メールが1回送信されたことを確認
         Mail::assertSent(ReminderMail::class, 1);
     }
 }
