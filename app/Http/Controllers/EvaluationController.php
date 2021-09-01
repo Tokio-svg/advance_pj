@@ -36,6 +36,11 @@ class EvaluationController extends Controller
             'comment' => $request->comment,
         ]);
 
-        return redirect('/mypage');
+        // 遷移元のURLを取得
+        $url = $request->url;
+
+        return view('evaluate_done', [
+            'url' => $url,
+        ]);
     }
 }

@@ -102,6 +102,65 @@
 </div>
 @endsection
 
+@section('evaluation')
+<div class="evaluation_wrap">
+  評価機能が入ります
+  @if (Auth::check())
+  <a href="/evaluation/{{$shop->id}}">評価を投稿する</a>
+  @endif
+  <div class="evaluation_content">
+    <h3>評価(全{{$grades[0]}}件)</h3>
+    <table>
+      <tr>
+        <th>平均</th>
+        <td>{{$grades[6]}}</td>
+      </tr>
+      <tr>
+        <th>1</th>
+        <td>{{$grades[1]}}</td>
+      </tr>
+      <tr>
+        <th>2</th>
+        <td>{{$grades[2]}}</td>
+      </tr>
+      <tr>
+        <th>3</th>
+        <td>{{$grades[3]}}</td>
+      </tr>
+      <tr>
+        <th>4</th>
+        <td>{{$grades[4]}}</td>
+      </tr>
+      <tr>
+        <th>5</th>
+        <td>{{$grades[5]}}</td>
+      </tr>
+    </table>
+    <h3>コメント</h3>
+    @foreach($comments as $comment)
+    <table>
+      <tr>
+        <th>ユーザー名</th>
+        <td>{{$comment->user->name}}さん</td>
+      </tr>
+      <tr>
+        <th>投稿日</th>
+        <td>{{$comment->created_at}}</td>
+      </tr>
+      <tr>
+        <th>評価</th>
+        <td>{{$comment->grade}}</td>
+      </tr>
+      <tr>
+        <th>コメント内容</th>
+        <td>{{$comment->comment}}</td>
+      </tr>
+    </table>
+    @endforeach
+  </div>
+</div>
+@endsection
+
 @section('script')
 <script>
   // 読み込み時の処理

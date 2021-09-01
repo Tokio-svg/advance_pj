@@ -9,7 +9,7 @@
 @section('content')
 <main>
   <div class="info_title" style="display: flex;">
-    <a href="/" class="back shadow">＜</a>
+    <a href="/detail/{{$shop->id}}" class="back shadow">＜</a>
     <h1 class="shop_name">{{$shop->name}}</h1>
   </div>
   <div class="image">
@@ -29,6 +29,7 @@
     @csrf
     <input type="hidden" name="user_id" value="{{$user->id}}">
     <input type="hidden" name="shop_id" value="{{$shop->id}}">
+    <input type="hidden" name="url" value="/detail/{{$shop->id}}">
     <div class="grade_wrap">
       <p>評価</p>
       <select name="grade" id="grade">

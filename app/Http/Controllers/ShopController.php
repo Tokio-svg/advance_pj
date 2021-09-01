@@ -8,6 +8,7 @@ use App\Models\Area;
 use App\Models\Favorite;
 use App\Models\Genre;
 use App\Models\Reservation;
+use App\Models\Evaluation;
 use Illuminate\Support\Facades\Auth;
 // use Log;
 
@@ -82,8 +83,23 @@ class ShopController extends Controller
             abort(404);
         }
 
+        // 最新3件の評価情報を取得
+        $comments = Evaluation::with('user')->where('shop_id', $shop_id)->orderBy('created_at', 'desc')->take(3)->get();
+
+        // 5段階評価の内訳を取得
+        $grades = array();
+        for($i=1; $i<6; $i++) {
+            $grades[$i] = Evaluation::where('shop_id', $shop_id)->where('grade', $i)->count();
+        }
+        // [0]に総数を格納
+        $grades[0] = $grades[1] + $grades[2] + $grades[3] + $grades[4] + $grades[5];
+        // [6]に平均値を格納
+        $grades[6] = ($grades[1] + ($grades[2] * 2) + ($grades[3] * 3) + ($grades[4] * 4) + ($grades[5] * 5)) / $grades[0];
+
         return view('detail', [
             'shop' => $shop,
+            'comments' => $comments,
+            'grades' => $grades,
         ]);
     }
 
