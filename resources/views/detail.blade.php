@@ -104,59 +104,52 @@
 
 @section('evaluation')
 <div class="evaluation_wrap">
-  評価機能が入ります
   @if (Auth::check())
   <a href="/evaluation/{{$shop->id}}">評価を投稿する</a>
   @endif
-  <div class="evaluation_content">
-    <h3>評価(全{{$grades[0]}}件)</h3>
-    <table>
-      <tr>
-        <th>平均</th>
-        <td>{{$grades[6]}}</td>
-      </tr>
-      <tr>
-        <th>1</th>
-        <td>{{$grades[1]}}</td>
-      </tr>
-      <tr>
-        <th>2</th>
-        <td>{{$grades[2]}}</td>
-      </tr>
-      <tr>
-        <th>3</th>
-        <td>{{$grades[3]}}</td>
-      </tr>
-      <tr>
-        <th>4</th>
-        <td>{{$grades[4]}}</td>
-      </tr>
-      <tr>
-        <th>5</th>
-        <td>{{$grades[5]}}</td>
-      </tr>
-    </table>
-    <h3>コメント</h3>
-    @foreach($comments as $comment)
-    <table>
-      <tr>
-        <th>ユーザー名</th>
-        <td>{{$comment->user->name}}さん</td>
-      </tr>
-      <tr>
-        <th>投稿日</th>
-        <td>{{$comment->created_at}}</td>
-      </tr>
-      <tr>
-        <th>評価</th>
-        <td>{{$comment->grade}}</td>
-      </tr>
-      <tr>
-        <th>コメント内容</th>
-        <td>{{$comment->comment}}</td>
-      </tr>
-    </table>
-    @endforeach
+  <div class="evaluation_flex">
+    <div class="evaluation_grade shadow">
+      <h3>評価(全{{$grades[0]}}件)</h3>
+      <table>
+        <tr>
+          <th>平均</th>
+          <td>{{round($grades[6],2)}}</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>{{$grades[1]}}</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>{{$grades[2]}}</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>{{$grades[3]}}</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>{{$grades[4]}}</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>{{$grades[5]}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="evaluation_comment shadow">
+      <h3>最新の評価</h3>
+      @foreach($comments as $comment)
+      <div class="comment_content">
+        <div style="display: flex; justify-content: space-between;">
+          <p>{{$comment->user->name}}さん</p>
+          <p>{{$comment->created_at}}</p>
+        </div>
+        <p style="margin: 10px 0;">{{$comment->grade}}</p>
+        <p>{{$comment->comment}}</p>
+      </div>
+      @endforeach
+    </div>
   </div>
 </div>
 @endsection

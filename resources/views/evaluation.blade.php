@@ -3,7 +3,7 @@
 @section('title','評価投稿ページ')
 
 @section('style')
-<link rel="stylesheet" href="{{putSource('/css/detail_style.css')}}">
+<link rel="stylesheet" href="{{putSource('/css/evaluation_style.css')}}">
 @endsection
 
 @section('content')
@@ -24,27 +24,23 @@
 @endsection
 
 @section('reservation')
-<div class="evaluation_form" style="width: 50%;">
+<div class="evaluation_wrap">
+  <h1>評価</h1>
   <form action="/evaluation" method="post">
     @csrf
     <input type="hidden" name="user_id" value="{{$user->id}}">
     <input type="hidden" name="shop_id" value="{{$shop->id}}">
     <input type="hidden" name="url" value="/detail/{{$shop->id}}">
     <div class="grade_wrap">
-      <p>評価</p>
-      <select name="grade" id="grade">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
+      <input type="range" name="grade" id="grade" min="1" max="5" step="1" value="3">
     </div>
     <div class="comment_wrap">
       <p>コメント</p>
       <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
     </div>
-    <input type="submit" value="送信">
+    <div class="submit">
+      <button type="submit">送信</button>
+    </div>
   </form>
 </div>
 @endsection
