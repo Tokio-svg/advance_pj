@@ -115,30 +115,30 @@
           <th>平均</th>
           <td>{{round($grades[6],2)}}</td>
         </tr>
-        <tr>
-          <th>1</th>
-          <td>{{$grades[1]}}</td>
-        </tr>
-        <tr>
-          <th>2</th>
-          <td>{{$grades[2]}}</td>
-        </tr>
-        <tr>
-          <th>3</th>
-          <td>{{$grades[3]}}</td>
-        </tr>
-        <tr>
-          <th>4</th>
-          <td>{{$grades[4]}}</td>
-        </tr>
-        <tr>
-          <th>5</th>
-          <td>{{$grades[5]}}</td>
-        </tr>
+        <?php
+          if($grades[0]!=0) {
+            for($i=1;$i<6;$i++) {
+              echo "<tr>
+                      <th>$i</th>
+                      <td>$grades[$i](" . round($grades[$i]/$grades[0]*100) . "%)</td>
+                    </tr>";
+            }
+          } else {
+            for ($i = 1; $i < 6; $i++) {
+              echo "<tr>
+                        <th>$i</th>
+                        <td>$grades[$i](0%)</td>
+                      </tr>";
+            }
+          }
+        ?>
       </table>
     </div>
     <div class="evaluation_comment shadow">
       <h3>最新の評価</h3>
+      @if($comments)
+      <p>評価はまだありません</p>
+      @endif
       @foreach($comments as $comment)
       <div class="comment_content">
         <div style="display: flex; justify-content: space-between;">

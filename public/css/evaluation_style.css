@@ -53,16 +53,32 @@ main p {
   border-radius: 10px; /* バーの両端の丸み */
   border: solid 3px #dff1ff; /* バー周囲の線 */
   display: block;
-  margin: 0 auto 30px;
+  margin: 30px auto;
 }
 #comment {
     resize: none;
     border: none;
     border-radius: 5px;
     width: 80%;
+    height: 100px;
     display: block;
     margin: 10px auto;
     padding: 10px;
+}
+.evaluation_confirm {
+    background: rgb(85, 128, 247);
+    padding: 20px;
+    width: 80%;
+    margin: 20px auto;
+    text-align: left;
+    font-size: 14px;
+    border-radius: 5px;
+}
+th {
+    padding-right: 30px;
+}
+th,td {
+    line-height: 2.0em;
 }
 .submit {
     position: absolute;

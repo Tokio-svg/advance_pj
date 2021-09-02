@@ -136,7 +136,7 @@ main p {
     display: flex;
 }
 .evaluation_grade {
-    width: 40%;
+    min-width: 25%;
     height: fit-content;
     background: rgb(53, 96, 246);
     padding: 40px;
@@ -144,6 +144,7 @@ main p {
     margin-right: 30px;
 }
 .evaluation_comment {
+    width: 100%;
     background: rgb(53, 96, 246);
     padding: 40px 60px;
     border-radius: 10px;
