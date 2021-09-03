@@ -63,7 +63,7 @@
         <table>
           <tr>
             <th>評価</th>
-            <td id="grade_confirm">{{$grade}}</td>
+            <td><img src="{{putSource('/img/star_' . $grade . '.png')}}" alt="no_image" id="grade_confirm"></td>
           </tr>
           <tr>
             <th>コメント</th>
@@ -92,9 +92,10 @@
     }
   }
 
-  // 関数：name=gradeの値を対応するタグに反映する
+  // 関数：name=gradeの値を対応するimgのsrcに反映する
   function changeGrade(value) {
-    document.getElementById('grade_confirm').textContent = value;
+    const grade = document.getElementById('grade_confirm');
+    grade.src = "/img/star_" + value + ".png";
   }
 
   // 関数：name=commentの値を対応するタグに反映する

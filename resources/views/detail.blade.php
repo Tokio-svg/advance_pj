@@ -113,24 +113,29 @@
       <table>
         <tr>
           <th>平均</th>
-          <td>{{round($grades[6],2)}}</td>
+          <td>
+            <img src="{{putSource('/img/star_' . round($grades[6]) . '.png')}}" alt="no image">
+            {{round($grades[6],2)}}
+          </td>
+          <td class="grade_rate" onclick="setRate(this,70);">test</td>
         </tr>
         <?php
-          if($grades[0]!=0) {
-            for($i=1;$i<6;$i++) {
-              echo "<tr>
+        if ($grades[0] != 0) {
+          for ($i = 1; $i < 6; $i++) {
+            echo "<tr>
                       <th>$i</th>
-                      <td>$grades[$i](" . round($grades[$i]/$grades[0]*100) . "%)</td>
+                      <td></td>
+                      <td>$grades[$i](" . round($grades[$i] / $grades[0] * 100) . "%)</td>
                     </tr>";
-            }
-          } else {
-            for ($i = 1; $i < 6; $i++) {
-              echo "<tr>
+          }
+        } else {
+          for ($i = 1; $i < 6; $i++) {
+            echo "<tr>
                         <th>$i</th>
                         <td>$grades[$i](0%)</td>
                       </tr>";
-            }
           }
+        }
         ?>
       </table>
     </div>
@@ -145,7 +150,9 @@
           <p>{{$comment->user->name}}さん</p>
           <p>{{$comment->created_at}}</p>
         </div>
-        <p style="margin: 10px 0;">{{$comment->grade}}</p>
+        <p style="margin: 10px 0;">
+          <img src="{{putSource('/img/star_' . $comment->grade . '.png')}}" alt="{{$comment->grade}}">
+        </p>
         <p>{{$comment->comment}}</p>
       </div>
       @endforeach
@@ -233,6 +240,11 @@
   // 関数：name=numberの値を対応するタグに反映する
   function changeNumber(value) {
     document.getElementById('number_display').textContent = value + '人';
+  }
+
+  // 関数：rateとして渡された百分率からタグのbackgroundを変更する
+  function setRate(element, rate) {
+    element.style.background = "linear-gradient(to right,red " + rate + "%,yellow " + rate + "%)";
   }
 </script>
 @endsection
