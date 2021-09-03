@@ -127,7 +127,7 @@ main p {
 .evaluation_wrap {
     width: 80%;
     min-width: 900px;
-    margin: 50px auto 0;
+    margin: 50px auto 20px;
     justify-content: space-between;
     color: white;
     line-height: 1.4em;
@@ -135,11 +135,15 @@ main p {
 .evaluation_flex {
     display: flex;
 }
+.evaluation_comment h1,
+.evaluation_grade h1 {
+    font-size: 20px;
+}
 .evaluation_grade {
     min-width: 25%;
     height: fit-content;
     background: rgb(53, 96, 246);
-    padding: 40px;
+    padding: 30px;
     border-radius: 10px;
     margin-right: 30px;
 }
@@ -156,11 +160,30 @@ main p {
     border-radius: 5px;
 }
 .grade_rate {
-    width: 100px;
-    height: 14px;
-    background: linear-gradient(to right,red 50%,green 50%);
+    width: 150px;
+    height: 15px;
+    color: transparent;
+    border-radius: 3px;
 }
-
+.grade_table {
+    margin: 20px auto;
+}
+.evaluation_button {
+    display: block;
+    color: white;
+    background: rgb(0, 63, 245);
+    border-radius: 10px;
+    width: 90%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+.evaluation_button:hover {
+    color: rgb(0, 63, 245);
+    background: rgb(144, 174, 255);
+}
 /* レスポンシブ対応(break point:768px) */
 @media screen and (max-width: 768px) {
     .flex_container {

@@ -84,7 +84,7 @@ class ShopController extends Controller
         }
 
         // 最新3件の評価情報を取得
-        $comments = Evaluation::with('user')->where('shop_id', $shop_id)->orderBy('created_at', 'desc')->take(3)->get();
+        $comments = Evaluation::with('user')->where('shop_id', $shop_id)->orderBy('updated_at', 'desc')->orderBy('created_at', 'desc')->take(3)->get();
 
         $grades = array();
         if ($comments->count()) {

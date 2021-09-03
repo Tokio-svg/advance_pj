@@ -104,51 +104,57 @@
 
 @section('evaluation')
 <div class="evaluation_wrap">
-  @if (Auth::check())
-  <a href="/evaluation/{{$shop->id}}">評価を投稿する</a>
-  @endif
   <div class="evaluation_flex">
-    <div class="evaluation_grade shadow">
-      <h3>評価(全{{$grades[0]}}件)</h3>
-      <table>
-        <tr>
-          <th>平均</th>
-          <td>
-            <img src="{{putSource('/img/star_' . round($grades[6]) . '.png')}}" alt="no image">
-            {{round($grades[6],2)}}
-          </td>
-          <td class="grade_rate" onclick="setRate(this,70);">test</td>
-        </tr>
-        <?php
-        if ($grades[0] != 0) {
-          for ($i = 1; $i < 6; $i++) {
-            echo "<tr>
-                      <th>$i</th>
-                      <td></td>
-                      <td>$grades[$i](" . round($grades[$i] / $grades[0] * 100) . "%)</td>
-                    </tr>";
-          }
-        } else {
-          for ($i = 1; $i < 6; $i++) {
-            echo "<tr>
+    <div class="evaluation_grade-wrap">
+      <div class="evaluation_grade shadow">
+        <h1>評価(全{{$grades[0]}}件)</h1>
+        <table class="grade_table">
+          <tr>
+            <th style="width: 30px;">平均</th>
+            <td>
+              <img src="{{putSource('/img/star_' . round($grades[6]) . '.png')}}" alt="no image">
+              <p>({{round($grades[6],2)}})</p>
+            </td>
+          </tr>
+          <?php
+          if ($grades[0] != 0) {
+            for ($i = 1; $i < 6; $i++) {
+              echo "<tr>
                         <th>$i</th>
-                        <td>$grades[$i](0%)</td>
+                        <td><div class='grade_rate'>" . round($grades[$i] / $grades[0] * 100) . "</div></td>
+                        <td>$grades[$i](" . round($grades[$i] / $grades[0] * 100) . "%)</td>
                       </tr>";
+            }
+          } else {
+            for ($i = 1; $i < 6; $i++) {
+              echo "<tr>
+                          <th>$i</th>
+                          <td>$grades[$i](0%)</td>
+                        </tr>";
+            }
           }
-        }
-        ?>
-      </table>
+          ?>
+        </table>
+      </div>
+      @if (Auth::check())
+      <a href="/evaluation/{{$shop->id}}" class="evaluation_button shadow">評価を投稿する</a>
+      @endif
     </div>
     <div class="evaluation_comment shadow">
-      <h3>最新の評価</h3>
-      @if($comments)
+      <h1>最新の評価</h1>
+      @if(!$comments)
       <p>評価はまだありません</p>
       @endif
       @foreach($comments as $comment)
       <div class="comment_content">
         <div style="display: flex; justify-content: space-between;">
           <p>{{$comment->user->name}}さん</p>
-          <p>{{$comment->created_at}}</p>
+          <p>
+            {{$comment->created_at}}
+            @if($comment->created_at < $comment->updated_at)
+              ({{$comment->updated_at}}更新)
+              @endif
+          </p>
         </div>
         <p style="margin: 10px 0;">
           <img src="{{putSource('/img/star_' . $comment->grade . '.png')}}" alt="{{$comment->grade}}">
@@ -199,6 +205,14 @@
       document.getElementById('error_number-require').style.display = "block";
     }
 
+    // ★評価の割合ゲージのパラメータを設定する
+    let rateItems = document.getElementsByClassName('grade_rate');
+    for (let i = 0; i < rateItems.length; i++) {
+      const rate = rateItems[i].textContent;
+      rateItems[i].textContent = "";
+      rateItems[i].style.background = "linear-gradient(to right,yellow " + rate + "%,rgb(85, 128, 247) " + rate + "%)";
+    }
+
     // ★timeフォームの初期値をoldから設定する
     let oldTime = '';
     // oldの値を取得する
@@ -240,11 +254,6 @@
   // 関数：name=numberの値を対応するタグに反映する
   function changeNumber(value) {
     document.getElementById('number_display').textContent = value + '人';
-  }
-
-  // 関数：rateとして渡された百分率からタグのbackgroundを変更する
-  function setRate(element, rate) {
-    element.style.background = "linear-gradient(to right,red " + rate + "%,yellow " + rate + "%)";
   }
 </script>
 @endsection
