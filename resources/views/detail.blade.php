@@ -108,7 +108,7 @@
     <div class="evaluation_grade-wrap">
       <div class="evaluation_grade shadow">
         <h1>評価(全{{$grades[0]}}件)</h1>
-        @if (grades[0] === 0)
+        @if ($grades[0] === 0)
         <p>評価はまだありません</p>
         @else
         <table class="grade_table">
@@ -146,7 +146,7 @@
     </div>
     <div class="evaluation_comment shadow">
       <h1>最新の評価</h1>
-      @if (grades[0] === 0)
+      @if ($grades[0] === 0)
       <p>評価はまだありません</p>
       @endif
       @foreach($comments as $comment)
