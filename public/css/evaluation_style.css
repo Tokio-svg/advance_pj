@@ -10,18 +10,18 @@ header {
     width: 100%;
 }
 main,
-.reservation_wrap {
+.evaluation_wrap {
     position: relative;
     width: 85%;
     line-height: 1.4em;
 }
-.reservation_wrap {
+.evaluation_wrap {
     margin-top: 40px;
     color: white;
     border-radius: 10px;
     background: rgb(53, 96, 246);
 }
-.reservation_wrap h1 {
+.evaluation_wrap h1 {
     font-size: 22px;
     margin: 0 0 20px 10px;
 }
@@ -42,7 +42,30 @@ main,
 main p {
     font-size: 14px;
 }
-.reservation_confirm {
+#grade {
+  -webkit-appearance: none; /* 🚩これ無しだとスタイルがほぼ全く反映されないので注意 */
+  appearance: none;
+  cursor: pointer; /* カーソルを分かりやすく */
+  outline: none; /* スライダーのアウトラインは見た目がキツイので消す */
+  height: 1px; /* バーの高さ */
+  width: 80%; /* バーの幅 */
+  background: #8acdff; /* バーの背景色 */
+  border-radius: 10px; /* バーの両端の丸み */
+  border: solid 3px #dff1ff; /* バー周囲の線 */
+  display: block;
+  margin: 30px auto;
+}
+#comment {
+    resize: none;
+    border: none;
+    border-radius: 5px;
+    width: 80%;
+    height: 100px;
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+}
+.evaluation_confirm {
     background: rgb(85, 128, 247);
     padding: 20px;
     width: 80%;
@@ -51,29 +74,11 @@ main p {
     font-size: 14px;
     border-radius: 5px;
 }
-.table_reservation {
-    line-height: 2em;
+th {
+    padding-right: 30px;
 }
-.table_reservation th {
-    font-weight: normal;
-    width: 100px;
-}
-#date,
-#time,
-#number {
-    height: 25px;
-    padding-left: 5px;
-    margin: 7px;
-    border: none;
-    border-radius: 5px;
-}
-#date {
-    width: 30%;
-    min-width: 150px;
-}
-#time,
-#number {
-    width: 90%;
+th,td {
+    line-height: 2.0em;
 }
 .submit {
     position: absolute;
@@ -119,71 +124,7 @@ main p {
 .info_title {
     margin: 40px 0 20px;
 }
-.reservation_content {
-    padding: 40px 20px;
-}
 
-/* 評価情報 */
-.evaluation_wrap {
-    width: 80%;
-    min-width: 900px;
-    margin: 50px auto 20px;
-    justify-content: space-between;
-    color: white;
-    line-height: 1.4em;
-}
-.evaluation_flex {
-    display: flex;
-}
-.evaluation_comment h1,
-.evaluation_grade h1 {
-    font-size: 20px;
-}
-.evaluation_grade {
-    min-width: 25%;
-    height: fit-content;
-    background: rgb(53, 96, 246);
-    padding: 30px;
-    border-radius: 10px;
-    margin-right: 30px;
-}
-.evaluation_comment {
-    width: 100%;
-    background: rgb(53, 96, 246);
-    padding: 40px 60px;
-    border-radius: 10px;
-}
-.comment_content {
-    background: rgb(85, 128, 247);
-    padding: 20px 40px;
-    margin: 20px 0;
-    border-radius: 5px;
-}
-.grade_rate {
-    width: 150px;
-    height: 15px;
-    color: transparent;
-    border-radius: 3px;
-}
-.grade_table {
-    margin: 20px auto;
-}
-.evaluation_button {
-    display: block;
-    color: white;
-    background: rgb(0, 63, 245);
-    border-radius: 10px;
-    width: 90%;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    margin-top: 20px;
-    font-size: 14px;
-}
-.evaluation_button:hover {
-    color: rgb(0, 63, 245);
-    background: rgb(144, 174, 255);
-}
 /* レスポンシブ対応(break point:768px) */
 @media screen and (max-width: 768px) {
     .flex_container {

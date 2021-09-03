@@ -8,6 +8,7 @@ use App\Models\Area;
 use App\Models\Favorite;
 use App\Models\Genre;
 use App\Models\Reservation;
+use App\Models\Evaluation;
 use Illuminate\Support\Facades\Auth;
 // use Log;
 
@@ -53,6 +54,25 @@ class ShopController extends Controller
             $shops = $query->get();
         }
 
+        // 評価情報取得
+        $grades = array();
+        foreach ($shops as $shop) {
+            // 5段階評価の内訳を取得
+            for ($i = 1; $i < 6; $i++) {
+                $grades[$i] = Evaluation::where('shop_id', $shop->id)->where('grade', $i)->count();
+            }
+            // [0]に総数を格納
+            $grades[0] = $grades[1] + $grades[2] + $grades[3] + $grades[4] + $grades[5];
+            // [6]に平均値を格納(評価が無い場合は0を格納する)
+            if ($grades[0] != 0) {
+                $grades[6] = round(($grades[1] + ($grades[2] * 2) + ($grades[3] * 3) + ($grades[4] * 4) + ($grades[5] * 5)) / $grades[0],2);
+            } else {
+                $grades[6] = 0;
+            }
+            // 評価平均情報をモデルに追加
+            $shop->grade = $grades[6];
+        }
+
         // 検索フォーム項目用レコード取得
         $areas = Area::has('shops')->get();
         $genres = Genre::has('shops')->get();
@@ -82,8 +102,29 @@ class ShopController extends Controller
             abort(404);
         }
 
+        // 最新3件の評価情報を取得
+        $comments = Evaluation::with('user')->where('shop_id', $shop_id)->orderBy('updated_at', 'desc')->orderBy('created_at', 'desc')->take(3)->get();
+
+        $grades = array();
+        if ($comments->count()) {
+            // 5段階評価の内訳を取得
+            for($i=1; $i<6; $i++) {
+                $grades[$i] = Evaluation::where('shop_id', $shop_id)->where('grade', $i)->count();
+            }
+            // [0]に総数を格納
+            $grades[0] = $grades[1] + $grades[2] + $grades[3] + $grades[4] + $grades[5];
+            // [6]に平均値を格納
+            $grades[6] = ($grades[1] + ($grades[2] * 2) + ($grades[3] * 3) + ($grades[4] * 4) + ($grades[5] * 5)) / $grades[0];
+        } else {    // 評価レコードが無い場合は配列の要素全てに0を格納する
+            for($i=0; $i<7; $i++) {
+                $grades[$i] = 0;
+            }
+        }
+
         return view('detail', [
             'shop' => $shop,
+            'comments' => $comments,
+            'grades' => $grades,
         ]);
     }
 
@@ -95,6 +136,26 @@ class ShopController extends Controller
         $reservations = Reservation::where('user_id', $user->id)->get();
         // お気に入り情報を取得
         $favorites = Favorite::with('shop')->where('user_id', $user->id)->get();
+
+        // 評価情報取得
+        $grades = array();
+        foreach ($favorites as $favorite) {
+            // 5段階評価の内訳を取得
+            for ($i = 1; $i < 6; $i++) {
+                $grades[$i] = Evaluation::where('shop_id', $favorite->shop->id)->where('grade', $i)->count();
+            }
+            // [0]に総数を格納
+            $grades[0] = $grades[1] + $grades[2] + $grades[3] + $grades[4] + $grades[5];
+            // [6]に平均値を格納(評価が無い場合は0を格納する)
+            if ($grades[0] != 0) {
+                $grades[6] = round(($grades[1] + ($grades[2] * 2) + ($grades[3] * 3) + ($grades[4] * 4) + ($grades[5] * 5)) / $grades[0], 2);
+            } else {
+                $grades[6] = 0;
+            }
+            // 評価平均情報をモデルに追加
+            $favorite->shop->grade = $grades[6];
+        }
+
         return view('mypage', [
             'user' => $user,
             'reservations' => $reservations,

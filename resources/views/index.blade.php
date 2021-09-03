@@ -62,6 +62,10 @@
         <div class="card_detail">
           <a href="/detail/{{$shop->id}}">詳しく見る</a>
         </div>
+        <div>
+          <img src="{{putSource('/img/star.png')}}" alt="no image" style="width: 20px; height: 20px;">
+          {{$shop->grade}}
+        </div>
         @if (Auth::check())
         @if (empty($shop->favorites[0]))
         <!-- メモ：POST送信でfavoritesレコードを挿入後現在のURLにリダイレクト -->

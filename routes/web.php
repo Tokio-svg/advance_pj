@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\EvaluationController;
 
 
 // 飲食店一覧ページ
@@ -21,6 +22,10 @@ Route::post('/reserve/delete', [ReservationController::class, 'delete'])->middle
 Route::post('/reserve/reminder', [ReservationController::class, 'switch_reminder'])->middleware(['auth']);
 Route::get('/reserve/{reservation_id}', [ReservationController::class, 'change'])->middleware(['auth']);
 Route::post('/reserve/{reservation_id}', [ReservationController::class, 'update'])->middleware(['auth']);
+// 評価投稿
+// メモ：ログイン必須にすること
+Route::get('/evaluation/{shop_id}', [EvaluationController::class, 'evaluation'])->middleware(['auth']);
+Route::post('/evaluation', [EvaluationController::class, 'create'])->middleware(['auth']);
 
 // テスト用ルーティング（後で消すこと）
 Route::get('/done', [ShopController::class, 'done']);

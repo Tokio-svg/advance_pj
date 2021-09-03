@@ -47,6 +47,7 @@
     </div>
     @yield('reservation')
   </div>
+  @yield('evaluation')
 
 
   <script>
