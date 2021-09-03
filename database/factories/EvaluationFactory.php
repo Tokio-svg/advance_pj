@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Evaluation;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class EvaluationFactory extends Factory
@@ -22,7 +23,10 @@ class EvaluationFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => $this->faker->numberBetween(1, 11),
+            'user_id' => function() {
+                $user = User::factory()->create();
+                return $user->id;
+            },
             'shop_id' => 1,
             'grade' => $this->faker->numberBetween(1, 5),
             'comment' => $this->faker->text,
