@@ -24,8 +24,8 @@ Route::get('/reserve/{reservation_id}', [ReservationController::class, 'change']
 Route::post('/reserve/{reservation_id}', [ReservationController::class, 'update'])->middleware(['auth']);
 // 評価投稿
 // メモ：ログイン必須にすること
-Route::get('/evaluation/{shop_id}', [EvaluationController::class, 'evaluation']);
-Route::post('/evaluation', [EvaluationController::class, 'create']);
+Route::get('/evaluation/{shop_id}', [EvaluationController::class, 'evaluation'])->middleware(['auth']);
+Route::post('/evaluation', [EvaluationController::class, 'create'])->middleware(['auth']);
 
 // テスト用ルーティング（後で消すこと）
 Route::get('/done', [ShopController::class, 'done']);

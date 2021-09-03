@@ -57,13 +57,13 @@
           <a href="/reserve/{{$reservation->id}}" class="change_button">変更</a>
           <!-- リマインダーボタン -->
           @if($reservation->reminder)
-            <div class="reminder_button" onclick="document.getElementById('reminder_{{$reservation->id}}').submit();" onmouseover="showText('popup_reminder-off',event)" onmouseout="hideText('popup_reminder-off')">
-              <img src="{{putSource('/img/bell_on.png')}}" alt="no image" style="width: 28px;">
-            </div>
+          <div class="reminder_button" onclick="document.getElementById('reminder_{{$reservation->id}}').submit();" onmouseover="showText('popup_reminder-off',event)" onmouseout="hideText('popup_reminder-off')">
+            <img src="{{putSource('/img/bell_on.png')}}" alt="no image" style="width: 28px;">
+          </div>
           @else
-            <div class="reminder_button" onclick="document.getElementById('reminder_{{$reservation->id}}').submit();" onmouseover="showText('popup_reminder-on',event)" onmouseout="hideText('popup_reminder-on')">
-              <img src="{{putSource('/img/bell_off.png')}}" alt="no image" style="width: 28px;">
-            </div>
+          <div class="reminder_button" onclick="document.getElementById('reminder_{{$reservation->id}}').submit();" onmouseover="showText('popup_reminder-on',event)" onmouseout="hideText('popup_reminder-on')">
+            <img src="{{putSource('/img/bell_off.png')}}" alt="no image" style="width: 28px;">
+          </div>
           @endif
           <form id="reminder_{{$reservation->id}}" action="/reserve/reminder" method="POST" style="display: none;">
             @csrf
@@ -94,6 +94,10 @@
             <div class="card_flex">
               <div class="card_detail">
                 <a href="/detail/{{$favorite->shop->id}}">詳しく見る</a>
+              </div>
+              <div>
+                <img src="{{putSource('/img/star.png')}}" alt="no image" style="width: 20px; height: 20px;">
+                {{$favorite->shop->grade}}
               </div>
               <!-- メモ：POST送信でfavoritesレコードを削除後現在のURLにリダイレクト -->
               <div onclick="event.preventDefault(); document.getElementById('shop_{{$favorite->shop->id}}').submit();" style="cursor: pointer;" onmouseover="showText('favorite_popup-delete',event)" onmouseout="hideText('favorite_popup-delete')">

@@ -11,6 +11,9 @@ class Shop extends Model
 
     protected $guarded = array('id');
 
+    // 評価情報格納用にフィールドを設ける
+    protected $appends = ['grade'];
+
     // リレーション設定
     public function reservations()
     {

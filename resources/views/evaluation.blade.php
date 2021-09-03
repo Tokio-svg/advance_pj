@@ -46,7 +46,9 @@
           $grade = 3;
         }
         ?>
-        <input type="range" name="grade" id="grade" min="1" max="5" step="1" value="{{$grade}}" onchange="changeGrade(this.value)">
+        <input type="range" name="grade" id="grade" min="1" max="5" step="1" value="{{$grade}}" onchange="changeGrade(this.value)" onblur="validateRequire(this.id, 'error_grade-require');">
+        <p id="error_grade-require" class="error" style="display: none;">評価を選択してください</p>
+        <p id="error_grade-between" class="error" style="display: none;">正しい値を選択してください</p>
       </div>
       <div class="comment_wrap">
         <h2>コメント</h2>
@@ -57,7 +59,9 @@
           $comment = '';
         }
         ?>
-        <textarea name="comment" id="comment" onchange="changeComment(this.value)" required>{{$comment}}</textarea>
+        <textarea name="comment" id="comment" onchange="changeComment(this.value)" onblur="validateRequire(this.id, 'error_comment-require');" required>{{$comment}}</textarea>
+        <p id="error_comment-require" class="error" style="display: none;">コメントを入力してください</p>
+        <p id="error_comment-max" class="error" style="display: none;">コメントは120文字以内で入力してください</p>
       </div>
       <div class="evaluation_confirm">
         <table>
