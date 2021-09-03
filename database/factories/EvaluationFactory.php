@@ -27,7 +27,7 @@ class EvaluationFactory extends Factory
                 $user = User::factory()->create();
                 return $user->id;
             },
-            'shop_id' => 1,
+            'shop_id' => 5,
             'grade' => $this->faker->numberBetween(1, 5),
             'comment' => $this->faker->text,
             'created_at' => $this->faker->dateTimeBetween('now', '+1 year'),
