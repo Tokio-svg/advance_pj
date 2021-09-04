@@ -140,7 +140,7 @@ main p {
     font-size: 20px;
 }
 .evaluation_grade {
-    min-width: 25%;
+    min-width: 300px;
     height: fit-content;
     background: rgb(53, 96, 246);
     padding: 30px;

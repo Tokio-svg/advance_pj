@@ -51,7 +51,7 @@
         <form action="/reserve/{{$reservation->id}}" method="post">
           @csrf
           @if (Auth::check())
-          <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+            <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
           @endif
           <input type="hidden" name="shop_id" value="{{$reservation->shop->id}}">
           <input type="hidden" name="url" value="/mypage">

@@ -15,24 +15,24 @@
     <select name="area_id" id="area" onchange="document.getElementById('search').submit();">
       <option value="">All area</option>
       @foreach ($areas as $area)
-      <!-- IDが入力値と同じ場合は初期値に設定 -->
-      @if ($area->id == $inputs['area_id'])
-      <option value="{{$area->id}}" selected>{{$area->name}}</option>
-      @else
-      <option value="{{$area->id}}">{{$area->name}}</option>
-      @endif
+        <!-- IDが入力値と同じ場合は初期値に設定 -->
+        @if ($area->id == $inputs['area_id'])
+          <option value="{{$area->id}}" selected>{{$area->name}}</option>
+        @else
+          <option value="{{$area->id}}">{{$area->name}}</option>
+        @endif
       @endforeach
     </select>
     <!-- ジャンル -->
     <select name="genre_id" id="genre" onchange="document.getElementById('search').submit();">
       <option value="">All genre</option>
       @foreach ($genres as $genre)
-      <!-- IDが入力値と同じ場合は初期値に設定 -->
-      @if ($genre->id == $inputs['genre_id'])
-      <option value="{{$genre->id}}" selected>{{$genre->name}}</option>
-      @else
-      <option value="{{$genre->id}}">{{$genre->name}}</option>
-      @endif
+        <!-- IDが入力値と同じ場合は初期値に設定 -->
+        @if ($genre->id == $inputs['genre_id'])
+          <option value="{{$genre->id}}" selected>{{$genre->name}}</option>
+        @else
+          <option value="{{$genre->id}}">{{$genre->name}}</option>
+        @endif
       @endforeach
     </select>
     <!-- アイコン -->
@@ -46,64 +46,64 @@
 @section('content')
 <main>
   @foreach ($shops as $shop)
-  <!-- 店舗情報カード -->
-  <div class="card_wrap shadow">
-    <div class="card_image" style="background-image: url({{$shop->image_url}});">
-    </div>
-    <div class="card_content-wrap">
-      <div class="sp_flex">
-        <h1 class="card_name">{{$shop->name}}</h1>
-        <div class="card_tag">
-          <a href="/?area_id={{$shop->area_id}}">#{{$shop->area->name}}</a>
-          <a href="/?genre_id={{$shop->genre_id}}">#{{$shop->genre->name}}</a>
+    <!-- 店舗情報カード -->
+    <div class="card_wrap shadow">
+      <div class="card_image" style="background-image: url({{$shop->image_url}});">
+      </div>
+      <div class="card_content-wrap">
+        <div class="sp_flex">
+          <h1 class="card_name">{{$shop->name}}</h1>
+          <div class="card_tag">
+            <a href="/?area_id={{$shop->area_id}}">#{{$shop->area->name}}</a>
+            <a href="/?genre_id={{$shop->genre_id}}">#{{$shop->genre->name}}</a>
+          </div>
+        </div>
+        <div class="card_flex">
+          <div class="card_detail">
+            <a href="/detail/{{$shop->id}}">詳しく見る</a>
+          </div>
+          <div>
+            <img src="{{putSource('/img/star.png')}}" alt="no image" style="width: 20px; height: 20px;">
+            {{$shop->grade}}
+          </div>
+          @if (Auth::check())
+            @if (empty($shop->favorites[0]))
+              <!-- メモ：POST送信でfavoritesレコードを挿入後現在のURLにリダイレクト -->
+              <div onclick="setPosition('position_add'); setShopId('shop_fav-add', '{{$shop->id}}'); document.getElementById('favorite_add').submit();" style="cursor: pointer;" onmouseover="showText('favorite_popup-add',event)" onmouseout="hideText('favorite_popup-add')">
+                <img class="heart" src="{{putSource('/img/heart.png')}}" alt="no image">
+              </div>
+            @else
+              <!-- メモ：POST送信でfavoritesレコードを削除後現在のURLにリダイレクト -->
+              <div onclick="setPosition('position_delete'); setShopId('shop_fav-delete', '{{$shop->id}}'); document.getElementById('favorite_delete').submit();" style="cursor: pointer;" onmouseover="showText('favorite_popup-delete',event)" onmouseout="hideText('favorite_popup-delete')">
+                <img class="heart" src="{{putSource('/img/heart_red.png')}}" alt="no image">
+              </div>
+            @endif
+          @endif
         </div>
       </div>
-      <div class="card_flex">
-        <div class="card_detail">
-          <a href="/detail/{{$shop->id}}">詳しく見る</a>
-        </div>
-        <div>
-          <img src="{{putSource('/img/star.png')}}" alt="no image" style="width: 20px; height: 20px;">
-          {{$shop->grade}}
-        </div>
-        @if (Auth::check())
-        @if (empty($shop->favorites[0]))
-        <!-- メモ：POST送信でfavoritesレコードを挿入後現在のURLにリダイレクト -->
-        <div onclick="setPosition('position_add'); setShopId('shop_fav-add', '{{$shop->id}}'); document.getElementById('favorite_add').submit();" style="cursor: pointer;" onmouseover="showText('favorite_popup-add',event)" onmouseout="hideText('favorite_popup-add')">
-          <img class="heart" src="{{putSource('/img/heart.png')}}" alt="no image">
-        </div>
-        @else
-        <!-- メモ：POST送信でfavoritesレコードを削除後現在のURLにリダイレクト -->
-        <div onclick="setPosition('position_delete'); setShopId('shop_fav-delete', '{{$shop->id}}'); document.getElementById('favorite_delete').submit();" style="cursor: pointer;" onmouseover="showText('favorite_popup-delete',event)" onmouseout="hideText('favorite_popup-delete')">
-          <img class="heart" src="{{putSource('/img/heart_red.png')}}" alt="no image">
-        </div>
-        @endif
-        @endif
-      </div>
     </div>
-  </div>
   @endforeach
   <!-- ポップアップメッセージ -->
   <p id="favorite_popup-add" class="popup">お気に入りに登録します</p>
   <p id="favorite_popup-delete" class="popup">お気に入り登録を解除します</p>
   <!-- お気に入り処理用フォーム -->
   @if (Auth::check())
-  <!-- 登録用 -->
-  <form id="favorite_add" action="/favorite" method="POST" style="display: none;">
-    @csrf
-    <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-    <input type="hidden" name="shop_id" value="" id="shop_fav-add">
-    <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
-    <input type="hidden" name="position" value="0" id="position_add">
-  </form>
-  <!-- 削除用 -->
-  <form id="favorite_delete" action="/favorite/delete" method="POST" style="display: none;">
-    @csrf
-    <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-    <input type="hidden" name="shop_id" value="" id="shop_fav-delete">
-    <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
-    <input type="hidden" name="position" value="0" id="position_delete">
-  </form>
+    <!-- 登録用 -->
+    <form id="favorite_add" action="/favorite" method="POST" style="display: none;">
+      @csrf
+      <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+      <input type="hidden" name="shop_id" value="" id="shop_fav-add">
+      <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
+      <input type="hidden" name="position" value="0" id="position_add">
+    </form>
+    <!-- 削除用 -->
+    <form id="favorite_delete" action="/favorite/delete" method="POST" style="display: none;">
+      @csrf
+      <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+      <input type="hidden" name="shop_id" value="" id="shop_fav-delete">
+      <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
+      <input type="hidden" name="position" value="0" id="position_delete">
+    </form>
   @endif
 </main>
 @endsection

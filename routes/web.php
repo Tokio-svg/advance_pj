@@ -23,7 +23,6 @@ Route::post('/reserve/reminder', [ReservationController::class, 'switch_reminder
 Route::get('/reserve/{reservation_id}', [ReservationController::class, 'change'])->middleware(['auth']);
 Route::post('/reserve/{reservation_id}', [ReservationController::class, 'update'])->middleware(['auth']);
 // 評価投稿
-// メモ：ログイン必須にすること
 Route::get('/evaluation/{shop_id}', [EvaluationController::class, 'evaluation'])->middleware(['auth']);
 Route::post('/evaluation', [EvaluationController::class, 'create'])->middleware(['auth']);
 

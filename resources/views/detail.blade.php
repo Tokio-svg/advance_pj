@@ -30,7 +30,7 @@
     <form action="/reserve" method="post">
       @csrf
       @if (Auth::check())
-      <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
       @endif
       <input type="hidden" name="shop_id" value="{{$shop->id}}">
       <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
@@ -84,7 +84,7 @@
             <th>Number</th>
             <td><span id="number_display">
                 @if (old('number'))
-                {{old('number')}}人
+                  {{old('number')}}人
                 @endif
               </span></td>
           </tr>
@@ -93,9 +93,9 @@
   </div>
   <div class="submit">
     @if (Auth::check())
-    <button type="submit">予約する</button>
+      <button type="submit">予約する</button>
     @else
-    <p>予約をご希望の方は<a href="/login" style="color: white; text-decoration: underline;">ログイン</a>してください</p>
+      <p>予約をご希望の方は<a href="/login" style="color: white; text-decoration: underline;">ログイン</a>してください</p>
     @endif
   </div>
   </form>
@@ -109,7 +109,7 @@
       <div class="evaluation_grade shadow">
         <h1>評価(全{{$grades[0]}}件)</h1>
         @if ($grades[0] === 0)
-        <p>評価はまだありません</p>
+          <p>評価はまだありません</p>
         @else
         <table class="grade_table">
           <tr>
@@ -141,30 +141,30 @@
         @endif
       </div>
       @if (Auth::check())
-      <a href="/evaluation/{{$shop->id}}" class="evaluation_button shadow">評価を投稿する</a>
+        <a href="/evaluation/{{$shop->id}}" class="evaluation_button shadow">評価を投稿する</a>
       @endif
     </div>
     <div class="evaluation_comment shadow">
       <h1>最新の評価</h1>
       @if ($grades[0] === 0)
-      <p>評価はまだありません</p>
+        <p>評価はまだありません</p>
       @endif
       @foreach($comments as $comment)
-      <div class="comment_content">
-        <div style="display: flex; justify-content: space-between;">
-          <p>{{$comment->user->name}}さん</p>
-          <p>
-            {{$comment->created_at}}
-            @if($comment->created_at < $comment->updated_at)
-              ({{$comment->updated_at}}更新)
-              @endif
+        <div class="comment_content">
+          <div style="display: flex; justify-content: space-between;">
+            <p>{{$comment->user->name}}さん</p>
+            <p>
+              {{$comment->created_at}}
+              @if($comment->created_at < $comment->updated_at)
+                ({{$comment->updated_at}}更新)
+                @endif
+            </p>
+          </div>
+          <p style="margin: 10px 0;">
+            <img src="{{putSource('/img/star_' . $comment->grade . '.png')}}" alt="{{$comment->grade}}">
           </p>
+          <p>{{$comment->comment}}</p>
         </div>
-        <p style="margin: 10px 0;">
-          <img src="{{putSource('/img/star_' . $comment->grade . '.png')}}" alt="{{$comment->grade}}">
-        </p>
-        <p>{{$comment->comment}}</p>
-      </div>
       @endforeach
     </div>
   </div>

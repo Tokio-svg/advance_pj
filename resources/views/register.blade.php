@@ -81,7 +81,7 @@
         if (e === 'そのメールアドレスは既に使用されています') {
           document.getElementById('error_email-unique').style.display = "block";
         }
-      })
+      });
       if (errors.password[0]) {
         document.getElementById('error_password-min').style.display = "block";
       }
