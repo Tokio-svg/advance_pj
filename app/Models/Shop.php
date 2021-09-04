@@ -39,4 +39,9 @@ class Shop extends Model
     {
         return $this->belongsTo('App\Models\Genre');
     }
+
+    public function schedule()
+    {
+        return $this->hasOne('App\Models\Schedule');
+    }
 }

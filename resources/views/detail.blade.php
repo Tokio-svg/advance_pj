@@ -11,6 +11,7 @@
   <div class="info_title" style="display: flex;">
     <a href="/" class="back shadow">＜</a>
     <h1 class="shop_name">{{$shop->name}}</h1>
+    <p>{{substr($shop->schedule->opening_time,0,5)}} ~ {{substr($shop->schedule->closing_time,0,5)}}</p>
   </div>
   <div class="image">
     <img src="{{$shop->image_url}}" alt="no image">
