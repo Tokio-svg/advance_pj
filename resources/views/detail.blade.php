@@ -11,7 +11,6 @@
   <div class="info_title" style="display: flex;">
     <a href="/" class="back shadow">＜</a>
     <h1 class="shop_name">{{$shop->name}}</h1>
-    <p>{{substr($shop->schedule->opening_time,0,5)}} ~ {{substr($shop->schedule->closing_time,0,5)}}</p>
   </div>
   <div class="image">
     <img src="{{$shop->image_url}}" alt="no image">
@@ -21,6 +20,31 @@
     <a href="/?genre_id={{$shop->genre_id}}">#{{$shop->genre->name}}</a>
   </div>
   <p>{{$shop->overview}}</p>
+  <div class="schedule_wrap">
+    <p>営業時間：{{substr($shop->schedule->opening_time,0,5)}} ~ {{substr($shop->schedule->closing_time,0,5)}}</p>
+    <table class="table_schedule">
+      <tr>
+        <th>日</th>
+        <th>月</th>
+        <th>火</th>
+        <th>水</th>
+        <th>木</th>
+        <th>金</th>
+        <th>土</th>
+      </tr>
+      <tr>
+        <?php
+          echo "<td>" . put_schedule_mark($shop->schedule->sunday) . "</td>";
+          echo "<td>" . put_schedule_mark($shop->schedule->monday) . "</td>";
+          echo "<td>" . put_schedule_mark($shop->schedule->tuesday) . "</td>";
+          echo "<td>" . put_schedule_mark($shop->schedule->wednesday) . "</td>";
+          echo "<td>" . put_schedule_mark($shop->schedule->thursday) . "</td>";
+          echo "<td>" . put_schedule_mark($shop->schedule->friday) . "</td>";
+          echo "<td>" . put_schedule_mark($shop->schedule->saturday) . "</td>";
+        ?>
+      </tr>
+    </table>
+  </div>
 </main>
 @endsection
 
@@ -118,9 +142,9 @@
         @else
         <table class="grade_table">
           <tr>
-            <th style="width: 30px;">平均</th>
-            <td>
-              <img src="{{putSource('/img/star_' . round($grades[6]) . '.png')}}" alt="no image">
+            <th>平均</th>
+            <td style="display: flex;">
+              <img src="{{putSource('/img/star_' . round($grades[6]) . '.png')}}" alt="no image" style="height: 17px;">
               <p>({{round($grades[6],2)}})</p>
             </td>
           </tr>
@@ -128,17 +152,17 @@
           if ($grades[0] != 0) {
             for ($i = 1; $i < 6; $i++) {
               echo "<tr>
-                          <th>$i</th>
-                          <td><div class='grade_rate'>" . round($grades[$i] / $grades[0] * 100) . "</div></td>
-                          <td>$grades[$i](" . round($grades[$i] / $grades[0] * 100) . "%)</td>
-                        </tr>";
+                      <th>$i</th>
+                      <td><div class='grade_rate'>" . round($grades[$i] / $grades[0] * 100) . "</div></td>
+                      <td>$grades[$i](" . round($grades[$i] / $grades[0] * 100) . "%)</td>
+                    </tr>";
             }
           } else {
             for ($i = 1; $i < 6; $i++) {
               echo "<tr>
-                            <th>$i</th>
-                            <td>$grades[$i](0%)</td>
-                          </tr>";
+                      <th>$i</th>
+                      <td>$grades[$i](0%)</td>
+                    </tr>";
             }
           }
           ?>
@@ -156,7 +180,7 @@
       @endif
       @foreach($comments as $comment)
         <div class="comment_content">
-          <div style="display: flex; justify-content: space-between;">
+          <div class="comment_title">
             <p>{{$comment->user->name}}さん</p>
             <p>
               {{$comment->created_at}}
@@ -177,6 +201,16 @@
 @endsection
 
 @section('script')
+<!-- PHP関数：引数が0なら"×"、それ以外なら"○"を返す -->
+<?php
+  function put_schedule_mark($day) {
+    if ($day === 0) {
+      return '×';
+    } else {
+      return '○';
+    }
+  }
+?>
 <script>
   // 読み込み時の処理
   window.onload = function() {
@@ -321,6 +355,7 @@
     // 定休日の場合はエラーメッセージを表示
     if (display === true) {
       document.getElementById('error_date-close').style.display = "block";
+      document.getElementById('date').value = ""; // 入力フォームの値をリセット
     } else {
       document.getElementById('error_date-close').style.display = "none";
     }
