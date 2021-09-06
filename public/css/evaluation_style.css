@@ -106,10 +106,14 @@ main p {
     border-radius: 5px;
 }
 th {
-    padding-right: 30px;
+    width: 80px;
 }
 th,td {
     line-height: 2.0em;
+}
+td {
+    max-width: 280px;
+    overflow-wrap: break-word;
 }
 .submit {
     position: absolute;

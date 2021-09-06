@@ -20,6 +20,31 @@
     <a href="/?genre_id={{$shop->genre_id}}">#{{$shop->genre->name}}</a>
   </div>
   <p>{{$shop->overview}}</p>
+  <div class="schedule_wrap">
+    <p>営業時間：{{substr($shop->schedule->opening_time,0,5)}} ~ {{substr($shop->schedule->closing_time,0,5)}}</p>
+    <table class="table_schedule">
+      <tr>
+        <th>日</th>
+        <th>月</th>
+        <th>火</th>
+        <th>水</th>
+        <th>木</th>
+        <th>金</th>
+        <th>土</th>
+      </tr>
+      <tr>
+        <?php
+          echo "<td>" . put_schedule_mark($shop->schedule->sunday) . "</td>";
+          echo "<td>" . put_schedule_mark($shop->schedule->monday) . "</td>";
+          echo "<td>" . put_schedule_mark($shop->schedule->tuesday) . "</td>";
+          echo "<td>" . put_schedule_mark($shop->schedule->wednesday) . "</td>";
+          echo "<td>" . put_schedule_mark($shop->schedule->thursday) . "</td>";
+          echo "<td>" . put_schedule_mark($shop->schedule->friday) . "</td>";
+          echo "<td>" . put_schedule_mark($shop->schedule->saturday) . "</td>";
+        ?>
+      </tr>
+    </table>
+  </div>
 </main>
 @endsection
 
@@ -36,16 +61,20 @@
       <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
       <div>
         <!-- 当日の1日後～30日後までを選択可能にする（暫定） -->
-        <input type="date" name="date" id="date" min="<?php echo date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") + 1, date("Y"))); ?>" max="<?php echo date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") + 30, date("Y"))); ?>" onblur="validateRequire(this.id,'error_date-require')" onchange="changeDate(this.value)" value="{{old('date')}}" required>
+        <input type="date" name="date" id="date" min="<?php echo date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") + 1, date("Y"))); ?>" max="<?php echo date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") + 30, date("Y"))); ?>" onblur="validateRequire(this.id,'error_date-require')" onchange="changeDate(this.value); dayCheck(this.value);" value="{{old('date')}}" required>
         <p id="error_date-require" class="error" style="display: none;">日付を選択してください</p>
+        <p id="error_date-close" class="error" style="display: none;">選択した日付は定休日です</p>
       </div>
       <div>
         <select name="time" id="time" onblur="validateRequire(this.id,'error_time-require')" onchange="changeTime(this.value)" required>
           <option value="">時間を選択してください</option>
           <?php
-          for ($i = 10; $i <= 19; $i++) {
-            echo "<option value='" . $i . ":00'>" . $i . ":00</option>";
-            echo "<option value='" . $i . ":30'>" . $i . ":30</option>";
+          // 営業時間に合わせて選択肢を出力
+          for ($i = 0; $i <= 23; $i++) {
+            if ($i >= substr($shop->schedule->opening_time,0,2) && $i < substr($shop->schedule->closing_time,0,2)) {
+              echo "<option value='" . $i . ":00'>" . $i . ":00</option>";
+              echo "<option value='" . $i . ":30'>" . $i . ":30</option>";
+            }
           }
           ?>
         </select>
@@ -113,9 +142,9 @@
         @else
         <table class="grade_table">
           <tr>
-            <th style="width: 30px;">平均</th>
-            <td>
-              <img src="{{putSource('/img/star_' . round($grades[6]) . '.png')}}" alt="no image">
+            <th>平均</th>
+            <td style="display: flex;">
+              <img src="{{putSource('/img/star_' . round($grades[6]) . '.png')}}" alt="no image" style="height: 17px;">
               <p>({{round($grades[6],2)}})</p>
             </td>
           </tr>
@@ -123,17 +152,17 @@
           if ($grades[0] != 0) {
             for ($i = 1; $i < 6; $i++) {
               echo "<tr>
-                          <th>$i</th>
-                          <td><div class='grade_rate'>" . round($grades[$i] / $grades[0] * 100) . "</div></td>
-                          <td>$grades[$i](" . round($grades[$i] / $grades[0] * 100) . "%)</td>
-                        </tr>";
+                      <th>$i</th>
+                      <td><div class='grade_rate'>" . round($grades[$i] / $grades[0] * 100) . "</div></td>
+                      <td>$grades[$i](" . round($grades[$i] / $grades[0] * 100) . "%)</td>
+                    </tr>";
             }
           } else {
             for ($i = 1; $i < 6; $i++) {
               echo "<tr>
-                            <th>$i</th>
-                            <td>$grades[$i](0%)</td>
-                          </tr>";
+                      <th>$i</th>
+                      <td>$grades[$i](0%)</td>
+                    </tr>";
             }
           }
           ?>
@@ -151,7 +180,7 @@
       @endif
       @foreach($comments as $comment)
         <div class="comment_content">
-          <div style="display: flex; justify-content: space-between;">
+          <div class="comment_title">
             <p>{{$comment->user->name}}さん</p>
             <p>
               {{$comment->created_at}}
@@ -172,6 +201,16 @@
 @endsection
 
 @section('script')
+<!-- PHP関数：引数が0なら"×"、それ以外なら"○"を返す -->
+<?php
+  function put_schedule_mark($day) {
+    if ($day === 0) {
+      return '×';
+    } else {
+      return '○';
+    }
+  }
+?>
 <script>
   // 読み込み時の処理
   window.onload = function() {
@@ -244,6 +283,81 @@
       errorMessage.style.display = "block";
     } else {
       errorMessage.style.display = "none";
+    }
+  }
+
+  // 関数：曜日バリデーション
+  function dayCheck(value) {
+    // dayに定休日情報を取得
+    let day = {};
+    <?php
+      echo "day.sunday = " . $shop->schedule->sunday . ";";
+      echo "day.monday = " . $shop->schedule->monday . ";";
+      echo "day.tuesday = " . $shop->schedule->tuesday . ";";
+      echo "day.wednesday = " . $shop->schedule->wednesday . ";";
+      echo "day.thursday = " . $shop->schedule->thursday . ";";
+      echo "day.friday = " . $shop->schedule->friday . ";";
+      echo "day.saturday = " . $shop->schedule->saturday . ";";
+    ?>
+    // 入力値の曜日を取得
+    const date = new Date(value);
+    const dayOfWeek = date.getDay();
+    const dayOfWeekStr = [ "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday" ][dayOfWeek];
+
+    // 選択した曜日が定休日かどうかを判定
+    let display = false;
+    switch (dayOfWeekStr) {
+      case 'sunday':
+        if (day.sunday === 0) {
+          display = true;
+        }
+      break;
+
+      case 'monday':
+        if (day.monday === 0) {
+          display = true;
+        }
+      break;
+
+      case 'tuesday':
+        if (day.tuesday === 0) {
+          display = true;
+        }
+      break;
+
+      case 'wednesday':
+        if (day.wednesday === 0) {
+          display = true;
+        }
+      break;
+
+      case 'thursday':
+        if (day.thursday === 0) {
+          display = true;
+        }
+      break;
+
+      case 'friday':
+        if (day.friday === 0) {
+          display = true;
+        }
+      break;
+
+      case 'saturday':
+        if (day.saturday === 0) {
+          display = true;
+        }
+      break;
+
+      default:
+    }
+
+    // 定休日の場合はエラーメッセージを表示
+    if (display === true) {
+      document.getElementById('error_date-close').style.display = "block";
+      document.getElementById('date').value = ""; // 入力フォームの値をリセット
+    } else {
+      document.getElementById('error_date-close').style.display = "none";
     }
   }
 

@@ -42,6 +42,20 @@ main,
 main p {
     font-size: 14px;
 }
+.schedule_wrap {
+    display: flex;
+    justify-content: space-between;
+}
+.table_schedule {
+    width: 50%;
+    border: 1px solid rgb(53, 96, 246);
+    text-align: center;
+    font-size: 14px;
+}
+.table_schedule th {
+    color: white;
+    background: rgb(53, 96, 246);
+}
 .reservation_confirm {
     background: rgb(85, 128, 247);
     padding: 20px;
@@ -117,7 +131,7 @@ main p {
     line-height: 1em;
 }
 .info_title {
-    margin: 40px 0 20px;
+    margin: 20px 0 20px;
 }
 .reservation_content {
     padding: 40px 20px;
@@ -159,6 +173,10 @@ main p {
     margin: 20px 0;
     border-radius: 5px;
 }
+.comment_title {
+    display: flex;
+    justify-content: space-between;
+}
 .grade_rate {
     width: 150px;
     height: 15px;
@@ -167,6 +185,9 @@ main p {
 }
 .grade_table {
     margin: 20px auto;
+}
+.grade_table th {
+    width: 50px;
 }
 .evaluation_button {
     display: block;
@@ -184,6 +205,7 @@ main p {
     color: rgb(0, 63, 245);
     background: rgb(144, 174, 255);
 }
+
 /* レスポンシブ対応(break point:768px) */
 @media screen and (max-width: 768px) {
     .flex_container {
@@ -202,5 +224,23 @@ main p {
     }
     .submit p {
         font-size: 12px;
+    }
+    .evaluation_flex {
+        display: block;
+    }
+    .evaluation_wrap {
+        width: 90%;
+        min-width: 320px;
+    }
+    .evaluation_grade,
+    .evaluation_comment,
+    .evaluation_button {
+        width: 70%;
+        min-width: 260px;
+        margin: 10px auto;
+        padding: 20px;
+    }
+    .comment_title {
+        display: block;
     }
 }
