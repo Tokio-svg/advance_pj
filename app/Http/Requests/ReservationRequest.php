@@ -24,9 +24,9 @@ class ReservationRequest extends FormRequest
     public function rules()
     {
         return [
-            'date' => 'required',
-            'time' => 'required',
-            'number' => 'required',
+            'date' => 'required|date|after_or_equal:tomorrow',
+            'time' => 'required|date_format:H:i',
+            'number' => 'required|numeric',
         ];
     }
 
@@ -35,8 +35,12 @@ class ReservationRequest extends FormRequest
     {
         return [
             'date.required' => '日付を選択してください',
+            'date.date' => '日付を選択してください',
+            'date.after_or_equal' => '日付を選択してください',
             'time.required' => '時間を選択してください',
+            'time.date_format' => '時間を選択してください',
             'number.required' => '人数を選択してください',
+            'number.numeric' => '人数を選択してください',
         ];
     }
 }
