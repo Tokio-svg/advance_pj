@@ -15,7 +15,7 @@ class EvaluationController extends Controller
     {
         $user = Auth::user();
 
-        $shop = Shop::with('area')->with('genre')->find($shop_id);
+        $shop = Shop::with(['area','genre'])->find($shop_id);
 
         if (!$shop) {
             abort(404);

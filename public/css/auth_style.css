@@ -36,6 +36,15 @@ input {
 .auth_button {
     display: flex;
     flex-direction: row-reverse;
+    justify-content: space-between;
+}
+#remember_me {
+    width: 20px;
+    height: 20px;
+}
+.remember_wrap {
+    font-size: 12px;
+    margin: 15px 0 auto 25px;
 }
 button {
     border: none;

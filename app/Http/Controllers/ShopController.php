@@ -96,7 +96,7 @@ class ShopController extends Controller
     // 飲食店詳細ページ
     public function detail(Request $request, $shop_id)
     {
-        $shop = Shop::with('area')->with('genre')->with('schedule')->find($shop_id);
+        $shop = Shop::with(['area','genre','schedule'])->find($shop_id);
 
         if (!$shop) {
             abort(404);

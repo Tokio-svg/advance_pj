@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('send:mail')->daily()->timezone('Asia/Tokyo');
+        $schedule->command('delete:reservation')->daily()->timezone('Asia/Tokyo');
     }
 
     /**

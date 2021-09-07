@@ -27,9 +27,17 @@
         </div>
         <div class="auth_button">
           <button type="submit">ログイン</button>
+          <!-- Remember Me -->
+          <div class="remember_wrap">
+            <label for="remember_me">
+                <input id="remember_me" type="checkbox"  name="remember">
+                <span>ログイン状態を維持する</span>
+            </label>
+          </div>
         </div>
       </form>
     </div>
+
   </main>
 @endsection
 
