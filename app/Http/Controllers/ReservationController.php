@@ -13,6 +13,9 @@ class ReservationController extends Controller
     // 予約レコード挿入
     public function create(ReservationRequest $request)
     {
+        // 営業日バリデーション
+        $request->check_close($request->shop_id);
+
         $reservation = new Reservation;
         $reservation->fill([
             'user_id' => $request->user_id,
@@ -78,6 +81,9 @@ class ReservationController extends Controller
         if (!$reservation) {
             abort(404);
         }
+
+        // 営業日バリデーション
+        $request->check_close($reservation->shop_id);
 
         $reservation->fill([
             'date' => $request->date,

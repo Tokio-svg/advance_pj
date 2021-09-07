@@ -224,8 +224,10 @@
     // 1.$errorから全エラーメッセージを取得する
     <?php
     if ($errors->has('date')) {
-      $tmp = $errors->first('date');
-      echo "errors.date.push('{$tmp}');";
+      $tmp = $errors->get('date');
+      foreach ($tmp as $error) {
+        echo "errors.date.push('{$error}');";
+      }
     }
     if ($errors->has('time')) {
       $tmp = $errors->first('time');
@@ -238,9 +240,14 @@
 
     ?>
     // 2.各エラーメッセージごとに表示するかどうかチェックする
-    if (errors.date[0]) {
-      document.getElementById('error_date-require').style.display = "block";
-    }
+    errors.date.forEach((e) => {
+      if (e === '日付を選択してください') {
+        document.getElementById('error_date-require').style.display = "block";
+      }
+      if (e === '選択した日付は定休日です') {
+        document.getElementById('error_date-close').style.display = "block";
+      }
+    });
     if (errors.time[0]) {
       document.getElementById('error_time-require').style.display = "block";
     }
@@ -355,7 +362,7 @@
     // 定休日の場合はエラーメッセージを表示
     if (display === true) {
       document.getElementById('error_date-close').style.display = "block";
-      document.getElementById('date').value = ""; // 入力フォームの値をリセット
+      // document.getElementById('date').value = ""; // 入力フォームの値をリセット
     } else {
       document.getElementById('error_date-close').style.display = "none";
     }
