@@ -6,6 +6,7 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 
 
 // 飲食店一覧ページ
@@ -46,6 +47,9 @@ Route::group(['middleware' => 'auth'], function() {
   });
 
 });
+
+// 管理画面
+Route::get('/admin', [AdminController::class, 'index']);
 
 // テスト用ルーティング（後で消すこと）
 Route::get('/done', [ShopController::class, 'done']);

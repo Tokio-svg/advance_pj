@@ -1,0 +1,30 @@
+header {
+    z-index: 100;
+}
+main {
+    width: 100%;
+}
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 300px;
+    background: rgb(255, 163, 163);
+}
+.content_wrap {
+    min-height: 100vh;
+    min-width: 1000px;
+    background: rgb(130, 128, 255);
+    padding-left: 150px;
+}
+.serch_wrap {
+    height: 250px;
+    background: rgb(158, 255, 128);
+}
+.result_wrap {
+    background: rgb(255, 128, 255);
+}
+/* レスポンシブ対応(break point:768px) */
+@media screen and (max-width: 768px) {
+}

@@ -10,7 +10,6 @@ use App\Models\Genre;
 use App\Models\Reservation;
 use App\Models\Evaluation;
 use Illuminate\Support\Facades\Auth;
-// use Log;
 
 use function PHPUnit\Framework\isNull;
 

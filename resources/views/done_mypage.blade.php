@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('title','予約完了ページ')
+@section('title','登録情報変更完了ページ')
 
 @section('style')
   <link rel="stylesheet" href="{{putSource('/css/thanks_style.css')}}">
