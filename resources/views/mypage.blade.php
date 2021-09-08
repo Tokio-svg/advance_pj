@@ -8,7 +8,10 @@
 
 @section('content')
 <main>
-  <h1 class="user_name">{{$user->name}}さん</h1>
+  <div style="display: flex; justify-content: center;">
+    <h1 class="user_name">{{$user->name}}さん</h1>
+    <a class="button_update hover" href="/mypage/update">登録情報を変更する</a>
+  </div>
   <div class="mypage_content">
     <div class="reservation_info">
       <h2>予約状況</h2>

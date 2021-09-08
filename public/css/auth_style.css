@@ -5,7 +5,6 @@ main {
     transform: translate(-50%, -50%);
     background: white;
     width: 350px;
-    /* height: 250px; */
     height: fit-content;
     border-radius: 5px;
     text-align: center;
@@ -59,4 +58,24 @@ button {
 .error {
     text-align: left;
     margin-left: 55px;
+}
+.delete_wrap {
+    position: absolute;
+    bottom: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+.delete_wrap button {
+    margin: auto;
+}
+.back_button {
+    width: 150px;
+    height: 30px;
+    background: rgb(53, 96, 246);
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    line-height: 30px;
 }

@@ -78,6 +78,10 @@ header {
     padding: 5px;
     white-space: nowrap;
 }
+.hover:hover {
+    color: rgb(0, 63, 245);
+    background: rgb(144, 174, 255);
+}
 
 /* レスポンシブ対応(break point:768px) */
 @media screen and (max-width: 768px) {

@@ -15,23 +15,36 @@ Route::get('/detail/{shop_id}', [ShopController::class, 'detail']);
 
 // authミドルウェア適用グループ
 Route::group(['middleware' => 'auth'], function() {
+
   // マイページ
-  Route::get('/mypage', [UserController::class, 'mypage']);
-  Route::get('/mypage/update', [UserController::class, 'change']);
-  Route::post('/mypage/update', [UserController::class, 'update']);
-  Route::post('/mypage/delete', [UserController::class, 'delete']);
+  Route::group(['prefix' => 'mypage'], function () {
+    Route::get('', [UserController::class, 'mypage']);
+    Route::get('update', [UserController::class, 'change']);
+    Route::post('update', [UserController::class, 'update']);
+    Route::post('delete', [UserController::class, 'delete']);
+  });
+
   // お気に入り登録、削除
-  Route::post('/favorite', [FavoriteController::class, 'create']);
-  Route::post('/favorite/delete', [FavoriteController::class, 'delete']);
+  Route::group(['prefix' => 'favorite'], function () {
+    Route::post('', [FavoriteController::class, 'create']);
+    Route::post('delete', [FavoriteController::class, 'delete']);
+  });
+
   // 予約登録、削除、変更
-  Route::post('/reserve', [ReservationController::class, 'create']);
-  Route::post('/reserve/delete', [ReservationController::class, 'delete']);
-  Route::post('/reserve/reminder', [ReservationController::class, 'switch_reminder']);
-  Route::get('/reserve/{reservation_id}', [ReservationController::class, 'change']);
-  Route::post('/reserve/{reservation_id}', [ReservationController::class, 'update']);
+  Route::group(['prefix' => 'reserve'], function () {
+    Route::post('', [ReservationController::class, 'create']);
+    Route::post('delete', [ReservationController::class, 'delete']);
+    Route::post('reminder', [ReservationController::class, 'switch_reminder']);
+    Route::get('{reservation_id}', [ReservationController::class, 'change']);
+    Route::post('{reservation_id}', [ReservationController::class, 'update']);
+  });
+
   // 評価投稿
-  Route::get('/evaluation/{shop_id}', [EvaluationController::class, 'evaluation']);
-  Route::post('/evaluation', [EvaluationController::class, 'create']);
+  Route::group(['prefix' => 'evaluation'], function () {
+    Route::get('{shop_id}', [EvaluationController::class, 'evaluation']);
+    Route::post('', [EvaluationController::class, 'create']);
+  });
+
 });
 
 // テスト用ルーティング（後で消すこと）

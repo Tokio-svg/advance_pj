@@ -64,6 +64,9 @@ class UserController extends Controller
     {
         // ログイン中のユーザー情報を取得
         $user = Auth::user();
+        // email:uniqueバリデーション
+        $request->email_unique($user->id);
+
         $user_record = User::find($user->id);
 
         $user_record->fill([

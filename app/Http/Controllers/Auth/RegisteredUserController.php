@@ -40,6 +40,9 @@ class RegisteredUserController extends Controller
         //     'password' => ['required', Rules\Password::defaults()],
         // ]);
 
+        // email:uniqueバリデーション
+        $request->email_unique(null);
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
