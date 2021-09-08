@@ -5,6 +5,7 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\UserController;
 
 
 // 飲食店一覧ページ
@@ -15,7 +16,10 @@ Route::get('/detail/{shop_id}', [ShopController::class, 'detail']);
 // authミドルウェア適用グループ
 Route::group(['middleware' => 'auth'], function() {
   // マイページ
-  Route::get('/mypage', [ShopController::class, 'mypage']);
+  Route::get('/mypage', [UserController::class, 'mypage']);
+  Route::get('/mypage/update', [UserController::class, 'change']);
+  Route::post('/mypage/update', [UserController::class, 'update']);
+  Route::post('/mypage/delete', [UserController::class, 'delete']);
   // お気に入り登録、削除
   Route::post('/favorite', [FavoriteController::class, 'create']);
   Route::post('/favorite/delete', [FavoriteController::class, 'delete']);

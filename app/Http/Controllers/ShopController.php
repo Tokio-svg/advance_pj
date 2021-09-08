@@ -128,41 +128,6 @@ class ShopController extends Controller
         ]);
     }
 
-    // マイページ
-    public function mypage(Request $request)
-    {
-        $user = Auth::user();
-        // 予約情報を取得
-        $reservations = Reservation::where('user_id', $user->id)->get();
-        // お気に入り情報を取得
-        $favorites = Favorite::with('shop')->where('user_id', $user->id)->get();
-
-        // 評価情報取得
-        $grades = array();
-        foreach ($favorites as $favorite) {
-            // 5段階評価の内訳を取得
-            for ($i = 1; $i < 6; $i++) {
-                $grades[$i] = Evaluation::where('shop_id', $favorite->shop->id)->where('grade', $i)->count();
-            }
-            // [0]に総数を格納
-            $grades[0] = $grades[1] + $grades[2] + $grades[3] + $grades[4] + $grades[5];
-            // [6]に平均値を格納(評価が無い場合は0を格納する)
-            if ($grades[0] != 0) {
-                $grades[6] = round(($grades[1] + ($grades[2] * 2) + ($grades[3] * 3) + ($grades[4] * 4) + ($grades[5] * 5)) / $grades[0], 2);
-            } else {
-                $grades[6] = 0;
-            }
-            // 評価平均情報をモデルに追加
-            $favorite->shop->grade = $grades[6];
-        }
-
-        return view('mypage', [
-            'user' => $user,
-            'reservations' => $reservations,
-            'favorites' => $favorites,
-        ]);
-    }
-
     // テスト用（後で消すこと）
     // 予約完了ページ
     public function done(Request $request)
