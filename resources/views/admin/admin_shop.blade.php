@@ -10,15 +10,15 @@
   <main>
     <div class="sidebar">
       <p style="margin-top: 100px;">サイドメニュー</p>
-      <div class="sidebar_button shadow">
-        <a href="/admin">
+      <div class="sidebar_button shadow" style="background: rgb(115, 125, 153);">
+        <a href="/admin/user">
           <div class="sidebar_button-content">
             <img src="{{putSource('/img/person.png')}}" alt="no image">
             <p>ユーザー管理</p>
           </div>
         </a>
       </div>
-      <div class="sidebar_button shadow">
+      <div class="sidebar_button shadow" style="background: rgb(53, 96, 246);">
         <a href="/admin/shop">
           <div class="sidebar_button-content">
             <p>店舗管理</p>
@@ -76,10 +76,11 @@
           <table class="result_table">
             <tr>
               <th>ID</th>
-              <th>name</th>
-              <th>area</th>
-              <th>genre</th>
-              <th>created_at</th>
+              <th>店名</th>
+              <th>地域</th>
+              <th>ジャンル</th>
+              <th>登録日時</th>
+              <th></th>
             </tr>
             @foreach($items as $shop)
               <tr>
@@ -88,6 +89,14 @@
                 <td>{{$shop->area->name}}</td>
                 <td>{{$shop->genre->name}}</td>
                 <td>{{$shop->created_at}}</td>
+                <td>
+                  <form action="/admin/shop/delete" method="post" onsubmit="return confirmDelete()">
+                    @csrf
+                    <input type="hidden" name="shop_id" value="{{$shop->id}}">
+                    <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
+                    <button type="submit">削除</button>
+                  </form>
+                </td>
               </tr>
             @endforeach
           </table>
@@ -95,4 +104,16 @@
       </div>
     </div>
   </main>
+@endsection
+
+@section('script')
+  <script>
+    // 関数：削除の確認ダイアログを表示
+    function confirmDelete() {
+      if (!window.confirm("本当に削除してもよろしいですか？")) {
+        return false;
+      }
+    }
+
+  </script>
 @endsection

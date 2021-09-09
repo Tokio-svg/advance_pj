@@ -10,15 +10,15 @@
   <main>
     <div class="sidebar">
       <p style="margin-top: 100px;">サイドメニュー</p>
-      <div class="sidebar_button shadow">
-        <a href="/admin">
+      <div class="sidebar_button shadow" style="background: rgb(53, 96, 246);">
+        <a href="/admin/user">
           <div class="sidebar_button-content">
             <img src="{{putSource('/img/person.png')}}" alt="no image">
             <p>ユーザー管理</p>
           </div>
         </a>
       </div>
-      <div class="sidebar_button shadow">
+      <div class="sidebar_button shadow" style="background: rgb(115, 125, 153);">
         <a href="/admin/shop">
           <div class="sidebar_button-content">
             <p>店舗管理</p>
@@ -30,7 +30,7 @@
       <div class="search_wrap">
         <div class="search_content">
           <p style="margin-top: 100px;">検索フォーム</p>
-          <form action="/admin" method="get">
+          <form action="/admin/user" method="get">
             <!-- ユーザーネーム -->
             <div>
               <label for="name">ユーザーネーム</label>
@@ -48,7 +48,7 @@
           </form>
           <!-- 検索条件クリア -->
           <div>
-            <a href="/admin">クリア</a>
+            <a href="/admin/user">クリア</a>
           </div>
         </div>
       </div>
@@ -59,9 +59,10 @@
           <table class="result_table">
             <tr>
               <th>ID</th>
-              <th>name</th>
-              <th>email</th>
-              <th>created_at</th>
+              <th>名前</th>
+              <th>メールアドレス</th>
+              <th>登録日</th>
+              <th></th>
             </tr>
             @foreach($items as $user)
               <tr>
@@ -69,6 +70,14 @@
                 <td>{{$user->name}}</td>
                 <td>{{$user->email}}</td>
                 <td>{{$user->created_at}}</td>
+                <td>
+                  <form action="/admin/user/delete" method="post" onsubmit="return confirmDelete()">
+                    @csrf
+                    <input type="hidden" name="user_id" value="{{$user->id}}">
+                    <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
+                    <button type="submit">削除</button>
+                  </form>
+                </td>
               </tr>
             @endforeach
           </table>
@@ -76,4 +85,16 @@
       </div>
     </div>
   </main>
+@endsection
+
+@section('script')
+  <script>
+    // 関数：削除の確認ダイアログを表示
+    function confirmDelete() {
+      if (!window.confirm("本当に削除してもよろしいですか？")) {
+        return false;
+      }
+    }
+
+  </script>
 @endsection

@@ -61,7 +61,9 @@ class ReservationController extends Controller
     public function change(Request $request, $reservation_id)
     {
         $user = Auth::user();
-        $reservation = Reservation::with('shop')->find($reservation_id);
+        $reservation = Reservation::with(['shop' => function ($query) {
+            $query->with('schedule');
+        }])->find($reservation_id);
 
         if (!$reservation) {
             abort(404);

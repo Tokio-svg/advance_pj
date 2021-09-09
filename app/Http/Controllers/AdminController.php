@@ -7,6 +7,10 @@ use App\Models\User;
 use App\Models\Shop;
 use App\Models\Area;
 use App\Models\Genre;
+use App\Models\Reservation;
+use App\Models\Favorite;
+use App\Models\Evaluation;
+use App\Models\Schedule;
 
 class AdminController extends Controller
 {
@@ -39,6 +43,22 @@ class AdminController extends Controller
             'items' => $users,
             'inputs' => $inputs,
         ]);
+    }
+
+    // ユーザー削除処理
+    public function delete_user(Request $request)
+    {
+        // 各種パラメータを取得
+        $user_id = $request->user_id;
+        $url = $request->url;
+
+        // 削除処理
+        User::where('id', $user_id)->delete();
+        Reservation::where('user_id', $user_id)->delete();
+        Favorite::where('user_id', $user_id)->delete();
+        Evaluation::where('user_id', $user_id)->delete();
+
+        return redirect($url);
     }
 
     // 管理画面トップページ(店舗管理画面)
@@ -83,5 +103,22 @@ class AdminController extends Controller
             'inputs' => $inputs,
         ]);
     }
+
+        // ユーザー削除処理
+        public function delete_shop(Request $request)
+        {
+            // 各種パラメータを取得
+            $shop_id = $request->shop_id;
+            $url = $request->url;
+
+            // 削除処理
+            Shop::where('id', $shop_id)->delete();
+            Reservation::where('shop_id', $shop_id)->delete();
+            Favorite::where('shop_id', $shop_id)->delete();
+            Evaluation::where('shop_id', $shop_id)->delete();
+            Schedule::where('shop_id', $shop_id)->delete();
+
+            return redirect($url);
+        }
 
 }

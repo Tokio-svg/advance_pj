@@ -18,7 +18,7 @@ main {
 .sidebar_button {
     width: 250px;
     height: 120px;
-    background: rgb(53, 96, 246);
+    /* background: rgb(115, 125, 153); */
     border-radius: 10px;
     margin: 20px auto;
     font-size: 20px;
@@ -80,6 +80,7 @@ input {
     text-align: left;
     line-height: 2.0em;
     margin-top: 10px;
+    border-bottom: 1px solid black;
 }
 .result_table th {
     border-top: 1px solid black;
@@ -98,7 +99,7 @@ input {
     display: flex;
 }
 .pagination li {
-    border: 1px solid rgb(233, 233, 233);
+    border: 1px solid rgb(53, 96, 246);
     border-collapse: collapse;
     width: 20px;
     height: 20px;
@@ -113,7 +114,7 @@ input {
 }
 .active {
     color: white;
-    background: black;
+    background: rgb(53, 96, 246);
 }
 
 /* レスポンシブ対応(break point:768px) */

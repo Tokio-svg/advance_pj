@@ -57,8 +57,9 @@
           <input type="hidden" name="url" value="/mypage">
           <div>
             <!-- 当日の1日後～30日後までを選択可能にする（暫定） -->
-            <input type="date" name="date" id="date" min="<?php echo date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") + 1, date("Y"))); ?>" max="<?php echo date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") + 30, date("Y"))); ?>" onblur="validateRequire(this.id,'error_date-require')" onchange="changeDate(this.value)" value="{{$reservation->date}}" required>
+            <input type="date" name="date" id="date" min="<?php echo date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") + 1, date("Y"))); ?>" max="<?php echo date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") + 30, date("Y"))); ?>" onblur="validateRequire(this.id,'error_date-require')" onchange="changeDate(this.value); dayCheck(this.value);" value="{{$reservation->date}}" required>
             <p id="error_date-require" class="error" style="display: none;">日付を選択してください</p>
+            <p id="error_date-close" class="error" style="display: none;">選択した日付は定休日です</p>
           </div>
           <div>
             <select name="time" id="time" onblur="validateRequire(this.id,'error_time-require')" onchange="changeTime(this.value)" required>
@@ -186,6 +187,81 @@
       errorMessage.style.display = "block";
     } else {
       errorMessage.style.display = "none";
+    }
+  }
+
+    // 関数：曜日バリデーション
+    function dayCheck(value) {
+    // dayに定休日情報を取得
+    let day = {};
+    <?php
+      echo "day.sunday = " . $reservation->shop->schedule->sunday . ";";
+      echo "day.monday = " . $reservation->shop->schedule->monday . ";";
+      echo "day.tuesday = " . $reservation->shop->schedule->tuesday . ";";
+      echo "day.wednesday = " . $reservation->shop->schedule->wednesday . ";";
+      echo "day.thursday = " . $reservation->shop->schedule->thursday . ";";
+      echo "day.friday = " . $reservation->shop->schedule->friday . ";";
+      echo "day.saturday = " . $reservation->shop->schedule->saturday . ";";
+    ?>
+    // 入力値の曜日を取得
+    const date = new Date(value);
+    const dayOfWeek = date.getDay();
+    const dayOfWeekStr = [ "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday" ][dayOfWeek];
+
+    // 選択した曜日が定休日かどうかを判定
+    let display = false;
+    switch (dayOfWeekStr) {
+      case 'sunday':
+        if (day.sunday === 0) {
+          display = true;
+        }
+      break;
+
+      case 'monday':
+        if (day.monday === 0) {
+          display = true;
+        }
+      break;
+
+      case 'tuesday':
+        if (day.tuesday === 0) {
+          display = true;
+        }
+      break;
+
+      case 'wednesday':
+        if (day.wednesday === 0) {
+          display = true;
+        }
+      break;
+
+      case 'thursday':
+        if (day.thursday === 0) {
+          display = true;
+        }
+      break;
+
+      case 'friday':
+        if (day.friday === 0) {
+          display = true;
+        }
+      break;
+
+      case 'saturday':
+        if (day.saturday === 0) {
+          display = true;
+        }
+      break;
+
+      default:
+    }
+
+    // 定休日の場合はエラーメッセージを表示
+    if (display === true) {
+      document.getElementById('error_date-close').style.display = "block";
+      document.getElementById('date').value = ""; // 入力フォームの値をリセット
+    } else {
+      document.getElementById('error_date-close').style.display = "none";
     }
   }
 
