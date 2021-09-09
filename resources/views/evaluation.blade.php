@@ -27,9 +27,23 @@
 <div class="evaluation_wrap shadow">
   <div class="evaluation_content" style="padding: 40px 30px;">
     <h1>このお店の評価を入力してください</h1>
-    <h2>評価(5段階)</h2>
     <form action="/evaluation" method="post">
       @csrf
+      <h2>投稿者名</h2>
+      <div>
+        <?php
+          // 初期値を設定
+          if (old('nickname')) {
+            $nickname = old('nickname');
+          } elseif ($evaluation) {
+            $nickname = $evaluation->nickname;
+          } else {
+            $nickname = '';
+          }
+        ?>
+        <input type="text" name="nickname" id="nickname" placeholder="未入力の場合はユーザー名が表示されます" value="{{$nickname}}">
+      </div>
+      <h2>評価(5段階)</h2>
       @if($evaluation)
         <input type="hidden" name="evaluation_id" value="{{$evaluation->id}}">
       @else

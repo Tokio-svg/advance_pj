@@ -11,15 +11,19 @@
     <div class="sidebar">
       <p style="margin-top: 100px;">サイドメニュー</p>
       <div class="sidebar_button shadow">
-        <div class="sidebar_button-content">
-          <img src="{{putSource('/img/person.png')}}" alt="no image">
-          <p>ユーザー管理</p>
-        </div>
+        <a href="/admin">
+          <div class="sidebar_button-content">
+            <img src="{{putSource('/img/person.png')}}" alt="no image">
+            <p>ユーザー管理</p>
+          </div>
+        </a>
       </div>
       <div class="sidebar_button shadow">
-        <div class="sidebar_button-content">
-          <p>店舗管理</p>
-        </div>
+        <a href="/admin/shop">
+          <div class="sidebar_button-content">
+            <p>店舗管理</p>
+          </div>
+        </a>
       </div>
     </div>
     <div class="content_wrap">
@@ -29,10 +33,34 @@
           <form action="/admin/shop" method="get">
             <!-- 飲食店名 -->
             <label for="name">飲食店名</label>
-            <input type="text" name="name" id="name">
+            <input type="text" name="name" id="name" value="{{$inputs['name']}}">
+            <!-- 地域 -->
+            <select name="area_id" id="area">
+              <option value="">All area</option>
+              @foreach ($areas as $area)
+                <!-- IDが入力値と同じ場合は初期値に設定 -->
+                @if ($area->id == $inputs['area_id'])
+                  <option value="{{$area->id}}" selected>{{$area->name}}</option>
+                @else
+                  <option value="{{$area->id}}">{{$area->name}}</option>
+                @endif
+              @endforeach
+            </select>
+            <!-- ジャンル -->
+            <select name="genre_id" id="genre">
+              <option value="">All genre</option>
+              @foreach ($genres as $genre)
+                <!-- IDが入力値と同じ場合は初期値に設定 -->
+                @if ($genre->id == $inputs['genre_id'])
+                  <option value="{{$genre->id}}" selected>{{$genre->name}}</option>
+                @else
+                  <option value="{{$genre->id}}">{{$genre->name}}</option>
+                @endif
+              @endforeach
+            </select>
             <!-- 検索ボタン -->
-            <div>
-              <button type="submit">検索</button>
+            <div style="text-align: center;">
+              <button class="button_search" type="submit">検索</button>
             </div>
           </form>
           <!-- 検索条件クリア -->

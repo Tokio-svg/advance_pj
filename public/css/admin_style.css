@@ -13,16 +13,21 @@ main {
     left: 0;
     height: 100vh;
     width: 300px;
-    background: rgb(209, 221, 255);
+    background: rgb(222, 230, 255);
 }
 .sidebar_button {
     width: 250px;
     height: 120px;
     background: rgb(53, 96, 246);
-    color: white;
     border-radius: 10px;
     margin: 20px auto;
     font-size: 20px;
+}
+.sidebar_button a {
+    color: white;
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 .sidebar_button-content {
     text-align: center;
@@ -42,6 +47,24 @@ main {
 .search_content {
     width: 90%;
     margin: 0 auto;
+}
+input {
+    border: 1px solid rgb(138, 138, 138);
+    width: 250px;
+    height: 30px;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+.button_search {
+    cursor: pointer;
+    border: none;
+    width: 200px;
+    height: 30px;
+    border-radius: 5px;
+    background: rgb(53, 96, 246);
+    color: white;
+    line-height: 30px;
+    margin: 10px 0;
 }
 
 /* 検索結果 */
@@ -63,7 +86,7 @@ main {
     border-bottom: 1px solid black;
 }
 .result_table tr:nth-of-type(2n) {
-    background: rgb(209, 221, 255);
+    background: rgb(222, 230, 255);
 }
 
 /* pagination */

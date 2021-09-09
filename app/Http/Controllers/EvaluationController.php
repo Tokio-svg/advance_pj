@@ -40,6 +40,7 @@ class EvaluationController extends Controller
             $evaluation->fill([
                 'grade' => $request->grade,
                 'comment' => $request->comment,
+                'nickname' => $request->nickname,
             ])->save();
         } else {
             // idが指定されていない場合は作成処理
@@ -48,6 +49,7 @@ class EvaluationController extends Controller
                 'shop_id' => $request->shop_id,
                 'grade' => $request->grade,
                 'comment' => $request->comment,
+                'nickname' => $request->nickname,
             ]);
         }
 

@@ -181,7 +181,11 @@
       @foreach($comments as $comment)
         <div class="comment_content">
           <div class="comment_title">
-            <p>{{$comment->user->name}}さん</p>
+            @if ($comment->nickname)
+              <p>{{$comment->nickname}}さん</p>
+            @else
+              <p>{{$comment->user->name}}さん</p>
+            @endif
             <p>
               {{$comment->created_at}}
               @if($comment->created_at < $comment->updated_at)
@@ -362,7 +366,7 @@
     // 定休日の場合はエラーメッセージを表示
     if (display === true) {
       document.getElementById('error_date-close').style.display = "block";
-      // document.getElementById('date').value = ""; // 入力フォームの値をリセット
+      document.getElementById('date').value = ""; // 入力フォームの値をリセット
     } else {
       document.getElementById('error_date-close').style.display = "none";
     }

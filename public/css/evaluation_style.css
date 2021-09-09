@@ -45,12 +45,21 @@ main p {
 }
 .range_wrap {
     width: 80%;
-    margin: 30px auto;
+    margin: 10px auto;
 }
 .range_scale {
     display: flex;
     justify-content: space-between;
     font-size: 13px;
+}
+#nickname {
+    border: none;
+    border-radius: 5px;
+    width: 80%;
+    height: 24px;
+    display: block;
+    margin: 10px auto;
+    padding: 0 10px;
 }
 #grade {
     -webkit-appearance: none; /* 🚩これ無しだとスタイルがほぼ全く反映されないので注意 */

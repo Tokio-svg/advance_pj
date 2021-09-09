@@ -11,15 +11,19 @@
     <div class="sidebar">
       <p style="margin-top: 100px;">サイドメニュー</p>
       <div class="sidebar_button shadow">
-        <div class="sidebar_button-content">
-          <img src="{{putSource('/img/person.png')}}" alt="no image">
-          <p>ユーザー管理</p>
-        </div>
+        <a href="/admin">
+          <div class="sidebar_button-content">
+            <img src="{{putSource('/img/person.png')}}" alt="no image">
+            <p>ユーザー管理</p>
+          </div>
+        </a>
       </div>
       <div class="sidebar_button shadow">
-        <div class="sidebar_button-content">
-          <p>店舗管理</p>
-        </div>
+        <a href="/admin/shop">
+          <div class="sidebar_button-content">
+            <p>店舗管理</p>
+          </div>
+        </a>
       </div>
     </div>
     <div class="content_wrap">
@@ -28,14 +32,18 @@
           <p style="margin-top: 100px;">検索フォーム</p>
           <form action="/admin" method="get">
             <!-- ユーザーネーム -->
-            <label for="name">ユーザーネーム</label>
-            <input type="text" name="name" id="name">
-            <!-- メールアドレス -->
-            <label for="email">メールアドレス</label>
-            <input type="text" name="email" id="email">
-            <!-- 検索ボタン -->
             <div>
-              <button type="submit">検索</button>
+              <label for="name">ユーザーネーム</label>
+              <input type="text" name="name" id="name" value="{{$inputs['name']}}">
+            </div>
+            <!-- メールアドレス -->
+            <div>
+              <label for="email">メールアドレス</label>
+              <input type="text" name="email" id="email" value="{{$inputs['email']}}">
+            </div>
+            <!-- 検索ボタン -->
+            <div style="text-align: center;">
+              <button class="button_search" type="submit">検索</button>
             </div>
           </form>
           <!-- 検索条件クリア -->

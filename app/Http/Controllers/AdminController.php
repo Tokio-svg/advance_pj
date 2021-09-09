@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Shop;
+use App\Models\Area;
+use App\Models\Genre;
 
 class AdminController extends Controller
 {
@@ -35,6 +37,7 @@ class AdminController extends Controller
 
         return view('admin.admin', [
             'items' => $users,
+            'inputs' => $inputs,
         ]);
     }
 
@@ -44,21 +47,40 @@ class AdminController extends Controller
         // 入力情報を格納
         $inputs = [
             'name' => $request->input('name'),
+            'area_id' => $request->input('area_id'),
+            'genre_id' => $request->input('genre_id'),
         ];
 
         // 各項目検索
         $query = Shop::query();
 
-        // ユーザーネーム
+        // 飲食店名
         if (!empty($inputs['name'])) {
             $query->where('name', 'LIKE', "%{$inputs['name']}%");
+        }
+
+        // 地域名
+        if (!empty($inputs['area_id'])) {
+            $query->where('area_id', $inputs['area_id']);
+        }
+
+        // ジャンル名
+        if (!empty($inputs['genre_id'])) {
+            $query->where('genre_id', $inputs['genre_id']);
         }
 
         // Shopレコード取得
         $shops = $query->with(['area','genre'])->paginate(10);
 
+        // 検索フォーム項目用レコード取得
+        $areas = Area::has('shops')->get();
+        $genres = Genre::has('shops')->get();
+
         return view('admin.admin_shop', [
             'items' => $shops,
+            'areas' => $areas,
+            'genres' => $genres,
+            'inputs' => $inputs,
         ]);
     }
 
