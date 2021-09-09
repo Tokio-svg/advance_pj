@@ -3,28 +3,96 @@ header {
 }
 main {
     width: 100%;
+    font-size: 14px;
 }
+
+/* サイドバー */
 .sidebar {
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
     width: 300px;
-    background: rgb(255, 163, 163);
+    background: rgb(209, 221, 255);
 }
+.sidebar_button {
+    width: 250px;
+    height: 120px;
+    background: rgb(53, 96, 246);
+    color: white;
+    border-radius: 10px;
+    margin: 20px auto;
+    font-size: 20px;
+}
+.sidebar_button-content {
+    text-align: center;
+    padding: 30px;
+}
+/* メイン画面 */
 .content_wrap {
-    min-height: 100vh;
     min-width: 1000px;
-    background: rgb(130, 128, 255);
     padding-left: 150px;
 }
-.serch_wrap {
-    height: 250px;
-    background: rgb(158, 255, 128);
+
+/* 検索フォーム */
+.search_wrap {
+    height: 200px;
+    border-bottom: 1px solid #000;
 }
+.search_content {
+    width: 90%;
+    margin: 0 auto;
+}
+
+/* 検索結果 */
 .result_wrap {
-    background: rgb(255, 128, 255);
+    background: transparent;
 }
+.result_content {
+    width: 90%;
+    margin: 20px auto 0;
+}
+.result_table {
+    width: 100%;
+    text-align: left;
+    line-height: 2.0em;
+    margin-top: 10px;
+}
+.result_table th {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.result_table tr:nth-of-type(2n) {
+    background: rgb(209, 221, 255);
+}
+
+/* pagination */
+.pagination__wrap {
+    display: flex;
+    justify-content: space-between;
+}
+.pagination {
+    display: flex;
+}
+.pagination li {
+    border: 1px solid rgb(233, 233, 233);
+    border-collapse: collapse;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+}
+.pagination li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    height: 100%;
+}
+.active {
+    color: white;
+    background: black;
+}
+
 /* レスポンシブ対応(break point:768px) */
 @media screen and (max-width: 768px) {
 }

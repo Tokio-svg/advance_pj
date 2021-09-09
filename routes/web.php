@@ -49,7 +49,10 @@ Route::group(['middleware' => 'auth'], function() {
 });
 
 // 管理画面
-Route::get('/admin', [AdminController::class, 'index']);
+Route::group(['prefix' => 'admin'], function () {
+  Route::get('', [AdminController::class, 'index']);
+  Route::get('shop', [AdminController::class, 'shop']);
+});
 
 // テスト用ルーティング（後で消すこと）
 Route::get('/done', [ShopController::class, 'done']);
