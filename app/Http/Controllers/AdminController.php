@@ -41,12 +41,12 @@ class AdminController extends Controller
         $users = $query->paginate(10);
 
         // test
-        // $admin = Auth::guard('admin')->user()->name;
+        $admin = Auth::guard('admin')->user()->name;
 
         return view('admin.admin', [
             'items' => $users,
             'inputs' => $inputs,
-            // 'admin' => $admin,
+            'admin' => $admin,
         ]);
     }
 

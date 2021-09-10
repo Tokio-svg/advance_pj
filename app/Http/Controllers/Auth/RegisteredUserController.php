@@ -17,11 +17,11 @@ class RegisteredUserController extends Controller
 {
 
     // adminガードのゲストとしてのアクセスを許可するミドルウェアを登録
-    // public function __construct()
-    // {
-    //     $this->middleware('guest')->except('logout');
-    //     $this->middleware('guest:admin')->except('logout');
-    // }
+    public function __construct()
+    {
+        $this->middleware('guest');
+        $this->middleware('guest:admin');
+    }
 
     /**
      * Display the registration view.

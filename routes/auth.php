@@ -87,6 +87,6 @@ Route::group(['prefix' => 'admin'], function () {
 
   // ログアウト
   Route::post('logout', [AuthenticatedSessionController::class, 'destroy_admin'])
-    ->middleware('auth')
+    ->middleware('admin.auth')
     ->name('admin_logout');
 });

@@ -48,14 +48,19 @@ Route::group(['middleware' => 'auth'], function() {
 
 });
 
-// 管理画面(管理者用)
-Route::group(['prefix' => 'admin'], function () {
-  // ユーザー管理
-  Route::get('user', [AdminController::class, 'index']);
-  Route::post('user/delete', [AdminController::class, 'delete_user']);
-  // 店舗管理
-  Route::get('shop', [AdminController::class, 'shop']);
-  Route::post('shop/delete', [AdminController::class, 'delete_shop']);
+// admin.authミドルウェア適用グループ
+Route::group(['middleware' => 'admin.auth'], function() {
+
+  // 管理画面(管理者用)
+  Route::group(['prefix' => 'admin'], function () {
+    // ユーザー管理
+    Route::get('user', [AdminController::class, 'index']);
+    Route::post('user/delete', [AdminController::class, 'delete_user']);
+    // 店舗管理
+    Route::get('shop', [AdminController::class, 'shop']);
+    Route::post('shop/delete', [AdminController::class, 'delete_shop']);
+  });
+
 });
 
 // テスト用ルーティング（後で消すこと）

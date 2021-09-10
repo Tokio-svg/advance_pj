@@ -26,6 +26,16 @@
           </div>
         </a>
       </div>
+      <div class="sidebar_button shadow" style="background: rgb(115, 125, 153);">
+        <a href="/" onclick="event.preventDefault(); document.getElementById('admin_logout-form').submit();">
+          <div class="sidebar_button-content">
+            <p>ログアウト</p>
+          </div>
+        </a>
+        <form id="admin_logout-form" action="/admin/logout" method="POST" style="display: none;">
+          @csrf
+        </form>
+      </div>
     </div>
     <div class="content_wrap">
       <div class="search_wrap">

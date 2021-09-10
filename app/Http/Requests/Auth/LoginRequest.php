@@ -56,10 +56,10 @@ class LoginRequest extends FormRequest
         if ($this->routeIs('admin.*')) {
             $guard = 'admin';
         } else {
-            $guard = 'web';
+            $guard = 'user';
         }
 
-        $guard = 'web';    // とりあえずwebで固定
+        $guard = 'user';    // とりあえずuserで固定
 
         if (!Auth::guard($guard)->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());

@@ -13,11 +13,11 @@ class AuthenticatedSessionController extends Controller
 {
 
     // adminガードのゲストとしてのアクセスを許可するミドルウェアを登録
-    // public function __construct()
-    // {
-    //     $this->middleware('guest')->except('logout');
-    //     $this->middleware('guest:admin')->except('logout');
-    // }
+    public function __construct()
+    {
+        $this->middleware('guest')->except('destroy');
+        $this->middleware('guest:admin')->except('destroy_admin');
+    }
 
     /**
      * Display the login view.
@@ -52,7 +52,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        Auth::guard('web')->logout();
+        Auth::guard('user')->logout();
 
         $request->session()->invalidate();
 
