@@ -10,6 +10,7 @@
   <main>
     <div class="sidebar">
       <p style="margin-top: 100px;">サイドメニュー</p>
+      <p>{{$admin}}</p>
       <div class="sidebar_button shadow" style="background: rgb(53, 96, 246);">
         <a href="/admin/user">
           <div class="sidebar_button-content">

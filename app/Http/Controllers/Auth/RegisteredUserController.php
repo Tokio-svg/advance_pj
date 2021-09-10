@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Admin;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -14,6 +15,14 @@ use App\Http\Requests\RegisterRequest;
 
 class RegisteredUserController extends Controller
 {
+
+    // adminガードのゲストとしてのアクセスを許可するミドルウェアを登録
+    // public function __construct()
+    // {
+    //     $this->middleware('guest')->except('logout');
+    //     $this->middleware('guest:admin')->except('logout');
+    // }
+
     /**
      * Display the registration view.
      *
@@ -55,4 +64,43 @@ class RegisteredUserController extends Controller
 
         return view('thanks');
     }
+
+    // 管理者用登録処理
+    /**
+     * Display the registration view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create_admin()
+    {
+        return view('admin.admin_register');
+    }
+
+    /**
+     * Handle an incoming registration request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function store_admin(RegisterRequest $request)
+    {
+
+        // email:uniqueバリデーション
+        $request->admin_email_unique(null);
+
+        $admin = Admin::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        event(new Registered($admin));
+
+        // Auth::login($user);
+
+        return redirect('/admin/login');
+    }
+
 }

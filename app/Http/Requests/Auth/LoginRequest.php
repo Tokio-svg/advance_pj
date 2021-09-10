@@ -52,7 +52,42 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (!Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        // ルート情報からユーザーと管理者どちらのログイン処理か判定（仮）
+        if ($this->routeIs('admin.*')) {
+            $guard = 'admin';
+        } else {
+            $guard = 'web';
+        }
+
+        $guard = 'web';    // とりあえずwebで固定
+
+        if (!Auth::guard($guard)->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'password' => 'メールアドレスまたはパスワードが違います',
+            ]);
+        }
+
+        RateLimiter::clear($this->throttleKey());
+    }
+
+    /**
+     * TEST:管理者用ログイン処理
+     *
+     * Attempt to authenticate the request's credentials.
+     *
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function admin_authenticate()
+    {
+        $this->ensureIsNotRateLimited();
+
+        $guard = 'admin';
+
+        if (!Auth::guard($guard)->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([

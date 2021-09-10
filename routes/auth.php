@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
+// ユーザー用認証処理
 // 新規登録
 Route::get('/register', [RegisteredUserController::class, 'create'])
   ->middleware('guest')
@@ -65,3 +66,27 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
 
 // Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store'])
 //   ->middleware('auth');
+
+// 管理者用認証処理
+Route::group(['prefix' => 'admin'], function () {
+  // 新規登録
+  Route::get('register', [RegisteredUserController::class, 'create_admin'])
+    ->middleware('guest')
+    ->name('admin_register');
+
+  Route::post('register', [RegisteredUserController::class, 'store_admin'])
+    ->middleware('guest');
+
+  // ログイン
+  Route::get('login', [AuthenticatedSessionController::class, 'create_admin'])
+    ->middleware('guest')
+    ->name('admin_login');
+
+  Route::post('login', [AuthenticatedSessionController::class, 'store_admin'])
+    ->middleware('guest');
+
+  // ログアウト
+  Route::post('logout', [AuthenticatedSessionController::class, 'destroy_admin'])
+    ->middleware('auth')
+    ->name('admin_logout');
+});

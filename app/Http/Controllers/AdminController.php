@@ -11,6 +11,7 @@ use App\Models\Reservation;
 use App\Models\Favorite;
 use App\Models\Evaluation;
 use App\Models\Schedule;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -39,9 +40,13 @@ class AdminController extends Controller
         // Userレコード取得
         $users = $query->paginate(10);
 
+        // test
+        // $admin = Auth::guard('admin')->user()->name;
+
         return view('admin.admin', [
             'items' => $users,
             'inputs' => $inputs,
+            // 'admin' => $admin,
         ]);
     }
 

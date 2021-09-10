@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Admin;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
@@ -62,6 +63,32 @@ class RegisterRequest extends FormRequest
             $count = User::whereNotIn('id', [$user_id])->where('email', $this->input('email'))->count();
         } else {
             $count = User::where('email', $this->input('email'))->count();
+        }
+        if ($count) {
+            throw ValidationException::withMessages([
+                'email' => 'そのメールアドレスは既に使用されています',
+            ]);
+        }
+
+    }
+
+        /**
+     * 引数で渡されたID以外のUserのemailと入力値を比較し、
+     * 同一のものがある場合はバリデーションエラーを返す
+     * （引数にnullが渡された場合はIDに条件を設けずに比較する）
+     *
+     * 管理者用処理（上記メソッドでガードの値で判定して分岐処理させた方が良い）
+     *
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function admin_email_unique($admin_id)
+    {
+        if ($admin_id) {
+            $count = Admin::whereNotIn('id', [$admin_id])->where('email', $this->input('email'))->count();
+        } else {
+            $count = Admin::where('email', $this->input('email'))->count();
         }
         if ($count) {
             throw ValidationException::withMessages([
