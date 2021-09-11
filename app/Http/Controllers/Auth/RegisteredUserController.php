@@ -87,6 +87,9 @@ class RegisteredUserController extends Controller
     public function store_admin(RegisterRequest $request)
     {
 
+        // 管理者認証キーバリデーション
+        $request->admin_key_check();
+
         // email:uniqueバリデーション
         $request->admin_email_unique(null);
 

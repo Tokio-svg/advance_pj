@@ -4,6 +4,11 @@
 
 @section('style')
   <link rel="stylesheet" href="{{putSource('/css/auth_style.css')}}">
+  <style>
+    .card_title {
+      background: rgb(246, 53, 53);
+    }
+  </style>
 @endsection
 
 @section('content')
@@ -32,10 +37,19 @@
           <input id="password" type="password" name="password" placeholder="Password" onblur="validatePasswordMin()" required />
           <p id="error_password-min" class="error" style="display: none;">パスワードは8文字以上で入力してください</p>
         </div>
+        <!-- 管理者認証キー -->
+        <div>
+          <img src="{{putSource('/img/key.png')}}" alt="no image">
+          <input id="password" type="password" name="key" placeholder="Admin key" onblur="validateRequire(this.id,'error_key-require')" required />
+          <p id="error_key-require" class="error" style="display: none;">管理者認証キーを入力してください</p>
+        </div>
         <div class="auth_button">
           <button type="submit">登録</button>
         </div>
       </form>
+    </div>
+    <div>
+      <a href="{{ route('admin.login') }}">ログイン</a>
     </div>
   </main>
 @endsection

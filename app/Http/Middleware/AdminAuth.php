@@ -22,6 +22,6 @@ class AdminAuth
         }
 
         // ログインしていなかったらリダイレクト
-        return redirect('/admin/login');
+        return redirect(route('admin.login'));
     }
 }

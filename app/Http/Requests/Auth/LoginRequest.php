@@ -80,6 +80,13 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
+        // 管理者認証キー照合
+        if (hash('md5', $this->input('key')) != config('app.admin_key')) {
+            throw ValidationException::withMessages([
+                'key' => '管理者認証キーが違います',
+            ]);
+        }
+
         if (!Auth::guard('admin')->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 

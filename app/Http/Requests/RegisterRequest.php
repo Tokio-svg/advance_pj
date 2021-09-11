@@ -95,7 +95,26 @@ class RegisterRequest extends FormRequest
                 'email' => 'そのメールアドレスは既に使用されています',
             ]);
         }
+    }
 
+    /**
+     * 管理者用
+     *
+     * 引数で渡されたID以外のUserのemailと入力値を比較し、
+     * 同一のものがある場合はバリデーションエラーを返す
+     * （引数にnullが渡された場合はIDに条件を設けずに比較する）
+     *
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function admin_key_check()
+    {
+        if (hash('md5', $this->input('key')) != config('app.admin_key')) {
+            throw ValidationException::withMessages([
+                'key' => '管理者認証キーが違います',
+            ]);
+        }
     }
 
 }
