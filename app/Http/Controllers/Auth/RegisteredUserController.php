@@ -100,7 +100,7 @@ class RegisteredUserController extends Controller
 
         // Auth::login($user);
 
-        return redirect('/admin/login');
+        return redirect(route('admin.login'));
     }
 
 }

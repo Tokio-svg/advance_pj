@@ -11,7 +11,7 @@
     <div class="sidebar">
       <p style="margin-top: 100px;">サイドメニュー</p>
       <div class="sidebar_button shadow" style="background: rgb(115, 125, 153);">
-        <a href="/admin/user">
+        <a href="{{ route('admin.user') }}">
           <div class="sidebar_button-content">
             <img src="{{putSource('/img/person.png')}}" alt="no image">
             <p>ユーザー管理</p>
@@ -19,7 +19,7 @@
         </a>
       </div>
       <div class="sidebar_button shadow" style="background: rgb(53, 96, 246);">
-        <a href="/admin/shop">
+        <a href="{{ route('admin.shop') }}">
           <div class="sidebar_button-content">
             <p>店舗管理</p>
           </div>
@@ -30,7 +30,7 @@
       <div class="search_wrap">
         <div class="search_content">
           <p style="margin-top: 100px;">検索フォーム</p>
-          <form action="/admin/shop" method="get">
+          <form action="{{ route('admin.shop') }}" method="get">
             <!-- 飲食店名 -->
             <label for="name">飲食店名</label>
             <input type="text" name="name" id="name" value="{{$inputs['name']}}">
@@ -65,7 +65,7 @@
           </form>
           <!-- 検索条件クリア -->
           <div>
-            <a href="/admin/shop">クリア</a>
+            <a href="{{ route('admin.shop') }}">クリア</a>
           </div>
         </div>
       </div>
@@ -90,7 +90,7 @@
                 <td>{{$shop->genre->name}}</td>
                 <td>{{$shop->created_at}}</td>
                 <td>
-                  <form action="/admin/shop/delete" method="post" onsubmit="return confirmDelete()">
+                  <form action="{{ route('admin.shop.delete') }}" method="post" onsubmit="return confirmDelete()">
                     @csrf
                     <input type="hidden" name="shop_id" value="{{$shop->id}}">
                     <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">

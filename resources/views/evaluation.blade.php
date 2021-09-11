@@ -27,7 +27,7 @@
 <div class="evaluation_wrap shadow">
   <div class="evaluation_content" style="padding: 40px 30px;">
     <h1>このお店の評価を入力してください</h1>
-    <form action="/evaluation" method="post">
+    <form action="{{ route('evaluation.create') }}" method="post">
       @csrf
       <h2>投稿者名</h2>
       <div>

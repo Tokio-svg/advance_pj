@@ -18,32 +18,32 @@ Route::get('/detail/{shop_id}', [ShopController::class, 'detail']);
 Route::group(['middleware' => 'auth'], function() {
 
   // マイページ
-  Route::group(['prefix' => 'mypage'], function () {
-    Route::get('', [UserController::class, 'mypage']);
-    Route::get('update', [UserController::class, 'change']);
-    Route::post('update', [UserController::class, 'update']);
-    Route::post('delete', [UserController::class, 'delete']);
+  Route::group(['prefix' => 'mypage', 'as' => 'mypage.'], function () {
+    Route::get('', [UserController::class, 'mypage'])->name('top');
+    Route::get('update', [UserController::class, 'change'])->name('change');
+    Route::post('update', [UserController::class, 'update'])->name('update');
+    Route::post('delete', [UserController::class, 'delete'])->name('delete');
   });
 
   // お気に入り登録、削除
-  Route::group(['prefix' => 'favorite'], function () {
-    Route::post('', [FavoriteController::class, 'create']);
-    Route::post('delete', [FavoriteController::class, 'delete']);
+  Route::group(['prefix' => 'favorite', 'as' => 'favorite.'], function () {
+    Route::post('', [FavoriteController::class, 'create'])->name('create');
+    Route::post('delete', [FavoriteController::class, 'delete'])->name('delete');
   });
 
   // 予約登録、削除、変更
-  Route::group(['prefix' => 'reserve'], function () {
-    Route::post('', [ReservationController::class, 'create']);
-    Route::post('delete', [ReservationController::class, 'delete']);
-    Route::post('reminder', [ReservationController::class, 'switch_reminder']);
-    Route::get('{reservation_id}', [ReservationController::class, 'change']);
-    Route::post('{reservation_id}', [ReservationController::class, 'update']);
+  Route::group(['prefix' => 'reserve', 'as' => 'reserve.'], function () {
+    Route::post('', [ReservationController::class, 'create'])->name('create');
+    Route::post('delete', [ReservationController::class, 'delete'])->name('delete');
+    Route::post('reminder', [ReservationController::class, 'switch_reminder'])->name('reminder');
+    Route::get('{reservation_id}', [ReservationController::class, 'change'])->name('change');
+    Route::post('{reservation_id}', [ReservationController::class, 'update'])->name('update');
   });
 
   // 評価投稿
-  Route::group(['prefix' => 'evaluation'], function () {
-    Route::get('{shop_id}', [EvaluationController::class, 'evaluation']);
-    Route::post('', [EvaluationController::class, 'create']);
+  Route::group(['prefix' => 'evaluation', 'as' => 'evaluation.'], function () {
+    Route::get('{shop_id}', [EvaluationController::class, 'evaluation'])->name('top');
+    Route::post('', [EvaluationController::class, 'create'])->name('create');
   });
 
 });
@@ -52,13 +52,13 @@ Route::group(['middleware' => 'auth'], function() {
 Route::group(['middleware' => 'admin.auth'], function() {
 
   // 管理画面(管理者用)
-  Route::group(['prefix' => 'admin'], function () {
+  Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     // ユーザー管理
-    Route::get('user', [AdminController::class, 'index']);
-    Route::post('user/delete', [AdminController::class, 'delete_user']);
+    Route::get('user', [AdminController::class, 'index'])->name('user');
+    Route::post('user/delete', [AdminController::class, 'delete_user'])->name('user.delete');
     // 店舗管理
-    Route::get('shop', [AdminController::class, 'shop']);
-    Route::post('shop/delete', [AdminController::class, 'delete_shop']);
+    Route::get('shop', [AdminController::class, 'shop'])->name('shop');
+    Route::post('shop/delete', [AdminController::class, 'delete_shop'])->name('shop.delete');
   });
 
 });

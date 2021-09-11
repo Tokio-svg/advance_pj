@@ -10,7 +10,7 @@
   <main class="shadow">
     <h1 class="card_title">登録情報変更</h1>
     <div class="form_wrap">
-      <form method="POST" action="/mypage/update">
+      <form method="POST" action="{{ route('mypage.update') }}">
         @csrf
         <!-- ユーザーネーム -->
         <div>
@@ -56,8 +56,8 @@
   </main>
   <!-- ユーザー削除ボタン -->
   <div class="delete_wrap">
-    <a class="back_button" href="/mypage">戻る</a>
-    <form action="/mypage/delete" method="post" onsubmit="return confirmDelete()">
+    <a class="back_button" href="{{ route('mypage.top') }}">戻る</a>
+    <form action="{{ route('mypage.delete') }}" method="post" onsubmit="return confirmDelete()">
       @csrf
       <button type="submit">退会する</button>
     </form>

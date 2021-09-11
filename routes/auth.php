@@ -68,11 +68,11 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
 //   ->middleware('auth');
 
 // 管理者用認証処理
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
   // 新規登録
   Route::get('register', [RegisteredUserController::class, 'create_admin'])
     ->middleware('guest')
-    ->name('admin.register');
+    ->name('register');
 
   Route::post('register', [RegisteredUserController::class, 'store_admin'])
     ->middleware('guest');
@@ -80,7 +80,7 @@ Route::group(['prefix' => 'admin'], function () {
   // ログイン
   Route::get('login', [AuthenticatedSessionController::class, 'create_admin'])
     ->middleware('guest')
-    ->name('admin.login');
+    ->name('login');
 
   Route::post('login', [AuthenticatedSessionController::class, 'store_admin'])
     ->middleware('guest');
@@ -88,5 +88,5 @@ Route::group(['prefix' => 'admin'], function () {
   // ログアウト
   Route::post('logout', [AuthenticatedSessionController::class, 'destroy_admin'])
     ->middleware('admin.auth')
-    ->name('admin.logout');
+    ->name('logout');
 });

@@ -10,7 +10,7 @@
 <main>
   <div style="display: flex; justify-content: center;">
     <h1 class="user_name">{{$user->name}}さん</h1>
-    <a class="button_update hover" href="/mypage/update">登録情報を変更する</a>
+    <a class="button_update hover" href="{{ route('mypage.change') }}">登録情報を変更する</a>
   </div>
   <div class="mypage_content">
     <div class="reservation_info">
@@ -26,7 +26,7 @@
             <div onclick="document.getElementById('reservation_{{$reservation->id}}').submit();" style="cursor: pointer;" onmouseover="showText('popup_delete',event)" onmouseout="hideText('popup_delete')">
               <img src="{{putSource('/img/cross.png')}}" alt="no image" style="width: 28px;">
             </div>
-            <form id="reservation_{{$reservation->id}}" action="/reserve/delete" method="POST" style="display: none;">
+            <form id="reservation_{{$reservation->id}}" action="{{ route('reserve.delete') }}" method="POST" style="display: none;">
               @csrf
               <input type="hidden" name="reservation_id" value="{{$reservation->id}}">
               <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
@@ -57,7 +57,7 @@
               </tr>
             </table>
             <!-- 予約情報変更ボタン -->
-            <a href="/reserve/{{$reservation->id}}" class="change_button">変更</a>
+            <a href="{{ route('reserve.change', ['reservation_id' => $reservation->id]) }}" class="change_button">変更</a>
             <!-- リマインダーボタン -->
             @if($reservation->reminder)
               <div class="reminder_button" onclick="document.getElementById('reminder_{{$reservation->id}}').submit();" onmouseover="showText('popup_reminder-off',event)" onmouseout="hideText('popup_reminder-off')">
@@ -68,7 +68,7 @@
                 <img src="{{putSource('/img/bell_off.png')}}" alt="no image" style="width: 28px;">
               </div>
             @endif
-            <form id="reminder_{{$reservation->id}}" action="/reserve/reminder" method="POST" style="display: none;">
+            <form id="reminder_{{$reservation->id}}" action="{{ route('reserve.reminder') }}" method="POST" style="display: none;">
               @csrf
               <input type="hidden" name="reservation_id" value="{{$reservation->id}}">
               <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
@@ -106,7 +106,7 @@
                 <div onclick="event.preventDefault(); document.getElementById('shop_{{$favorite->shop->id}}').submit();" style="cursor: pointer;" onmouseover="showText('favorite_popup-delete',event)" onmouseout="hideText('favorite_popup-delete')">
                   <img src="{{putSource('/img/heart_red.png')}}" alt="no image">
                 </div>
-                <form id="shop_{{$favorite->shop->id}}" action="/favorite/delete" method="POST" style="display: none;">
+                <form id="shop_{{$favorite->shop->id}}" action="{{ route('favorite.delete') }}" method="POST" style="display: none;">
                   @csrf
                   <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
                   <input type="hidden" name="shop_id" value="{{$favorite->shop->id}}">

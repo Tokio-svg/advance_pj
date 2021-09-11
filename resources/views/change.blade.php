@@ -48,7 +48,7 @@
     <div class="reservation_wrap shadow">
       <div class="reservation_content">
         <h1>予約変更</h1>
-        <form action="/reserve/{{$reservation->id}}" method="post">
+        <form action="{{ route('reserve.update', ['reservation_id' => $reservation->id]) }}" method="post">
           @csrf
           @if (Auth::check())
             <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
