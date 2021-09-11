@@ -72,12 +72,12 @@ class RegisterRequest extends FormRequest
 
     }
 
-        /**
+    /**
+     * 管理者用
+     *
      * 引数で渡されたID以外のUserのemailと入力値を比較し、
      * 同一のものがある場合はバリデーションエラーを返す
      * （引数にnullが渡された場合はIDに条件を設けずに比較する）
-     *
-     * 管理者用処理（上記メソッドでガードの値で判定して分岐処理させた方が良い）
      *
      * @return void
      *

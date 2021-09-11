@@ -14,6 +14,7 @@ class CreateShopsTable extends Migration
     public function up()
     {
         Schema::create('shops', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->bigIncrements('id');
             $table->string('name');
             $table->unsignedBigInteger('area_id');
@@ -22,6 +23,16 @@ class CreateShopsTable extends Migration
             $table->string('image_url');
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
+
+            //外部キー制約
+            $table->foreign('area_id')
+                    ->references('id')
+                    ->on('areas')
+                    ->onDelete('cascade');
+            $table->foreign('genre_id')
+                    ->references('id')
+                    ->on('genres')
+                    ->onDelete('cascade');
         });
     }
 

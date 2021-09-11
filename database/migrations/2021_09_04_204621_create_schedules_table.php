@@ -14,6 +14,7 @@ class CreateSchedulesTable extends Migration
     public function up()
     {
         Schema::create('schedules', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->bigIncrements('id');
             $table->unsignedBigInteger('shop_id');
             $table->time('opening_time');
@@ -27,6 +28,12 @@ class CreateSchedulesTable extends Migration
             $table->boolean('saturday');
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
+
+            //外部キー制約
+            $table->foreign('shop_id')
+                    ->references('id')
+                    ->on('shops')
+                    ->onDelete('cascade');
         });
     }
 

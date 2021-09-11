@@ -72,7 +72,7 @@ Route::group(['prefix' => 'admin'], function () {
   // 新規登録
   Route::get('register', [RegisteredUserController::class, 'create_admin'])
     ->middleware('guest')
-    ->name('admin_register');
+    ->name('admin.register');
 
   Route::post('register', [RegisteredUserController::class, 'store_admin'])
     ->middleware('guest');
@@ -80,7 +80,7 @@ Route::group(['prefix' => 'admin'], function () {
   // ログイン
   Route::get('login', [AuthenticatedSessionController::class, 'create_admin'])
     ->middleware('guest')
-    ->name('admin_login');
+    ->name('admin.login');
 
   Route::post('login', [AuthenticatedSessionController::class, 'store_admin'])
     ->middleware('guest');
@@ -88,5 +88,5 @@ Route::group(['prefix' => 'admin'], function () {
   // ログアウト
   Route::post('logout', [AuthenticatedSessionController::class, 'destroy_admin'])
     ->middleware('admin.auth')
-    ->name('admin_logout');
+    ->name('admin.logout');
 });

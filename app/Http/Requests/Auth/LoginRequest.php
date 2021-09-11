@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
+
+use function Psy\debug;
 
 class LoginRequest extends FormRequest
 {
@@ -52,16 +56,7 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        // ルート情報からユーザーと管理者どちらのログイン処理か判定（仮）
-        if ($this->routeIs('admin.*')) {
-            $guard = 'admin';
-        } else {
-            $guard = 'user';
-        }
-
-        $guard = 'user';    // とりあえずuserで固定
-
-        if (!Auth::guard($guard)->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        if (!Auth::guard('user')->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -73,7 +68,7 @@ class LoginRequest extends FormRequest
     }
 
     /**
-     * TEST:管理者用ログイン処理
+     * 管理者用ログイン処理
      *
      * Attempt to authenticate the request's credentials.
      *
@@ -85,9 +80,7 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        $guard = 'admin';
-
-        if (!Auth::guard($guard)->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        if (!Auth::guard('admin')->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
