@@ -90,3 +90,27 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     ->middleware('admin.auth')
     ->name('logout');
 });
+
+// 飲食店用認証処理
+Route::group(['prefix' => 'shop_admin', 'as' => 'shop.'], function () {
+  // 新規登録(管理者adminとしてのログイン必須)
+  Route::get('register', [RegisteredUserController::class, 'create_shop_admin'])
+    ->middleware('admin.auth')
+    ->name('register');
+
+  Route::post('register', [RegisteredUserController::class, 'store_shop_admin'])
+    ->middleware('admin.auth');
+
+  // ログイン
+  Route::get('login', [AuthenticatedSessionController::class, 'create_shop_admin'])
+    ->middleware('guest')
+    ->name('login');
+
+  Route::post('login', [AuthenticatedSessionController::class, 'store_shop_admin'])
+    ->middleware('guest');
+
+  // ログアウト
+  Route::post('logout', [AuthenticatedSessionController::class, 'destroy_shop_admin'])
+    ->middleware('admin.auth')
+    ->name('logout');
+});

@@ -19,6 +19,9 @@ class AuthenticatedSessionController extends Controller
         $this->middleware('guest:admin')->except('destroy_admin');
     }
 
+    // ----------------------------------------------------------------------
+    // ユーザーログイン処理群
+    // ----------------------------------------------------------------------
     /**
      * Display the login view.
      *
@@ -62,7 +65,9 @@ class AuthenticatedSessionController extends Controller
     }
 
 
-    // 管理者用ログイン処理
+    // ----------------------------------------------------------------------
+    // 管理者ログイン処理群
+    // ----------------------------------------------------------------------
     /**
      * Display the login view.
      *
@@ -104,4 +109,50 @@ class AuthenticatedSessionController extends Controller
 
         return redirect(route('admin.login'));
     }
+
+    // ----------------------------------------------------------------------
+    // 飲食店管理者ログイン処理群
+    // ----------------------------------------------------------------------
+    /**
+     * Display the login view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create_shop_admin()
+    {
+        return view('shop.shop_admin_login');
+    }
+
+    /**
+     * Handle an incoming authentication request.
+     *
+     * @param  \App\Http\Requests\Auth\LoginRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store_shop_admin(LoginRequest $request)
+    {
+        $request->shop_authenticate();
+
+        $request->session()->regenerate();
+
+        return redirect(route('shop.top'));
+    }
+
+    /**
+     * Destroy an authenticated session.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy_shop_admin(Request $request)
+    {
+        Auth::guard('shop')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect(route('shop.login'));
+    }
+
 }

@@ -99,6 +99,30 @@ class LoginRequest extends FormRequest
     }
 
     /**
+     * 飲食店管理者用ログイン処理
+     *
+     * Attempt to authenticate the request's credentials.
+     *
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function shop_authenticate()
+    {
+        $this->ensureIsNotRateLimited();
+
+        if (!Auth::guard('shop')->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'password' => 'メールアドレスまたはパスワードが違います',
+            ]);
+        }
+
+        RateLimiter::clear($this->throttleKey());
+    }
+
+    /**
      * Ensure the login request is not rate limited.
      *
      * @return void

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Shop_admin;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use App\Http\Requests\RegisterRequest;
+use Illuminate\Support\Facades\Log;
 
 class RegisteredUserController extends Controller
 {
@@ -20,9 +22,12 @@ class RegisteredUserController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
-        $this->middleware('guest:admin');
+        $this->middleware('guest:admin')->except(['create_shop_admin', 'store_shop_admin']);
     }
 
+    // ----------------------------------------------------------------------
+    // ユーザー登録処理群
+    // ----------------------------------------------------------------------
     /**
      * Display the registration view.
      *
@@ -65,7 +70,10 @@ class RegisteredUserController extends Controller
         return view('thanks');
     }
 
-    // 管理者用登録処理
+
+    // ----------------------------------------------------------------------
+    // 管理者登録処理群
+    // ----------------------------------------------------------------------
     /**
      * Display the registration view.
      *
@@ -104,6 +112,49 @@ class RegisteredUserController extends Controller
         // Auth::login($user);
 
         return redirect(route('admin.login'));
+    }
+
+    // ----------------------------------------------------------------------
+    // 飲食店管理者登録処理群
+    // ----------------------------------------------------------------------
+    /**
+     * Display the registration view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create_shop_admin()
+    {
+        return view('shop.shop_admin_register');
+    }
+
+    /**
+     * Handle an incoming registration request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function store_shop_admin(RegisterRequest $request)
+    {
+
+        // email:uniqueバリデーション
+        $request->shop_email_unique(null);
+
+        Log::debug($request->shop_id);
+
+        $shop_admin = Shop_admin::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'shop_id' => $request->shop_id,
+        ]);
+
+        event(new Registered($shop_admin));
+
+        // Auth::login($user);
+
+        return redirect(route('shop.login'));
     }
 
 }

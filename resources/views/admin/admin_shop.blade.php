@@ -25,7 +25,25 @@
           </div>
         </a>
       </div>
+      <div class="sidebar_button shadow" style="background: rgb(53, 96, 246);">
+        <a href="{{ route('shop.register') }}">
+          <div class="sidebar_button-content">
+            <p>店舗アカウント作成</p>
+          </div>
+        </a>
+      </div>
+      <div class="sidebar_button shadow" style="background: rgb(115, 125, 153);">
+        <a href="#" onclick="event.preventDefault(); document.getElementById('admin_logout-form').submit();">
+          <div class="sidebar_button-content">
+            <p>ログアウト</p>
+          </div>
+        </a>
+        <form id="admin_logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+          @csrf
+        </form>
+      </div>
     </div>
+
     <div class="content_wrap">
       <div class="search_wrap">
         <div class="search_content">

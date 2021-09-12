@@ -3,9 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Models\Admin;
+use App\Models\Shop_admin;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
-use App\Models\User;
 use Symfony\Component\Console\Input\Input;
 
 class RegisterRequest extends FormRequest
@@ -75,7 +76,7 @@ class RegisterRequest extends FormRequest
     /**
      * 管理者用
      *
-     * 引数で渡されたID以外のUserのemailと入力値を比較し、
+     * 引数で渡されたID以外のAdminのemailと入力値を比較し、
      * 同一のものがある場合はバリデーションエラーを返す
      * （引数にnullが渡された場合はIDに条件を設けずに比較する）
      *
@@ -100,9 +101,7 @@ class RegisterRequest extends FormRequest
     /**
      * 管理者用
      *
-     * 引数で渡されたID以外のUserのemailと入力値を比較し、
-     * 同一のものがある場合はバリデーションエラーを返す
-     * （引数にnullが渡された場合はIDに条件を設けずに比較する）
+     * 管理者認証キーチェック
      *
      * @return void
      *
@@ -113,6 +112,31 @@ class RegisterRequest extends FormRequest
         if (hash('md5', $this->input('key')) != config('app.admin_key')) {
             throw ValidationException::withMessages([
                 'key' => '管理者認証キーが違います',
+            ]);
+        }
+    }
+
+    /**
+     * 飲食店管理者用
+     *
+     * 引数で渡されたID以外のShop_adminのemailと入力値を比較し、
+     * 同一のものがある場合はバリデーションエラーを返す
+     * （引数にnullが渡された場合はIDに条件を設けずに比較する）
+     *
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function shop_email_unique($shop_id)
+    {
+        if ($shop_id) {
+            $count = Shop_admin::whereNotIn('id', [$shop_id])->where('email', $this->input('email'))->count();
+        } else {
+            $count = Shop_admin::where('email', $this->input('email'))->count();
+        }
+        if ($count) {
+            throw ValidationException::withMessages([
+                'email' => 'そのメールアドレスは既に使用されています',
             ]);
         }
     }

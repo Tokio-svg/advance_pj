@@ -7,6 +7,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Shop_adminController;
 
 
 // 飲食店一覧ページ
@@ -62,6 +63,17 @@ Route::group(['middleware' => 'admin.auth'], function() {
   });
 
 });
+
+// admin.authミドルウェア適用グループ
+// Route::group(['middleware' => 'admin.auth'], function() {
+
+  // 管理画面(飲食店管理者用)
+  Route::group(['prefix' => 'shop_admin', 'as' => 'shop.'], function () {
+    // トップページ
+    Route::get('', [Shop_adminController::class, 'index'])->name('top');
+  });
+
+// });
 
 // テスト用ルーティング（後で消すこと）
 Route::get('/done', [ShopController::class, 'done']);
