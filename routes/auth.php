@@ -111,6 +111,6 @@ Route::group(['prefix' => 'shop_admin', 'as' => 'shop.'], function () {
 
   // ログアウト
   Route::post('logout', [AuthenticatedSessionController::class, 'destroy_shop_admin'])
-    ->middleware('admin.auth')
+    ->middleware('shop.auth')
     ->name('logout');
 });

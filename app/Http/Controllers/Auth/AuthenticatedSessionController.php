@@ -17,6 +17,7 @@ class AuthenticatedSessionController extends Controller
     {
         $this->middleware('guest')->except('destroy');
         $this->middleware('guest:admin')->except('destroy_admin');
+        $this->middleware('guest:shop')->except('destroy_shop_admin');
     }
 
     // ----------------------------------------------------------------------

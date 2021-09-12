@@ -21,6 +21,7 @@
       <div class="sidebar_button shadow" style="background: rgb(53, 96, 246);">
         <a href="{{ route('admin.shop') }}">
           <div class="sidebar_button-content">
+            <img src="{{putSource('/img/shop.png')}}" alt="no image">
             <p>店舗管理</p>
           </div>
         </a>
@@ -35,6 +36,7 @@
       <div class="sidebar_button shadow" style="background: rgb(115, 125, 153);">
         <a href="#" onclick="event.preventDefault(); document.getElementById('admin_logout-form').submit();">
           <div class="sidebar_button-content">
+          <img src="{{putSource('/img/exit.png')}}" alt="no image">
             <p>ログアウト</p>
           </div>
         </a>

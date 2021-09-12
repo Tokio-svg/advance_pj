@@ -10,17 +10,38 @@
   <main>
     <div class="sidebar">
       <p style="margin-top: 100px;">サイドメニュー</p>
+      <p>店名：{{$shop->name}}</p>
+      <!-- サイドバーボタン -->
+      <div class="sidebar_button shadow" style="background: rgb(53, 96, 246);">
+        <a href="{{ route('shop.top') }}">
+          <div class="sidebar_button-content">
+            <img src="{{putSource('/img/shop.png')}}" alt="no image">
+            <p>店舗情報</p>
+          </div>
+        </a>
+      </div>
+      <div class="sidebar_button shadow" style="background: rgb(53, 96, 246);">
+        <a href="{{ route('shop.top') }}">
+          <div class="sidebar_button-content">
+            <img src="{{putSource('/img/calendar.png')}}" alt="no image">
+            <p>予約情報</p>
+          </div>
+        </a>
+      </div>
+      <div class="sidebar_button shadow" style="background: rgb(53, 96, 246);">
+        <a href="#" onclick="event.preventDefault(); document.getElementById('admin_logout-form').submit();">
+          <div class="sidebar_button-content">
+            <img src="{{putSource('/img/exit.png')}}" alt="no image">
+            <p>ログアウト</p>
+          </div>
+        </a>
+        <form id="admin_logout-form" action="{{ route('shop.logout') }}" method="POST" style="display: none;">
+          @csrf
+        </form>
+      </div>
     </div>
     <div class="content_wrap">
-      <div class="search_wrap">
-        <div class="search_content">
-          <p style="margin-top: 100px;">検索フォーム</p>
-      </div>
-      <div class="result_wrap">
-        <div class="result_content">
-          検索結果
-        </div>
-      </div>
+      店舗情報
     </div>
   </main>
 @endsection

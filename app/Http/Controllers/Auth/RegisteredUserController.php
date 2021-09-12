@@ -23,6 +23,7 @@ class RegisteredUserController extends Controller
     {
         $this->middleware('guest');
         $this->middleware('guest:admin')->except(['create_shop_admin', 'store_shop_admin']);
+        $this->middleware('guest:shop');
     }
 
     // ----------------------------------------------------------------------

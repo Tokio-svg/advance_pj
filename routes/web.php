@@ -64,8 +64,8 @@ Route::group(['middleware' => 'admin.auth'], function() {
 
 });
 
-// admin.authミドルウェア適用グループ
-// Route::group(['middleware' => 'admin.auth'], function() {
+// shop.authミドルウェア適用グループ
+Route::group(['middleware' => 'shop.auth'], function() {
 
   // 管理画面(飲食店管理者用)
   Route::group(['prefix' => 'shop_admin', 'as' => 'shop.'], function () {
@@ -73,7 +73,7 @@ Route::group(['middleware' => 'admin.auth'], function() {
     Route::get('', [Shop_adminController::class, 'index'])->name('top');
   });
 
-// });
+});
 
 // テスト用ルーティング（後で消すこと）
 Route::get('/done', [ShopController::class, 'done']);
