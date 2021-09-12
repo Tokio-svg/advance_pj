@@ -10,7 +10,7 @@
   <main>
     <div class="sidebar">
       <p style="margin-top: 100px;">サイドメニュー</p>
-      <div class="sidebar_button shadow" style="background: rgb(115, 125, 153);">
+      <div class="sidebar_button shadow">
         <a href="{{ route('admin.user') }}">
           <div class="sidebar_button-content">
             <img src="{{putSource('/img/person.png')}}" alt="no image">
@@ -18,22 +18,21 @@
           </div>
         </a>
       </div>
-      <div class="sidebar_button shadow" style="background: rgb(53, 96, 246);">
-        <a href="{{ route('admin.shop') }}">
+      <div class="sidebar_button shadow button_push">
           <div class="sidebar_button-content">
             <img src="{{putSource('/img/shop.png')}}" alt="no image">
             <p>店舗管理</p>
           </div>
-        </a>
       </div>
-      <div class="sidebar_button shadow" style="background: rgb(53, 96, 246);">
+      <div class="sidebar_button shadow">
         <a href="{{ route('shop.register') }}">
           <div class="sidebar_button-content">
+          <img src="{{putSource('/img/shop.png')}}" alt="no image">
             <p>店舗アカウント作成</p>
           </div>
         </a>
       </div>
-      <div class="sidebar_button shadow" style="background: rgb(115, 125, 153);">
+      <div class="sidebar_button shadow">
         <a href="#" onclick="event.preventDefault(); document.getElementById('admin_logout-form').submit();">
           <div class="sidebar_button-content">
           <img src="{{putSource('/img/exit.png')}}" alt="no image">

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Shop_admin;
+use App\Models\Shop;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -125,7 +126,11 @@ class RegisteredUserController extends Controller
      */
     public function create_shop_admin()
     {
-        return view('shop.shop_admin_register');
+        // 全Shopレコードを取得
+        $shops = Shop::get(['id','name']);
+        return view('shop.shop_admin_register', [
+            'shops' => $shops,
+        ]);
     }
 
     /**

@@ -69,8 +69,10 @@ Route::group(['middleware' => 'shop.auth'], function() {
 
   // 管理画面(飲食店管理者用)
   Route::group(['prefix' => 'shop_admin', 'as' => 'shop.'], function () {
-    // トップページ
+    // 飲食店情報管理
     Route::get('', [Shop_adminController::class, 'index'])->name('top');
+    // 予約情報管理
+    Route::get('reservation', [Shop_adminController::class, 'reservation'])->name('reservation');
   });
 
 });

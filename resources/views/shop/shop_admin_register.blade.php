@@ -40,8 +40,13 @@
         <!-- shop_id -->
         <div>
           <img src="{{putSource('/img/key.png')}}" alt="no image">
-          <input id="shop_id" type="number" name="shop_id" placeholder="Shop_id" onblur="validateRequire(this.id,'error_shop_id-require')" required />
-          <p id="error_shop_id-require" class="error" style="display: none;">shop_idを入力してください</p>
+          <select name="shop_id" id="shop_id" onblur="validateRequire(this.id,'error_shop_id-require')" required>
+            <option value="">飲食店を選択してください</option>
+            @foreach($shops as $shop)
+              <option value="{{$shop->id}}">{{$shop->name}}</option>
+            @endforeach
+          </select>
+          <p id="error_shop_id-require" class="error" style="display: none;">飲食店を選択してください</p>
         </div>
         <div class="auth_button">
           <button type="submit">登録</button>

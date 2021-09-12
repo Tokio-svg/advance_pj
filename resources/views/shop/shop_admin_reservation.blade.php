@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('title','ユーザー管理画面')
+@section('title','予約情報管理画面')
 
 @section('style')
   <link rel="stylesheet" href="{{putSource('/css/admin_style.css')}}">
@@ -11,54 +11,46 @@
     <div class="sidebar">
       <p style="margin-top: 100px;">サイドメニュー</p>
       <!-- サイドバーボタン -->
+      <div class="sidebar_button shadow">
+        <a href="{{ route('shop.top') }}">
+          <div class="sidebar_button-content">
+            <img src="{{putSource('/img/shop.png')}}" alt="no image">
+            <p>店舗情報</p>
+          </div>
+        </a>
+      </div>
       <div class="sidebar_button shadow button_push">
           <div class="sidebar_button-content">
-            <img src="{{putSource('/img/person.png')}}" alt="no image">
-            <p>ユーザー管理</p>
+            <img src="{{putSource('/img/calendar.png')}}" alt="no image">
+            <p>予約情報</p>
           </div>
-      </div>
-      <div class="sidebar_button shadow">
-        <a href="{{ route('admin.shop') }}">
-          <div class="sidebar_button-content">
-          <img src="{{putSource('/img/shop.png')}}" alt="no image">
-            <p>店舗管理</p>
-          </div>
-        </a>
-      </div>
-      <div class="sidebar_button shadow">
-        <a href="{{ route('shop.register') }}">
-          <div class="sidebar_button-content">
-          <img src="{{putSource('/img/shop.png')}}" alt="no image">
-            <p>店舗アカウント作成</p>
-          </div>
-        </a>
       </div>
       <div class="sidebar_button shadow">
         <a href="#" onclick="event.preventDefault(); document.getElementById('admin_logout-form').submit();">
           <div class="sidebar_button-content">
-          <img src="{{putSource('/img/exit.png')}}" alt="no image">
+            <img src="{{putSource('/img/exit.png')}}" alt="no image">
             <p>ログアウト</p>
           </div>
         </a>
-        <form id="admin_logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+        <form id="admin_logout-form" action="{{ route('shop.logout') }}" method="POST" style="display: none;">
           @csrf
         </form>
       </div>
     </div>
     <div class="content_wrap">
-      <div class="search_wrap">
+    <div class="search_wrap">
         <div class="search_content">
           <p style="margin-top: 100px;">検索フォーム</p>
-          <form action="{{ route('admin.user') }}" method="get">
+          <form action="{{ route('shop.reservation') }}" method="get">
             <!-- ユーザーネーム -->
             <div>
               <label for="name">ユーザーネーム</label>
-              <input type="text" name="name" id="name" value="{{$inputs['name']}}">
+              <input type="text" name="name" id="name" value="">
             </div>
             <!-- メールアドレス -->
             <div>
               <label for="email">メールアドレス</label>
-              <input type="text" name="email" id="email" value="{{$inputs['email']}}">
+              <input type="text" name="email" id="email" value="">
             </div>
             <!-- 検索ボタン -->
             <div style="text-align: center;">
@@ -67,7 +59,7 @@
           </form>
           <!-- 検索条件クリア -->
           <div>
-            <a href="{{ route('admin.user') }}">クリア</a>
+            <a href="{{ route('shop.reservation') }}">クリア</a>
           </div>
         </div>
       </div>
@@ -77,26 +69,21 @@
           {{$items->appends(request()->query())->links('vendor.pagination.default_custom')}}
           <table class="result_table">
             <tr>
-              <th>ID</th>
-              <th>名前</th>
-              <th>メールアドレス</th>
-              <th>登録日</th>
-              <th></th>
+              <th>お客様名</th>
+              <th>お客様メールアドレス</th>
+              <th>予約日</th>
+              <th>予約時間</th>
+              <th>人数</th>
+              <th>登録日時</th>
             </tr>
-            @foreach($items as $user)
+            @foreach($items as $reservation)
               <tr>
-                <td>{{$user->id}}</td>
-                <td>{{$user->name}}</td>
-                <td>{{$user->email}}</td>
-                <td>{{$user->created_at}}</td>
-                <td>
-                  <form action="{{ route('admin.user.delete') }}" method="post" onsubmit="return confirmDelete()">
-                    @csrf
-                    <input type="hidden" name="user_id" value="{{$user->id}}">
-                    <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
-                    <button type="submit">削除</button>
-                  </form>
-                </td>
+                <td>{{$reservation->user->name}}</td>
+                <td>{{$reservation->user->email}}</td>
+                <td>{{$reservation->date}}</td>
+                <td>{{$reservation->time}}</td>
+                <td>{{$reservation->number}}名様</td>
+                <td>{{$reservation->created_at}}</td>
               </tr>
             @endforeach
           </table>
