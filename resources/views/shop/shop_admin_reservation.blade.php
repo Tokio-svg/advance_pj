@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.layout_admin')
 
 @section('title','予約情報管理画面')
 
@@ -8,37 +8,10 @@
 
 @section('content')
   <main>
-    <div class="sidebar">
-      <p style="margin-top: 100px;">サイドメニュー</p>
-      <!-- サイドバーボタン -->
-      <div class="sidebar_button shadow">
-        <a href="{{ route('shop.top') }}">
-          <div class="sidebar_button-content">
-            <img src="{{putSource('/img/shop.png')}}" alt="no image">
-            <p>店舗情報</p>
-          </div>
-        </a>
-      </div>
-      <div class="sidebar_button shadow button_push">
-          <div class="sidebar_button-content">
-            <img src="{{putSource('/img/calendar.png')}}" alt="no image">
-            <p>予約情報</p>
-          </div>
-      </div>
-      <div class="sidebar_button shadow">
-        <a href="#" onclick="event.preventDefault(); document.getElementById('admin_logout-form').submit();">
-          <div class="sidebar_button-content">
-            <img src="{{putSource('/img/exit.png')}}" alt="no image">
-            <p>ログアウト</p>
-          </div>
-        </a>
-        <form id="admin_logout-form" action="{{ route('shop.logout') }}" method="POST" style="display: none;">
-          @csrf
-        </form>
-      </div>
-    </div>
+    @component('components.sidebar_shop')
+    @endcomponent
     <div class="content_wrap">
-    <div class="search_wrap">
+      <div class="search_wrap">
         <div class="search_content">
           <p style="margin-top: 100px;">検索フォーム</p>
           <form action="{{ route('shop.reservation') }}" method="get">

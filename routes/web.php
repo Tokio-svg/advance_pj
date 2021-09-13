@@ -73,6 +73,10 @@ Route::group(['middleware' => 'shop.auth'], function() {
     Route::get('', [Shop_adminController::class, 'index'])->name('top');
     // 予約情報管理
     Route::get('reservation', [Shop_adminController::class, 'reservation'])->name('reservation');
+    // お気に入り情報管理
+    Route::get('favorite', [Shop_adminController::class, 'favorite'])->name('favorite');
+    // 評価情報管理
+    Route::get('evaluation', [Shop_adminController::class, 'evaluation'])->name('evaluation');
   });
 
 });

@@ -1,6 +1,6 @@
 @extends('layouts.layout_admin')
 
-@section('title','ユーザー管理画面')
+@section('title','評価情報管理画面')
 
 @section('style')
   <link rel="stylesheet" href="{{putSource('/css/admin_style.css')}}">
@@ -8,22 +8,22 @@
 
 @section('content')
   <main>
-    @component('components.sidebar_admin')
+    @component('components.sidebar_shop')
     @endcomponent
     <div class="content_wrap">
       <div class="search_wrap">
-        <div class="search_content">
-          <p style="margin-top: 100px;">検索フォーム</p>
-          <form action="{{ route('admin.user') }}" method="get">
+        <div class="search_content" style="margin-top: 100px;">
+          <p>検索フォーム</p>
+          <form action="{{ route('shop.reservation') }}" method="get">
             <!-- ユーザーネーム -->
             <div>
               <label for="name">ユーザーネーム</label>
-              <input type="text" name="name" id="name" value="{{$inputs['name']}}">
+              <input type="text" name="name" id="name" value="">
             </div>
             <!-- メールアドレス -->
             <div>
               <label for="email">メールアドレス</label>
-              <input type="text" name="email" id="email" value="{{$inputs['email']}}">
+              <input type="text" name="email" id="email" value="">
             </div>
             <!-- 検索ボタン -->
             <div style="text-align: center;">
@@ -32,7 +32,7 @@
           </form>
           <!-- 検索条件クリア -->
           <div>
-            <a href="{{ route('admin.user') }}">クリア</a>
+            <a href="{{ route('shop.reservation') }}">クリア</a>
           </div>
         </div>
       </div>
@@ -42,26 +42,19 @@
           {{$items->appends(request()->query())->links('vendor.pagination.default_custom')}}
           <table class="result_table">
             <tr>
-              <th>ID</th>
-              <th>名前</th>
-              <th>メールアドレス</th>
-              <th>登録日</th>
-              <th></th>
+              <th>お客様名</th>
+              <th>お客様メールアドレス</th>
+              <th>評価</th>
+              <th>コメント</th>
+              <th>登録日時</th>
             </tr>
-            @foreach($items as $user)
+            @foreach($items as $evaluation)
               <tr>
-                <td>{{$user->id}}</td>
-                <td>{{$user->name}}</td>
-                <td>{{$user->email}}</td>
-                <td>{{$user->created_at}}</td>
-                <td>
-                  <form action="{{ route('admin.user.delete') }}" method="post" onsubmit="return confirmDelete()">
-                    @csrf
-                    <input type="hidden" name="user_id" value="{{$user->id}}">
-                    <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">
-                    <button type="submit">削除</button>
-                  </form>
-                </td>
+                <td>{{$evaluation->user->name}}</td>
+                <td>{{$evaluation->user->email}}</td>
+                <td>{{$evaluation->grade}}</td>
+                <td>{{$evaluation->comment}}</td>
+                <td>{{$evaluation->created_at}}</td>
               </tr>
             @endforeach
           </table>
@@ -79,6 +72,5 @@
         return false;
       }
     }
-
   </script>
 @endsection
