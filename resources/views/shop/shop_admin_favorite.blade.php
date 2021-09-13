@@ -17,16 +17,20 @@
       <div class="search_wrap">
         <div class="search_content">
           <p>検索フォーム</p>
-          <form action="{{ route('shop.reservation') }}" method="get">
+          <form action="{{ route('shop.favorite') }}" method="get">
             <!-- ユーザーネーム -->
             <div>
               <label for="name">ユーザーネーム</label>
-              <input type="text" name="name" id="name" value="">
-            </div>
-            <!-- メールアドレス -->
-            <div>
+              <input type="text" name="name" id="name" value="{{$inputs['name']}}">
+              <!-- メールアドレス -->
               <label for="email">メールアドレス</label>
-              <input type="text" name="email" id="email" value="">
+              <input type="text" name="email" id="email" value="{{$inputs['email']}}">
+            </div>
+            <!-- 登録日 -->
+            <div>
+              <label for="date_start">登録日</label>
+              <input type="date" name="date_start" id="date_start" value="{{$inputs['date_start']}}">~
+              <input type="date" name="date_end" id="date_end" value="{{$inputs['date_end']}}">
             </div>
             <!-- 検索ボタン -->
             <div style="text-align: center;">
@@ -35,7 +39,7 @@
           </form>
           <!-- 検索条件クリア -->
           <div>
-            <a href="{{ route('shop.reservation') }}">クリア</a>
+            <a href="{{ route('shop.favorite') }}">クリア</a>
           </div>
         </div>
       </div>
@@ -47,7 +51,7 @@
             <tr>
               <th>お客様名</th>
               <th>お客様メールアドレス</th>
-              <th>登録日時</th>
+              <th>登録日</th>
             </tr>
             @foreach($items as $favorite)
               <tr>

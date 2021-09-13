@@ -33,7 +33,7 @@
       </div>
     </a>
   </div>
-  <div class="sidebar_button shadow">
+  <div class="sidebar_button shadow" style="background: rgb(40, 89, 112);">
     <a href="#" onclick="event.preventDefault(); document.getElementById('admin_logout-form').submit();">
       <div class="sidebar_button-content">
         <img src="{{putSource('/img/exit.png')}}" alt="no image">

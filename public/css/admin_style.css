@@ -52,7 +52,7 @@ main {
     width: 90%;
     margin: 0 auto;
 }
-input {
+input,select {
     border: 1px solid rgb(138, 138, 138);
     width: 250px;
     height: 30px;
@@ -66,7 +66,7 @@ input {
     height: 30px;
     border-radius: 5px;
     background: rgb(53, 96, 246);
-    /* background: rgb(69, 246, 53); */
+    /* background: rgb(40, 89, 112); */
     color: white;
     line-height: 30px;
     margin: 10px 0;

@@ -19,6 +19,7 @@
             <label for="name">飲食店名</label>
             <input type="text" name="name" id="name" value="{{$inputs['name']}}">
             <!-- 地域 -->
+            <label for="area">地域</label>
             <select name="area_id" id="area">
               <option value="">All area</option>
               @foreach ($areas as $area)
@@ -31,6 +32,7 @@
               @endforeach
             </select>
             <!-- ジャンル -->
+            <label for="genre">ジャンル</label>
             <select name="genre_id" id="genre">
               <option value="">All genre</option>
               @foreach ($genres as $genre)
@@ -42,6 +44,12 @@
                 @endif
               @endforeach
             </select>
+            <!-- 登録日 -->
+            <div>
+              <label for="date_start">登録日</label>
+              <input type="date" name="date_start" id="date_start" value="{{$inputs['date_start']}}">~
+              <input type="date" name="date_end" id="date_end" value="{{$inputs['date_end']}}">
+            </div>
             <!-- 検索ボタン -->
             <div style="text-align: center;">
               <button class="button_search" type="submit">検索</button>
@@ -63,7 +71,7 @@
               <th>店名</th>
               <th>地域</th>
               <th>ジャンル</th>
-              <th>登録日時</th>
+              <th>登録日</th>
               <th></th>
             </tr>
             @foreach($items as $shop)

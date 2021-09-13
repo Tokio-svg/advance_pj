@@ -19,11 +19,15 @@
             <div>
               <label for="name">ユーザーネーム</label>
               <input type="text" name="name" id="name" value="{{$inputs['name']}}">
-            </div>
-            <!-- メールアドレス -->
-            <div>
+              <!-- メールアドレス -->
               <label for="email">メールアドレス</label>
               <input type="text" name="email" id="email" value="{{$inputs['email']}}">
+            </div>
+            <!-- 登録日 -->
+            <div>
+              <label for="date_start">登録日</label>
+              <input type="date" name="date_start" id="date_start" value="{{$inputs['date_start']}}">~
+              <input type="date" name="date_end" id="date_end" value="{{$inputs['date_end']}}">
             </div>
             <!-- 検索ボタン -->
             <div style="text-align: center;">

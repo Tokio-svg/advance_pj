@@ -18,12 +18,34 @@
             <!-- ユーザーネーム -->
             <div>
               <label for="name">ユーザーネーム</label>
-              <input type="text" name="name" id="name" value="">
-            </div>
-            <!-- メールアドレス -->
-            <div>
+              <input type="text" name="name" id="name" value="{{$inputs['name']}}">
+              <!-- メールアドレス -->
               <label for="email">メールアドレス</label>
-              <input type="text" name="email" id="email" value="">
+              <input type="text" name="email" id="email" value="{{$inputs['email']}}">
+            </div>
+            <!-- 予約日 -->
+            <div>
+              <label for="date_start">予約日</label>
+              <input type="date" name="date_start" id="date_start" value="{{$inputs['date_start']}}">~
+              <input type="date" name="date_end" id="date_end" value="{{$inputs['date_end']}}">
+            </div>
+            <!-- 予約時間 -->
+            <div>
+              <label for="time_start">予約時間</label>
+              <input type="time" name="time_start" id="time_start" value="{{$inputs['time_start']}}">~
+              <input type="time" name="time_end" id="time_end" value="{{$inputs['time_end']}}">
+            </div>
+            <!-- 人数 -->
+            <div>
+              <label for="number_start">人数</label>
+              <input type="number" name="number_start" id="number_start" value="{{$inputs['number_start']}}">~
+              <input type="number" name="number_end" id="number_end" value="{{$inputs['number_end']}}">
+            </div>
+            <!-- 登録日 -->
+            <div>
+              <label for="create_start">登録日</label>
+              <input type="date" name="create_start" id="create_start" value="{{$inputs['create_start']}}">~
+              <input type="date" name="create_end" id="create_end" value="{{$inputs['create_end']}}">
             </div>
             <!-- 検索ボタン -->
             <div style="text-align: center;">

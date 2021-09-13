@@ -14,16 +14,51 @@
       <div class="search_wrap">
         <div class="search_content" style="margin-top: 100px;">
           <p>検索フォーム</p>
-          <form action="{{ route('shop.reservation') }}" method="get">
-            <!-- ユーザーネーム -->
+          <form action="{{ route('shop.evaluation') }}" method="get">
             <div>
+              <!-- ユーザーネーム -->
               <label for="name">ユーザーネーム</label>
-              <input type="text" name="name" id="name" value="">
-            </div>
-            <!-- メールアドレス -->
-            <div>
+              <input type="text" name="name" id="name" value="{{$inputs['name']}}">
+              <!-- メールアドレス -->
               <label for="email">メールアドレス</label>
-              <input type="text" name="email" id="email" value="">
+              <input type="text" name="email" id="email" value="{{$inputs['email']}}">
+            </div>
+            <!-- 評価 -->
+            <div>
+              <label for="grade_start">評価</label>
+              <select name="grade_start" id="grade_start">
+                <option value="">選択してください</option>
+                @for ($i = 1; $i <= 5; $i++)
+                  <!-- 入力値と同じ項目を初期値に設定 -->
+                  @if ($i == $inputs['grade_start'])
+                    <option value="{{$i}}" selected>{{$i}}</option>
+                  @else
+                    <option value="{{$i}}">{{$i}}</option>
+                  @endif
+                @endfor
+              </select>~
+              <select name="grade_end" id="grade_end">
+                <option value="">選択してください</option>
+                @for ($i = 1; $i <= 5; $i++)
+                  <!-- 入力値と同じ項目を初期値に設定 -->
+                  @if ($i == $inputs['grade_end'])
+                    <option value="{{$i}}" selected>{{$i}}</option>
+                  @else
+                    <option value="{{$i}}">{{$i}}</option>
+                  @endif
+                @endfor
+              </select>
+            </div>
+            <div>
+              <!-- コメント -->
+              <label for="name">コメント</label>
+              <input type="text" name="comment" id="comment" value="{{$inputs['comment']}}">
+            </div>
+            <!-- 登録日 -->
+            <div>
+              <label for="date_start">登録日</label>
+              <input type="date" name="date_start" id="date_start" value="{{$inputs['date_start']}}">~
+              <input type="date" name="date_end" id="date_end" value="{{$inputs['date_end']}}">
             </div>
             <!-- 検索ボタン -->
             <div style="text-align: center;">
@@ -32,7 +67,7 @@
           </form>
           <!-- 検索条件クリア -->
           <div>
-            <a href="{{ route('shop.reservation') }}">クリア</a>
+            <a href="{{ route('shop.evaluation') }}">クリア</a>
           </div>
         </div>
       </div>
