@@ -63,6 +63,7 @@
         name: [],
         email: [],
         password: [],
+        key: [],
       };
       // 1.$errorから全エラーメッセージを取得する
       <?php
@@ -79,6 +80,10 @@
       if ($errors->has('password')) {
         $tmp = $errors->first('password');
         echo "errors.password.push('{$tmp}');";
+      }
+      if ($errors->has('key')) {
+        $tmp = $errors->first('key');
+        echo "errors.key.push('{$tmp}');";
       }
       ?>
       // 2.各エラーメッセージごとに表示するかどうかチェックする
@@ -98,6 +103,9 @@
       });
       if (errors.password[0]) {
         document.getElementById('error_password-min').style.display = "block";
+      }
+      if (errors.key[0]) {
+        document.getElementById('error_key-require').style.display = "block";
       }
     }
 

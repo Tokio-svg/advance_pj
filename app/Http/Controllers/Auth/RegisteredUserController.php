@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use App\Http\Requests\RegisterRequest;
-use Illuminate\Support\Facades\Log;
+// use Illuminate\Support\Facades\Log;
 
 class RegisteredUserController extends Controller
 {
@@ -142,10 +142,11 @@ class RegisteredUserController extends Controller
     public function store_shop_admin(RegisterRequest $request)
     {
 
+        // shop_idバリデーション
+        $request->shop_id_check();
+
         // email:uniqueバリデーション
         $request->shop_email_unique(null);
-
-        Log::debug($request->shop_id);
 
         $shop_admin = Shop_admin::create([
             'name' => $request->name,

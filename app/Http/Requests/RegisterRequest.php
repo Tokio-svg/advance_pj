@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Admin;
+use App\Models\Shop;
 use App\Models\Shop_admin;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
@@ -139,6 +140,38 @@ class RegisterRequest extends FormRequest
                 'email' => 'そのメールアドレスは既に使用されています',
             ]);
         }
+    }
+
+    /**
+     * 飲食店管理者用
+     *
+     * $this->input('shop_id')の値が入力されているか(required)、
+     * Shopsテーブルに存在するidかどうかをチェックし、
+     * それぞれのバリデーションメッセージを返す
+     *
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function shop_id_check()
+    {
+        $input = $this->input('shop_id');
+
+        // requiredチェック
+        if (!$input) {
+            throw ValidationException::withMessages([
+                'shop_id' => '飲食店を選択してください',
+            ]);
+        }
+
+        // Shop存在チェック
+        $count = Shop::where('id', $input)->count();
+        if (!$count) {
+            throw ValidationException::withMessages([
+                'shop_id' => 'その飲食店は存在しません',
+            ]);
+        }
+
     }
 
 }

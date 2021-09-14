@@ -62,6 +62,7 @@
       let errors = {
         email: [],
         password: [],
+        key: [],
       };
       // 1.$errorから全エラーメッセージを取得する
       <?php
@@ -74,6 +75,10 @@
         foreach ($tmp as $error) {
           echo "errors.password.push('{$error}');";
         }
+      }
+      if ($errors->has('key')) {
+        $tmp = $errors->first('key');
+        echo "errors.key.push('{$tmp}');";
       }
 
       ?>
@@ -89,6 +94,9 @@
           document.getElementById('error_auth').style.display = "block";
         }
       })
+      if (errors.key[0]) {
+        document.getElementById('error_key-require').style.display = "block";
+      }
 
     }
 

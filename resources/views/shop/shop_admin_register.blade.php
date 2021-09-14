@@ -40,13 +40,14 @@
         <!-- shop_id -->
         <div>
           <img src="{{putSource('/img/key.png')}}" alt="no image">
-          <select name="shop_id" id="shop_id" onblur="validateRequire(this.id,'error_shop_id-require')" required>
+          <select name="shop_id" id="shop_id" onblur="validateRequire(this.id,'error_shop_id-require')">
             <option value="">飲食店を選択してください</option>
             @foreach($shops as $shop)
               <option value="{{$shop->id}}">{{$shop->name}}</option>
             @endforeach
           </select>
           <p id="error_shop_id-require" class="error" style="display: none;">飲食店を選択してください</p>
+          <p id="error_shop_id-exist" class="error" style="display: none;">その飲食店は存在しません</p>
         </div>
         <div class="auth_button">
           <button type="submit">登録</button>
@@ -65,6 +66,7 @@
         name: [],
         email: [],
         password: [],
+        shop_id: [],
       };
       // 1.$errorから全エラーメッセージを取得する
       <?php
@@ -81,6 +83,12 @@
       if ($errors->has('password')) {
         $tmp = $errors->first('password');
         echo "errors.password.push('{$tmp}');";
+      }
+      if ($errors->has('shop_id')) {
+        $tmp = $errors->get('shop_id');
+        foreach ($tmp as $error) {
+          echo "errors.shop_id.push('{$error}');";
+        }
       }
       ?>
       // 2.各エラーメッセージごとに表示するかどうかチェックする
@@ -101,6 +109,14 @@
       if (errors.password[0]) {
         document.getElementById('error_password-min').style.display = "block";
       }
+      errors.shop_id.forEach((e) => {
+        if (e === '飲食店を選択してください') {
+          document.getElementById('error_shop_id-require').style.display = "block";
+        }
+        if (e === 'その飲食店は存在しません') {
+          document.getElementById('error_shop_id-exist').style.display = "block";
+        }
+      });
     }
 
     // 関数：入力必須バリデーション
