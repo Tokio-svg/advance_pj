@@ -111,8 +111,6 @@ class RegisteredUserController extends Controller
 
         event(new Registered($admin));
 
-        // Auth::login($user);
-
         return redirect(route('admin.login'));
     }
 
@@ -157,8 +155,6 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($shop_admin));
-
-        // Auth::login($user);
 
         return redirect(route('shop.login'));
     }

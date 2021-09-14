@@ -40,7 +40,7 @@
         <!-- 管理者認証キー -->
         <div>
           <img src="{{putSource('/img/key.png')}}" alt="no image">
-          <input id="password" type="password" name="key" placeholder="Admin key" onblur="validateRequire(this.id,'error_key-require')" required />
+          <input id="key" type="password" name="key" placeholder="Admin key" onblur="validateRequire(this.id,'error_key-require')" required />
           <p id="error_key-require" class="error" style="display: none;">管理者認証キーを入力してください</p>
         </div>
         <div class="auth_button">
