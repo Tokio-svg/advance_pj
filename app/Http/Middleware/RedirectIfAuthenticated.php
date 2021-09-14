@@ -23,7 +23,16 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                // return redirect(RouteServiceProvider::HOME);
+                // 管理者としてログイン中に他の認証画面にアクセスした場合はユーザー管理画面にリダイレクト
+                if ($guard === 'admin') {
+                    return redirect(route('admin.user'));
+                }
+
+                // 飲食店管理者としてログイン中に他の認証画面にアクセスした場合は飲食店管理画面トップにリダイレクト
+                if ($guard === 'shop') {
+                    return redirect(route('shop.top'));
+                }
+
                 return redirect('/');
             }
         }

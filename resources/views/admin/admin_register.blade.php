@@ -1,67 +1,57 @@
-@extends('layouts.layout')
+@extends('layouts.layout_admin')
 
-@section('title','会員登録ページ')
+@section('title','管理者登録ページ')
 
 @section('style')
   <link rel="stylesheet" href="{{putSource('/css/auth_style.css')}}">
+  <style>
+    .card_title {
+      background: rgb(246, 53, 53);
+    }
+  </style>
 @endsection
 
 @section('content')
   <main class="shadow">
-    <h1 class="card_title">登録情報変更</h1>
+    <h1 class="card_title">Registration</h1>
     <div class="form_wrap">
-      <form method="POST" action="{{ route('mypage.update') }}">
+      <form method="POST" action="/admin/register">
         @csrf
         <!-- ユーザーネーム -->
         <div>
           <img src="{{putSource('/img/person.png')}}" alt="no image">
-          <!-- 初期値を設定 -->
-          <?php
-            if (old('name')) {
-              $value = old('name');
-            } else {
-              $value = $user->name;
-            }
-          ?>
-          <input id="name" type="text" name="name" value="{{$value}}" placeholder="Username" onblur="validateRequire(this.id,'error_name-require')" required />
+          <input id="name" type="text" name="name" value="{{old('name')}}" placeholder="Username" onblur="validateRequire(this.id,'error_name-require')" required />
           <p id="error_name-require" class="error" style="display: none;">名前を入力してください</p>
         </div>
         <!-- メールアドレス -->
         <div>
           <img src="{{putSource('/img/mail.png')}}" alt="no image">
-          <!-- 初期値を設定 -->
-          <?php
-            if (old('email')) {
-              $value = old('email');
-            } else {
-              $value = $user->email;
-            }
-          ?>
-          <input id="email" type="email" name="email" value="{{$value}}" placeholder="Email" onblur="validateRequire(this.id,'error_email-require'); validateEmail()" required />
+          <input id="email" type="email" name="email" value="{{old('email')}}" placeholder="Email" onblur="validateRequire(this.id,'error_email-require'); validateEmail()" required />
           <p id="error_email-require" class="error" style="display: none;">メールアドレスを入力してください</p>
           <p id="error_email-type" class="error" style="display: none;">メールアドレスの形式で入力してください</p>
           <p id="error_email-unique" class="error" style="display: none;">そのメールアドレスは既に使用されています</p>
         </div>
-      <!-- パスワード -->
-      <div>
-        <img src="{{putSource('/img/key.png')}}" alt="no image">
-        <input id="password" type="password" name="password" placeholder="Password" onblur="validatePasswordMin()" required />
-        <p id="error_password-min" class="error" style="display: none;">パスワードは8文字以上で入力してください</p>
-      </div>
+        <!-- パスワード -->
+        <div>
+          <img src="{{putSource('/img/key.png')}}" alt="no image">
+          <input id="password" type="password" name="password" placeholder="Password" onblur="validatePasswordMin()" required />
+          <p id="error_password-min" class="error" style="display: none;">パスワードは8文字以上で入力してください</p>
+        </div>
+        <!-- 管理者認証キー -->
+        <div>
+          <img src="{{putSource('/img/key.png')}}" alt="no image">
+          <input id="password" type="password" name="key" placeholder="Admin key" onblur="validateRequire(this.id,'error_key-require')" required />
+          <p id="error_key-require" class="error" style="display: none;">管理者認証キーを入力してください</p>
+        </div>
         <div class="auth_button">
-          <button type="submit">変更</button>
+          <button type="submit">登録</button>
         </div>
       </form>
     </div>
+    <div>
+      <a href="{{ route('admin.login') }}">ログイン</a>
+    </div>
   </main>
-  <!-- ユーザー削除ボタン -->
-  <div class="delete_wrap">
-    <a class="back_button" href="{{ route('mypage.top') }}">戻る</a>
-    <form action="{{ route('mypage.delete') }}" method="post" onsubmit="return confirmDelete()">
-      @csrf
-      <button type="submit">退会する</button>
-    </form>
-  </div>
 @endsection
 
 @section('script')
@@ -150,13 +140,5 @@
         errorMessage.style.display = "none";
       }
     }
-
-    // 関数：削除の確認ダイアログを表示
-    function confirmDelete() {
-      if (!window.confirm("本当に退会してもよろしいですか？")) {
-        return false;
-      }
-    }
-
   </script>
 @endsection

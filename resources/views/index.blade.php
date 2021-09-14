@@ -89,7 +89,7 @@
   <!-- お気に入り処理用フォーム -->
   @if (Auth::check())
     <!-- 登録用 -->
-    <form id="favorite_add" action="/favorite" method="POST" style="display: none;">
+    <form id="favorite_add" action="{{ route('favorite.create') }}" method="POST" style="display: none;">
       @csrf
       <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
       <input type="hidden" name="shop_id" value="" id="shop_fav-add">
@@ -97,7 +97,7 @@
       <input type="hidden" name="position" value="0" id="position_add">
     </form>
     <!-- 削除用 -->
-    <form id="favorite_delete" action="/favorite/delete" method="POST" style="display: none;">
+    <form id="favorite_delete" action="{{ route('favorite.delete') }}" method="POST" style="display: none;">
       @csrf
       <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
       <input type="hidden" name="shop_id" value="" id="shop_fav-delete">

@@ -14,6 +14,7 @@ class CreateReservationsTable extends Migration
     public function up()
     {
         Schema::create('reservations', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('shop_id');
@@ -22,6 +23,16 @@ class CreateReservationsTable extends Migration
             $table->integer('number');
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
+
+            //外部キー制約
+            $table->foreign('user_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onDelete('cascade');
+            $table->foreign('shop_id')
+                    ->references('id')
+                    ->on('shops')
+                    ->onDelete('cascade');
         });
     }
 

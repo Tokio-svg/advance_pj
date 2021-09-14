@@ -11,6 +11,7 @@ use App\Models\Reservation;
 use App\Models\Favorite;
 use App\Models\Evaluation;
 use App\Models\Schedule;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -21,6 +22,8 @@ class AdminController extends Controller
         $inputs = [
             'name' => $request->input('name'),
             'email' => $request->input('email'),
+            'date_start' => $request->input('date_start'),
+            'date_end' => $request->input('date_end'),
         ];
 
         // 各項目検索
@@ -36,12 +39,25 @@ class AdminController extends Controller
             $query->where('email', 'LIKE', "%{$inputs['email']}%");
         }
 
+        // 登録日
+        if (!empty($inputs['date_start'])) {
+            $query->where('created_at', '>=', $inputs['date_start']);
+        }
+
+        if (!empty($inputs['date_end'])) {
+            $query->where('created_at', '<=', $inputs['date_end']);
+        }
+
         // Userレコード取得
         $users = $query->paginate(10);
+
+        // test
+        $admin = Auth::guard('admin')->user()->name;
 
         return view('admin.admin', [
             'items' => $users,
             'inputs' => $inputs,
+            'admin' => $admin,
         ]);
     }
 
@@ -69,6 +85,8 @@ class AdminController extends Controller
             'name' => $request->input('name'),
             'area_id' => $request->input('area_id'),
             'genre_id' => $request->input('genre_id'),
+            'date_start' => $request->input('date_start'),
+            'date_end' => $request->input('date_end'),
         ];
 
         // 各項目検索
@@ -87,6 +105,15 @@ class AdminController extends Controller
         // ジャンル名
         if (!empty($inputs['genre_id'])) {
             $query->where('genre_id', $inputs['genre_id']);
+        }
+
+        // 登録日
+        if (!empty($inputs['date_start'])) {
+            $query->where('created_at', '>=', $inputs['date_start']);
+        }
+
+        if (!empty($inputs['date_end'])) {
+            $query->where('created_at', '<=', $inputs['date_end']);
         }
 
         // Shopレコード取得

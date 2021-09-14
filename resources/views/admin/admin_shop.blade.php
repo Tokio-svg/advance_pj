@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.layout_admin')
 
 @section('title','店舗管理画面')
 
@@ -8,33 +8,18 @@
 
 @section('content')
   <main>
-    <div class="sidebar">
-      <p style="margin-top: 100px;">サイドメニュー</p>
-      <div class="sidebar_button shadow" style="background: rgb(115, 125, 153);">
-        <a href="/admin/user">
-          <div class="sidebar_button-content">
-            <img src="{{putSource('/img/person.png')}}" alt="no image">
-            <p>ユーザー管理</p>
-          </div>
-        </a>
-      </div>
-      <div class="sidebar_button shadow" style="background: rgb(53, 96, 246);">
-        <a href="/admin/shop">
-          <div class="sidebar_button-content">
-            <p>店舗管理</p>
-          </div>
-        </a>
-      </div>
-    </div>
+    @component('components.sidebar_admin')
+    @endcomponent
     <div class="content_wrap">
       <div class="search_wrap">
         <div class="search_content">
           <p style="margin-top: 100px;">検索フォーム</p>
-          <form action="/admin/shop" method="get">
+          <form action="{{ route('admin.shop') }}" method="get">
             <!-- 飲食店名 -->
             <label for="name">飲食店名</label>
             <input type="text" name="name" id="name" value="{{$inputs['name']}}">
             <!-- 地域 -->
+            <label for="area">地域</label>
             <select name="area_id" id="area">
               <option value="">All area</option>
               @foreach ($areas as $area)
@@ -47,6 +32,7 @@
               @endforeach
             </select>
             <!-- ジャンル -->
+            <label for="genre">ジャンル</label>
             <select name="genre_id" id="genre">
               <option value="">All genre</option>
               @foreach ($genres as $genre)
@@ -58,6 +44,12 @@
                 @endif
               @endforeach
             </select>
+            <!-- 登録日 -->
+            <div>
+              <label for="date_start">登録日</label>
+              <input type="date" name="date_start" id="date_start" value="{{$inputs['date_start']}}">~
+              <input type="date" name="date_end" id="date_end" value="{{$inputs['date_end']}}">
+            </div>
             <!-- 検索ボタン -->
             <div style="text-align: center;">
               <button class="button_search" type="submit">検索</button>
@@ -65,7 +57,7 @@
           </form>
           <!-- 検索条件クリア -->
           <div>
-            <a href="/admin/shop">クリア</a>
+            <a href="{{ route('admin.shop') }}">クリア</a>
           </div>
         </div>
       </div>
@@ -79,7 +71,7 @@
               <th>店名</th>
               <th>地域</th>
               <th>ジャンル</th>
-              <th>登録日時</th>
+              <th>登録日</th>
               <th></th>
             </tr>
             @foreach($items as $shop)
@@ -90,7 +82,7 @@
                 <td>{{$shop->genre->name}}</td>
                 <td>{{$shop->created_at}}</td>
                 <td>
-                  <form action="/admin/shop/delete" method="post" onsubmit="return confirmDelete()">
+                  <form action="{{ route('admin.shop.delete') }}" method="post" onsubmit="return confirmDelete()">
                     @csrf
                     <input type="hidden" name="shop_id" value="{{$shop->id}}">
                     <input type="hidden" name="url" value="{{$_SERVER['REQUEST_URI']}}">

@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
+
+use function Psy\debug;
 
 class LoginRequest extends FormRequest
 {
@@ -52,7 +56,62 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (!Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        if (!Auth::guard('user')->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'password' => 'メールアドレスまたはパスワードが違います',
+            ]);
+        }
+
+        RateLimiter::clear($this->throttleKey());
+    }
+
+    /**
+     * 管理者用ログイン処理
+     *
+     * Attempt to authenticate the request's credentials.
+     *
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function admin_authenticate()
+    {
+        $this->ensureIsNotRateLimited();
+
+        // 管理者認証キー照合
+        if (hash('md5', $this->input('key')) != config('app.admin_key')) {
+            throw ValidationException::withMessages([
+                'key' => '管理者認証キーが違います',
+            ]);
+        }
+
+        if (!Auth::guard('admin')->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'password' => 'メールアドレスまたはパスワードが違います',
+            ]);
+        }
+
+        RateLimiter::clear($this->throttleKey());
+    }
+
+    /**
+     * 飲食店管理者用ログイン処理
+     *
+     * Attempt to authenticate the request's credentials.
+     *
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function shop_authenticate()
+    {
+        $this->ensureIsNotRateLimited();
+
+        if (!Auth::guard('shop')->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([

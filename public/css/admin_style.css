@@ -17,8 +17,8 @@ main {
 }
 .sidebar_button {
     width: 250px;
-    height: 120px;
-    /* background: rgb(115, 125, 153); */
+    height: 90px;
+    background: rgb(53, 96, 246);
     border-radius: 10px;
     margin: 20px auto;
     font-size: 20px;
@@ -31,7 +31,11 @@ main {
 }
 .sidebar_button-content {
     text-align: center;
-    padding: 30px;
+    padding: 15px;
+    color: white;
+}
+.button_push {
+    background: rgb(41, 57, 100);
 }
 /* メイン画面 */
 .content_wrap {
@@ -48,7 +52,7 @@ main {
     width: 90%;
     margin: 0 auto;
 }
-input {
+input,select {
     border: 1px solid rgb(138, 138, 138);
     width: 250px;
     height: 30px;
@@ -62,6 +66,7 @@ input {
     height: 30px;
     border-radius: 5px;
     background: rgb(53, 96, 246);
+    /* background: rgb(40, 89, 112); */
     color: white;
     line-height: 30px;
     margin: 10px 0;
@@ -115,6 +120,27 @@ input {
 .active {
     color: white;
     background: rgb(53, 96, 246);
+}
+
+/* 飲食店情報 */
+.shop_info-flex {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: 40px auto;
+}
+.shop_image,
+.shop_info {
+    width: 500px;
+}
+.shop_info th,
+.shop_info td {
+    border-collapse: collapse;
+    border: 1px solid black;
+    padding: 10px;
+}
+.shop_info th {
+    width: 100px;
 }
 
 /* レスポンシブ対応(break point:768px) */

@@ -52,7 +52,7 @@
 <div class="reservation_wrap shadow">
   <div class="reservation_content">
     <h1>予約</h1>
-    <form action="/reserve" method="post">
+    <form action="{{ route('reserve.create') }}" method="post">
       @csrf
       @if (Auth::check())
         <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
