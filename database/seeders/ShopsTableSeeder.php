@@ -32,13 +32,9 @@ class ShopsTableSeeder extends Seeder
             'shop_id' => $shop->id,
             'opening_time' => '10:00',
             'closing_time' => '20:00',
-            'sunday' =>    1,
-            'monday' =>    1,
-            'tuesday' =>   1,
-            'wednesday' => 0,
-            'thursday' =>  1,
-            'friday' =>    1,
-            'saturday' =>  1,
+            'day_of_week' => [
+                1,0,1,0,1,1,1,
+            ],
         ];
         Schedule::create($param);
 
@@ -56,13 +52,9 @@ class ShopsTableSeeder extends Seeder
             'shop_id' => $shop->id,
             'opening_time' => '11:00',
             'closing_time' => '19:00',
-            'sunday' =>    1,
-            'monday' =>    0,
-            'tuesday' =>   0,
-            'wednesday' => 1,
-            'thursday' =>  1,
-            'friday' =>    1,
-            'saturday' =>  1,
+            'day_of_week' => [
+                1,0,1,0,1,1,1,
+            ],
         ];
         Schedule::create($param);
 
@@ -80,13 +72,9 @@ class ShopsTableSeeder extends Seeder
             'shop_id' => $shop->id,
             'opening_time' => '9:00',
             'closing_time' => '21:00',
-            'sunday' =>    1,
-            'monday' =>    1,
-            'tuesday' =>   1,
-            'wednesday' => 1,
-            'thursday' =>  0,
-            'friday' =>    1,
-            'saturday' =>  1,
+            'day_of_week' => [
+                1,0,1,0,1,1,1,
+            ],
         ];
         Schedule::create($param);
 
@@ -104,13 +92,9 @@ class ShopsTableSeeder extends Seeder
             'shop_id' => $shop->id,
             'opening_time' => '12:00',
             'closing_time' => '22:00',
-            'sunday' =>    1,
-            'monday' =>    0,
-            'tuesday' =>   1,
-            'wednesday' => 0,
-            'thursday' =>  1,
-            'friday' =>    0,
-            'saturday' =>  1,
+            'day_of_week' => [
+                1,0,1,0,1,1,1,
+            ],
         ];
         Schedule::create($param);
 
@@ -128,13 +112,9 @@ class ShopsTableSeeder extends Seeder
             'shop_id' => $shop->id,
             'opening_time' => '10:00',
             'closing_time' => '20:00',
-            'sunday' =>    1,
-            'monday' =>    1,
-            'tuesday' =>   1,
-            'wednesday' => 0,
-            'thursday' =>  1,
-            'friday' =>    1,
-            'saturday' =>  1,
+            'day_of_week' => [
+                1,0,1,0,1,1,1,
+            ],
         ];
         Schedule::create($param);
 
@@ -152,13 +132,9 @@ class ShopsTableSeeder extends Seeder
             'shop_id' => $shop->id,
             'opening_time' => '10:00',
             'closing_time' => '20:00',
-            'sunday' =>    1,
-            'monday' =>    1,
-            'tuesday' =>   1,
-            'wednesday' => 0,
-            'thursday' =>  1,
-            'friday' =>    1,
-            'saturday' =>  1,
+            'day_of_week' => [
+                1,0,1,0,1,1,1,
+            ],
         ];
         Schedule::create($param);
 
@@ -176,13 +152,9 @@ class ShopsTableSeeder extends Seeder
             'shop_id' => $shop->id,
             'opening_time' => '10:00',
             'closing_time' => '20:00',
-            'sunday' =>    1,
-            'monday' =>    1,
-            'tuesday' =>   1,
-            'wednesday' => 0,
-            'thursday' =>  1,
-            'friday' =>    1,
-            'saturday' =>  1,
+            'day_of_week' => [
+                1,0,1,0,1,1,1,
+            ],
         ];
         Schedule::create($param);
 
@@ -200,13 +172,9 @@ class ShopsTableSeeder extends Seeder
             'shop_id' => $shop->id,
             'opening_time' => '10:00',
             'closing_time' => '20:00',
-            'sunday' =>    1,
-            'monday' =>    1,
-            'tuesday' =>   1,
-            'wednesday' => 0,
-            'thursday' =>  1,
-            'friday' =>    1,
-            'saturday' =>  1,
+            'day_of_week' => [
+                1,0,1,0,1,1,1,
+            ],
         ];
         Schedule::create($param);
 
@@ -224,13 +192,9 @@ class ShopsTableSeeder extends Seeder
             'shop_id' => $shop->id,
             'opening_time' => '10:00',
             'closing_time' => '20:00',
-            'sunday' =>    1,
-            'monday' =>    1,
-            'tuesday' =>   1,
-            'wednesday' => 0,
-            'thursday' =>  1,
-            'friday' =>    1,
-            'saturday' =>  1,
+            'day_of_week' => [
+                1,0,1,0,1,1,1,
+            ],
         ];
         Schedule::create($param);
 
@@ -248,13 +212,9 @@ class ShopsTableSeeder extends Seeder
             'shop_id' => $shop->id,
             'opening_time' => '10:00',
             'closing_time' => '20:00',
-            'sunday' =>    1,
-            'monday' =>    1,
-            'tuesday' =>   1,
-            'wednesday' => 0,
-            'thursday' =>  1,
-            'friday' =>    1,
-            'saturday' =>  1,
+            'day_of_week' => [
+                1,0,1,0,1,1,1,
+            ],
         ];
         Schedule::create($param);
 
@@ -272,13 +232,9 @@ class ShopsTableSeeder extends Seeder
             'shop_id' => $shop->id,
             'opening_time' => '10:00',
             'closing_time' => '20:00',
-            'sunday' =>    1,
-            'monday' =>    1,
-            'tuesday' =>   1,
-            'wednesday' => 0,
-            'thursday' =>  1,
-            'friday' =>    1,
-            'saturday' =>  1,
+            'day_of_week' => [
+                1,0,1,0,1,1,1,
+            ],
         ];
         Schedule::create($param);
 
@@ -296,13 +252,9 @@ class ShopsTableSeeder extends Seeder
             'shop_id' => $shop->id,
             'opening_time' => '10:00',
             'closing_time' => '20:00',
-            'sunday' =>    1,
-            'monday' =>    1,
-            'tuesday' =>   1,
-            'wednesday' => 0,
-            'thursday' =>  1,
-            'friday' =>    1,
-            'saturday' =>  1,
+            'day_of_week' => [
+                1,0,1,0,1,1,1,
+            ],
         ];
         Schedule::create($param);
 
@@ -320,13 +272,9 @@ class ShopsTableSeeder extends Seeder
             'shop_id' => $shop->id,
             'opening_time' => '10:00',
             'closing_time' => '20:00',
-            'sunday' =>    1,
-            'monday' =>    1,
-            'tuesday' =>   1,
-            'wednesday' => 0,
-            'thursday' =>  1,
-            'friday' =>    1,
-            'saturday' =>  1,
+            'day_of_week' => [
+                1,0,1,0,1,1,1,
+            ],
         ];
         Schedule::create($param);
 
@@ -344,13 +292,9 @@ class ShopsTableSeeder extends Seeder
             'shop_id' => $shop->id,
             'opening_time' => '10:00',
             'closing_time' => '20:00',
-            'sunday' =>    1,
-            'monday' =>    1,
-            'tuesday' =>   1,
-            'wednesday' => 0,
-            'thursday' =>  1,
-            'friday' =>    1,
-            'saturday' =>  1,
+            'day_of_week' => [
+                1,0,1,0,1,1,1,
+            ],
         ];
         Schedule::create($param);
 
@@ -368,13 +312,9 @@ class ShopsTableSeeder extends Seeder
             'shop_id' => $shop->id,
             'opening_time' => '10:00',
             'closing_time' => '20:00',
-            'sunday' =>    1,
-            'monday' =>    1,
-            'tuesday' =>   1,
-            'wednesday' => 0,
-            'thursday' =>  1,
-            'friday' =>    1,
-            'saturday' =>  1,
+            'day_of_week' => [
+                1,0,1,0,1,1,1,
+            ],
         ];
         Schedule::create($param);
 
@@ -392,13 +332,9 @@ class ShopsTableSeeder extends Seeder
             'shop_id' => $shop->id,
             'opening_time' => '10:00',
             'closing_time' => '20:00',
-            'sunday' =>    1,
-            'monday' =>    1,
-            'tuesday' =>   1,
-            'wednesday' => 0,
-            'thursday' =>  1,
-            'friday' =>    1,
-            'saturday' =>  1,
+            'day_of_week' => [
+                1,0,1,0,1,1,1,
+            ],
         ];
         Schedule::create($param);
 
@@ -416,13 +352,9 @@ class ShopsTableSeeder extends Seeder
             'shop_id' => $shop->id,
             'opening_time' => '10:00',
             'closing_time' => '20:00',
-            'sunday' =>    1,
-            'monday' =>    1,
-            'tuesday' =>   1,
-            'wednesday' => 0,
-            'thursday' =>  1,
-            'friday' =>    1,
-            'saturday' =>  1,
+            'day_of_week' => [
+                1,0,1,0,1,1,1,
+            ],
         ];
         Schedule::create($param);
 
@@ -440,13 +372,9 @@ class ShopsTableSeeder extends Seeder
             'shop_id' => $shop->id,
             'opening_time' => '10:00',
             'closing_time' => '20:00',
-            'sunday' =>    1,
-            'monday' =>    1,
-            'tuesday' =>   1,
-            'wednesday' => 0,
-            'thursday' =>  1,
-            'friday' =>    1,
-            'saturday' =>  1,
+            'day_of_week' => [
+                1,0,1,0,1,1,1,
+            ],
         ];
         Schedule::create($param);
 
@@ -464,13 +392,9 @@ class ShopsTableSeeder extends Seeder
             'shop_id' => $shop->id,
             'opening_time' => '10:00',
             'closing_time' => '20:00',
-            'sunday' =>    1,
-            'monday' =>    1,
-            'tuesday' =>   1,
-            'wednesday' => 0,
-            'thursday' =>  1,
-            'friday' =>    1,
-            'saturday' =>  1,
+            'day_of_week' => [
+                1,0,1,0,1,1,1,
+            ],
         ];
         Schedule::create($param);
 
@@ -488,13 +412,9 @@ class ShopsTableSeeder extends Seeder
             'shop_id' => $shop->id,
             'opening_time' => '10:00',
             'closing_time' => '20:00',
-            'sunday' =>    1,
-            'monday' =>    1,
-            'tuesday' =>   1,
-            'wednesday' => 0,
-            'thursday' =>  1,
-            'friday' =>    1,
-            'saturday' =>  1,
+            'day_of_week' => [
+                1,0,1,0,1,1,1,
+            ],
         ];
         Schedule::create($param);
 

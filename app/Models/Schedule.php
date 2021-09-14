@@ -11,4 +11,8 @@ class Schedule extends Model
 
     protected $guarded = array('id');
 
+    // 営業日情報をJSONから配列にキャスト
+    protected $casts = [
+        'day_of_week' => 'array'
+    ];
 }

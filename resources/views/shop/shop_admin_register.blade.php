@@ -40,7 +40,7 @@
         <!-- shop_id -->
         <div>
           <img src="{{putSource('/img/key.png')}}" alt="no image">
-          <select name="shop_id" id="shop_id" onblur="validateRequire(this.id,'error_shop_id-require')">
+          <select name="shop_id" id="shop_id" onblur="validateRequire(this.id,'error_shop_id-require')" required>
             <option value="">飲食店を選択してください</option>
             @foreach($shops as $shop)
               <option value="{{$shop->id}}">{{$shop->name}}</option>
