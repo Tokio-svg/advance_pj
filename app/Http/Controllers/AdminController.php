@@ -131,7 +131,7 @@ class AdminController extends Controller
         ]);
     }
 
-        // ユーザー削除処理
+        // 飲食店削除処理
         public function delete_shop(Request $request)
         {
             // 各種パラメータを取得
@@ -146,6 +146,18 @@ class AdminController extends Controller
             Schedule::where('shop_id', $shop_id)->delete();
 
             return redirect($url);
+        }
+
+        // 飲食店新規作成画面表示
+        public function new_shop(Request $request)
+        {
+            return view('admin.admin_shop_create');
+        }
+
+        // 飲食店新規作成処理
+        public function create_shop(Request $request)
+        {
+            return redirect(route('admin.user'));
         }
 
 }

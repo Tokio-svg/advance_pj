@@ -33,6 +33,9 @@
           </tr>
         </table>
       </div>
+      <div>
+        <a href="{{ route('shop.change')}} ">登録情報を変更する</a>
+      </div>
     </div>
   </main>
 @endsection

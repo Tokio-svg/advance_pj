@@ -13,7 +13,15 @@
     <a href="{{ route('admin.shop') }}">
       <div class="sidebar_button-content">
       <img src="{{putSource('/img/shop.png')}}" alt="no image">
-        <p>店舗管理</p>
+        <p>飲食店管理</p>
+      </div>
+    </a>
+  </div>
+  <div class="sidebar_button shadow">
+    <a href="{{ route('admin.shop.new') }}">
+      <div class="sidebar_button-content">
+      <img src="{{putSource('/img/shop.png')}}" alt="no image">
+        <p>新規飲食店作成</p>
       </div>
     </a>
   </div>
@@ -21,7 +29,7 @@
     <a href="{{ route('shop.register') }}">
       <div class="sidebar_button-content">
       <img src="{{putSource('/img/shop.png')}}" alt="no image">
-        <p>店舗アカウント作成</p>
+        <p>飲食店アカウント作成</p>
       </div>
     </a>
   </div>

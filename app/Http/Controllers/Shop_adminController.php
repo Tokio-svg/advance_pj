@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Shop;
 use App\Models\Reservation;
 use App\Models\Favorite;
 use App\Models\Evaluation;
+use App\Models\Genre;
+use App\Models\Schedule;
 
 class Shop_adminController extends Controller
 {
@@ -21,6 +24,49 @@ class Shop_adminController extends Controller
         return view('shop.shop_admin', [
             'shop' => $shop,
         ]);
+    }
+
+    // 登録情報変更画面表示
+    public function change(Request $request)
+    {
+        // 店舗情報取得
+        $shop_id = Auth::guard('shop')->user()->id;
+        $shop = Shop::with(['area','genre'])->find($shop_id);
+        $schedule = Schedule::where('shop_id', $shop_id);
+
+        // 地域、ジャンル選択項目取得
+        $areas = Area::get(['id','name']);
+        $genres = Genre::get(['id','name']);
+
+        return view('shop.shop_admin_update', [
+            'shop' => $shop,
+            'schedule' => $schedule,
+            'areas' => $areas,
+            'genres' => $genres,
+        ]);
+    }
+
+    // 登録情報変更処理
+    public function update(Request $request)
+    {
+        // 店舗情報取得
+        $shop_id = Auth::guard('shop')->user()->id;
+        $shop = Shop::find($shop_id);
+
+        if (!$shop) {
+            abort(404);
+        }
+
+        $shop->fill([
+            'name' => $request->name,
+            'area_id' => $request->area_id,
+            'genre_id' => $request->genre_id,
+            'overview' => $request->overview,
+            'image_url' => $request->image_url,
+            'public' => $request->public,
+        ])->save();
+
+        return redirect(route('shop.top'));
     }
 
     // 予約情報管理画面
