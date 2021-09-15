@@ -64,11 +64,21 @@
               営業時間
               <label for="opening_time">開店</label>
               <select name="opening_time" id="opening_time">
-                <option value="">選択してください</option>
+                <?php
+                  for($i=0; $i<24; $i++) {
+                    echo "<option value='" . $i . ":00'>" . $i . ":00</option>";
+                    echo "<option value='" . $i . ":30'>" . $i . ":30</option>";
+                  }
+                ?>
               </select>~
               <label for="closing_time">閉店</label>
               <select name="closing_time" id="closing_time">
-                <option value="">選択してください</option>
+                <?php
+                  for($i=0; $i<24; $i++) {
+                    echo "<option value='" . $i . ":00'>" . $i . ":00</option>";
+                    echo "<option value='" . $i . ":30'>" . $i . ":30</option>";
+                  }
+                ?>
               </select>
             </div>
             <div>

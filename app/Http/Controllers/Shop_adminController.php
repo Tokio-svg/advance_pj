@@ -53,10 +53,14 @@ class Shop_adminController extends Controller
         $shop_id = Auth::guard('shop')->user()->shop_id;
         $shop = Shop::find($shop_id);
 
-        if (!$shop) {
+        // 営業日時情報取得
+        $schedule = Schedule::where('shop_id', $shop_id)->first();
+
+        if (!$shop || !$schedule) {
             abort(404);
         }
 
+        // レコード更新
         $shop->fill([
             'name' => $request->name,
             'area_id' => $request->area_id,
@@ -66,7 +70,22 @@ class Shop_adminController extends Controller
             'public' => $request->public,
         ])->save();
 
+        $day_of_week = [$this->convert_day($request->sun), $this->convert_day($request->mon), $this->convert_day($request->tue), $this->convert_day($request->wed), $this->convert_day($request->thu), $this->convert_day($request->fri), $this->convert_day($request->sat)];
+
+        $schedule->fill([
+            'opening_time' => $request->opening_time,
+            'closing_time' => $request->closing_time,
+            'day_of_week' => $day_of_week,
+        ])->save();
+
         return redirect(route('shop.top'));
+    }
+
+    public function convert_day($value) {
+        if (!$value) {
+            return 0;
+        }
+        return 1;
     }
 
     // 予約情報管理画面
