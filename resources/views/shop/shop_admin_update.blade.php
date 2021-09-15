@@ -4,6 +4,11 @@
 
 @section('style')
   <link rel="stylesheet" href="{{putSource('/css/admin_style.css')}}">
+  <style>
+    .dayOfWeek {
+      width: 50px;
+    }
+  </style>
 @endsection
 
 @section('content')
@@ -57,9 +62,79 @@
             </div>
             <div>
               営業時間
+              <label for="opening_time">開店</label>
+              <select name="opening_time" id="opening_time">
+                <option value="">選択してください</option>
+              </select>~
+              <label for="closing_time">閉店</label>
+              <select name="closing_time" id="closing_time">
+                <option value="">選択してください</option>
+              </select>
             </div>
             <div>
               営業日
+              <table>
+                <tr>
+                  <th>日</th>
+                  <th>月</th>
+                  <th>火</th>
+                  <th>水</th>
+                  <th>木</th>
+                  <th>金</th>
+                  <th>土</th>
+                </tr>
+                <tr>
+                  <td>
+                    @if($schedule->day_of_week[0] == 0)
+                      <input type="checkbox" name="sun" class="dayOfWeek">
+                    @else
+                      <input type="checkbox" name="sun" class="dayOfWeek" checked>
+                    @endif
+                  </td>
+                  <td>
+                    @if($schedule->day_of_week[1] == 0)
+                      <input type="checkbox" name="mon" class="dayOfWeek">
+                    @else
+                      <input type="checkbox" name="mon" class="dayOfWeek" checked>
+                    @endif
+                  </td>
+                  <td>
+                    @if($schedule->day_of_week[2] == 0)
+                      <input type="checkbox" name="tue" class="dayOfWeek">
+                    @else
+                      <input type="checkbox" name="tue" class="dayOfWeek" checked>
+                    @endif
+                  </td>
+                  <td>
+                    @if($schedule->day_of_week[3] == 0)
+                      <input type="checkbox" name="wed" class="dayOfWeek">
+                    @else
+                      <input type="checkbox" name="wed" class="dayOfWeek" checked>
+                    @endif
+                  </td>
+                  <td>
+                    @if($schedule->day_of_week[4] == 0)
+                      <input type="checkbox" name="thu" class="dayOfWeek">
+                    @else
+                      <input type="checkbox" name="thu" class="dayOfWeek" checked>
+                    @endif
+                  </td>
+                  <td>
+                    @if($schedule->day_of_week[5] == 0)
+                      <input type="checkbox" name="fri" class="dayOfWeek">
+                    @else
+                      <input type="checkbox" name="fri" class="dayOfWeek" checked>
+                    @endif
+                  </td>
+                  <td>
+                    @if($schedule->day_of_week[6] == 0)
+                      <input type="checkbox" name="sat" class="dayOfWeek">
+                    @else
+                      <input type="checkbox" name="sat" class="dayOfWeek" checked>
+                    @endif
+                  </td>
+                </tr>
+              </table>
             </div>
             <div>
               @if($shop->public == 0)

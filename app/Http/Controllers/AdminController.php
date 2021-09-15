@@ -157,7 +157,30 @@ class AdminController extends Controller
         // 飲食店新規作成処理
         public function create_shop(Request $request)
         {
-            return redirect(route('admin.user'));
+            // 新規飲食店レコード作成
+            $area_id = Area::first()->id;
+            $genre_id = Genre::first()->id;
+
+            $shop = Shop::create([
+                'name' => $request->name,
+                'area_id' => $area_id,
+                'genre_id' => $genre_id,
+                'overview' => '概要を記入してください',
+                'image_url' => 'no_image',
+                'public' => 0,
+            ]);
+
+            // 営業日時情報レコード作成
+            Schedule::create([
+                'shop_id' => $shop->id,
+                'opening_time' => '10:00',
+                'closing_time' => '22:00',
+                'day_of_week' => [1,1,1,1,1,1,1,],
+            ]);
+
+            return view('admin.admin_done', [
+                'shop_name' => $shop->name,
+            ]);
         }
 
 }

@@ -18,7 +18,7 @@ class Shop_adminController extends Controller
     public function index(Request $request)
     {
         // 店舗情報取得
-        $shop_id = Auth::guard('shop')->user()->id;
+        $shop_id = Auth::guard('shop')->user()->shop_id;
         $shop = Shop::with(['area','genre'])->find($shop_id);
 
         return view('shop.shop_admin', [
@@ -30,9 +30,9 @@ class Shop_adminController extends Controller
     public function change(Request $request)
     {
         // 店舗情報取得
-        $shop_id = Auth::guard('shop')->user()->id;
+        $shop_id = Auth::guard('shop')->user()->shop_id;
         $shop = Shop::with(['area','genre'])->find($shop_id);
-        $schedule = Schedule::where('shop_id', $shop_id);
+        $schedule = Schedule::where('shop_id', $shop_id)->first();
 
         // 地域、ジャンル選択項目取得
         $areas = Area::get(['id','name']);
@@ -50,7 +50,7 @@ class Shop_adminController extends Controller
     public function update(Request $request)
     {
         // 店舗情報取得
-        $shop_id = Auth::guard('shop')->user()->id;
+        $shop_id = Auth::guard('shop')->user()->shop_id;
         $shop = Shop::find($shop_id);
 
         if (!$shop) {
@@ -140,7 +140,7 @@ class Shop_adminController extends Controller
         }
 
         // 予約情報取得
-        $shop_id = Auth::guard('shop')->user()->id;
+        $shop_id = Auth::guard('shop')->user()->shop_id;
         $reservations = $query->with('user')->where('shop_id', $shop_id)->paginate(10);
 
         return view('shop.shop_admin_reservation', [
@@ -187,7 +187,7 @@ class Shop_adminController extends Controller
         }
 
         // お気に入り情報取得
-        $shop_id = Auth::guard('shop')->user()->id;
+        $shop_id = Auth::guard('shop')->user()->shop_id;
         $favorites = $query->with('user')->where('shop_id', $shop_id)->paginate(10);
 
         return view('shop.shop_admin_favorite', [
@@ -251,7 +251,7 @@ class Shop_adminController extends Controller
         }
 
         // 評価情報取得
-        $shop_id = Auth::guard('shop')->user()->id;
+        $shop_id = Auth::guard('shop')->user()->shop_id;
         $evaluations = $query->with('user')->where('shop_id', $shop_id)->paginate(10);
 
         return view('shop.shop_admin_evaluation', [
