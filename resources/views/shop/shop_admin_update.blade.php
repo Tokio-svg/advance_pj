@@ -21,10 +21,10 @@
         @csrf
         <div class="shop_info-flex">
           <div class="shop_info-imagewrap">
-            <img class="shop_image" src="{{$shop->image_url}}" alt="no_image">
+            <img id="shop_image" class="shop_image" src="{{$shop->image_url}}" alt="no_image">
             <div>
             <label for="image_url">画像URL</label>
-              <input type="text" name="image_url" id="image_url" value="{{$shop->image_url}}">
+              <input type="text" name="image_url" id="image_url" value="{{$shop->image_url}}" onblur="changeImage(this.id)">
             </div>
           </div>
           <div class="shop_input-wrap">
@@ -65,21 +65,45 @@
               <label for="opening_time">開店</label>
               <select name="opening_time" id="opening_time">
                 <?php
+                  $time = substr($schedule->opening_time, 0, 5);
                   for($i=0; $i<24; $i++) {
-                    echo "<option value='" . $i . ":00'>" . $i . ":00</option>";
-                    echo "<option value='" . $i . ":30'>" . $i . ":30</option>";
+                    if ( $time === substr("0" . $i . ":00",-5)) {
+                      $selected = 'selected';
+                    } else {
+                      $selected = '';
+                    }
+                    echo "<option value='" . $i . ":00'" . $selected . ">" . $i . ":00</option>";
+                    if ($time === substr("0" . $i . ":30",-5)) {
+                      $selected = 'selected';
+                    } else {
+                      $selected = '';
+                    }
+                    echo "<option value='" . $i . ":30'" . $selected . ">" . $i . ":30</option>";
                   }
                 ?>
               </select>~
-              <label for="closing_time">閉店</label>
-              <select name="closing_time" id="closing_time">
-                <?php
-                  for($i=0; $i<24; $i++) {
-                    echo "<option value='" . $i . ":00'>" . $i . ":00</option>";
-                    echo "<option value='" . $i . ":30'>" . $i . ":30</option>";
-                  }
-                ?>
-              </select>
+              <div>
+                <label for="closing_time">閉店</label>
+                <select name="closing_time" id="closing_time">
+                  <?php
+                    $time = substr($schedule->closing_time, 0, 5);
+                    for($i=0; $i<24; $i++) {
+                      if ( $time === substr("0" . $i . ":00",-5)) {
+                        $selected = 'selected';
+                      } else {
+                        $selected = '';
+                      }
+                      echo "<option value='" . $i . ":00'" . $selected . ">" . $i . ":00</option>";
+                      if ($time === substr("0" . $i . ":30",-5)) {
+                        $selected = 'selected';
+                      } else {
+                        $selected = '';
+                      }
+                      echo "<option value='" . $i . ":30'" . $selected . ">" . $i . ":30</option>";
+                      }
+                  ?>
+                </select>
+              </div>
             </div>
             <div>
               営業日
@@ -172,5 +196,11 @@
 
 @section('script')
   <script>
+    // 関数：引数に渡されたIDのvalueをimageのsrcに設定する
+    function changeImage(id) {
+      const src = document.getElementById(id).value;
+      const image = document.getElementById('shop_image');
+      image.src = src;
+    }
   </script>
 @endsection

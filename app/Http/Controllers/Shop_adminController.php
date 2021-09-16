@@ -11,6 +11,7 @@ use App\Models\Favorite;
 use App\Models\Evaluation;
 use App\Models\Genre;
 use App\Models\Schedule;
+use App\Http\Requests\ShopRequest;
 
 class Shop_adminController extends Controller
 {
@@ -20,9 +21,11 @@ class Shop_adminController extends Controller
         // 店舗情報取得
         $shop_id = Auth::guard('shop')->user()->shop_id;
         $shop = Shop::with(['area','genre'])->find($shop_id);
+        $schedule = Schedule::where('shop_id', $shop_id)->first();
 
         return view('shop.shop_admin', [
             'shop' => $shop,
+            'schedule' => $schedule,
         ]);
     }
 
@@ -47,7 +50,7 @@ class Shop_adminController extends Controller
     }
 
     // 登録情報変更処理
-    public function update(Request $request)
+    public function update(ShopRequest $request)
     {
         // 店舗情報取得
         $shop_id = Auth::guard('shop')->user()->shop_id;

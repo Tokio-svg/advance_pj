@@ -161,8 +161,14 @@ class AdminController extends Controller
             $area_id = Area::first()->id;
             $genre_id = Genre::first()->id;
 
+            if(!$request->name) {
+                $name = '新規飲食店';
+            } else {
+                $name = $request->name;
+            }
+
             $shop = Shop::create([
-                'name' => $request->name,
+                'name' => $name,
                 'area_id' => $area_id,
                 'genre_id' => $genre_id,
                 'overview' => '概要を記入してください',

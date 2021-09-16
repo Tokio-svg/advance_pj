@@ -34,13 +34,9 @@
       </tr>
       <tr>
         <?php
-          echo "<td>" . put_schedule_mark($shop->schedule->day_of_week[0]) . "</td>";
-          echo "<td>" . put_schedule_mark($shop->schedule->day_of_week[1]) . "</td>";
-          echo "<td>" . put_schedule_mark($shop->schedule->day_of_week[2]) . "</td>";
-          echo "<td>" . put_schedule_mark($shop->schedule->day_of_week[3]) . "</td>";
-          echo "<td>" . put_schedule_mark($shop->schedule->day_of_week[4]) . "</td>";
-          echo "<td>" . put_schedule_mark($shop->schedule->day_of_week[5]) . "</td>";
-          echo "<td>" . put_schedule_mark($shop->schedule->day_of_week[6]) . "</td>";
+          for($i=0; $i<7; $i++) {
+            echo "<td>" . put_schedule_mark($shop->schedule->day_of_week[$i]) . "</td>";
+          }
         ?>
       </tr>
     </table>

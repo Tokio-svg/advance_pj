@@ -31,6 +31,22 @@
             <th>紹介文</th>
             <td>{{$shop->overview}}</td>
           </tr>
+          <tr>
+            <th>営業時間</th>
+            <td>
+              <p>{{substr($schedule->opening_time,0,5)}} ~ {{substr($schedule->closing_time,0,5)}}</p>
+              <table>
+                <tr><th>日</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th></tr>
+                <tr>
+                  <?php
+                    for($i=0; $i<7; $i++) {
+                      echo "<td>" . put_schedule_mark($shop->schedule->day_of_week[$i]) . "</td>";
+                    }
+                  ?>
+                </tr>
+              </table>
+            </td>
+          </tr>
         </table>
       </div>
       <div>
@@ -41,6 +57,16 @@
 @endsection
 
 @section('script')
+<!-- PHP関数：引数が0なら"×"、それ以外なら"○"を返す -->
+  <?php
+    function put_schedule_mark($day) {
+      if ($day === 0) {
+        return '×';
+      } else {
+        return '○';
+      }
+    }
+  ?>
   <script>
     // 関数：削除の確認ダイアログを表示
     function confirmDelete() {
