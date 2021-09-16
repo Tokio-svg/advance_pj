@@ -24,17 +24,19 @@
             <img id="shop_image" class="shop_image" src="{{$shop->image_url}}" alt="no_image">
             <div>
             <label for="image_url">画像URL</label>
-              <input type="text" name="image_url" id="image_url" value="{{$shop->image_url}}" onblur="changeImage(this.id)">
+              <input type="text" name="image_url" id="image_url" value="{{$shop->image_url}}" onblur="validateRequire(this.id,'error_image_url-require'); changeImage(this.id)" required>
+              <p id="error_image_url-require" class="error" style="display: none;">画像URLを入力してください</p>
             </div>
           </div>
           <div class="shop_input-wrap">
             <div>
               <label for="name">名前</label>
-              <input type="text" name="name" id="name" value="{{$shop->name}}">
+              <input type="text" name="name" id="name" value="{{$shop->name}}" onblur="validateRequire(this.id,'error_name-require')" required>
+              <p id="error_name-require" class="error" style="display: none;">名前を入力してください</p>
             </div>
             <div>
               <label for="area_id">地域</label>
-              <select name="area_id" id="area_id">
+              <select name="area_id" id="area_id" onblur="validateRequire(this.id,'error_area-require')" required>
                 @foreach($areas as $area)
                   @if($area->id == $shop->area->id)
                     <option value="{{$area->id}}" selected>{{$area->name}}</option>
@@ -43,10 +45,11 @@
                   @endif
                 @endforeach
               </select>
+              <p id="error_area-require" class="error" style="display: none;">地域を選択してください</p>
             </div>
             <div>
               <label for="genre_id">ジャンル</label>
-              <select name="genre_id" id="genre_id">
+              <select name="genre_id" id="genre_id" onblur="validateRequire(this.id,'error_genre-require')" required>
                 @foreach($genres as $genre)
                   @if($genre->id == $shop->genre->id)
                     <option value="{{$genre->id}}" selected>{{$genre->name}}</option>
@@ -55,15 +58,17 @@
                   @endif
                 @endforeach
               </select>
+              <p id="error_genre-require" class="error" style="display: none;">ジャンルを選択してください</p>
             </div>
             <div>
               <label for="overview">紹介文</label>
-              <textarea name="overview" id="overview">{{$shop->overview}}</textarea>
+              <textarea name="overview" id="overview" onblur="validateRequire(this.id,'error_overview-require')" required>{{$shop->overview}}</textarea>
+              <p id="error_overview-require" class="error" style="display: none;">紹介文を入力してください</p>
             </div>
             <div>
               営業時間
               <label for="opening_time">開店</label>
-              <select name="opening_time" id="opening_time">
+              <select name="opening_time" id="opening_time" onblur="validateRequire(this.id,'error_opening_time-require')" required>
                 <?php
                   $time = substr($schedule->opening_time, 0, 5);
                   for($i=0; $i<24; $i++) {
@@ -82,9 +87,10 @@
                   }
                 ?>
               </select>~
+              <p id="error_opening_time-require" class="error" style="display: none;">開店時間を選択してください</p>
               <div>
                 <label for="closing_time">閉店</label>
-                <select name="closing_time" id="closing_time">
+                <select name="closing_time" id="closing_time" onblur="validateRequire(this.id,'error_closing_time-require')" required>
                   <?php
                     $time = substr($schedule->closing_time, 0, 5);
                     for($i=0; $i<24; $i++) {
@@ -103,6 +109,7 @@
                       }
                   ?>
                 </select>
+                <p id="error_closing_time-require" class="error" style="display: none;">閉店時間を選択してください</p>
               </div>
             </div>
             <div>
@@ -196,11 +203,91 @@
 
 @section('script')
   <script>
+    // 読み込み時にlaravelエラーメッセージの有無を取得して
+    // 対応するエラーメッセージを表示状態に変更する
+    window.onload = function() {
+      let errors = {
+        image_url: [],
+        name: [],
+        area: [],
+        genre: [],
+        overview: [],
+        opening_time: [],
+        closing_time: [],
+        public: [],
+      };
+      // 1.$errorから全エラーメッセージを取得する
+      <?php
+      if ($errors->has('image_url')) {
+        $tmp = $errors->first('image_url');
+        echo "errors.image_url.push('{$tmp}');";
+      }
+      if ($errors->has('name')) {
+        $tmp = $errors->first('name');
+        echo "errors.name.push('{$tmp}');";
+      }
+      if ($errors->has('area_id')) {
+        $tmp = $errors->first('area_id');
+        echo "errors.area_id.push('{$tmp}');";
+      }
+      if ($errors->has('genre_id')) {
+        $tmp = $errors->first('genre_id');
+        echo "errors.genre_id.push('{$tmp}');";
+      }
+      if ($errors->has('overview')) {
+        $tmp = $errors->first('overview');
+        echo "errors.overview.push('{$tmp}');";
+      }
+      if ($errors->has('opening_time')) {
+        $tmp = $errors->first('opening_time');
+        echo "errors.opening_time.push('{$tmp}');";
+      }
+      if ($errors->has('closing_time')) {
+        $tmp = $errors->first('closing_time');
+        echo "errors.closing_time.push('{$tmp}');";
+      }
+
+      ?>
+      // 2.各エラーメッセージごとに表示するかどうかチェックする
+      if (errors.image_url[0]) {
+        document.getElementById('error_image_url-require').style.display = "block";
+      }
+      if (errors.name[0]) {
+        document.getElementById('error_name-require').style.display = "block";
+      }
+      if (errors.area[0]) {
+        document.getElementById('error_area-require').style.display = "block";
+      }
+      if (errors.genre[0]) {
+        document.getElementById('error_genre-require').style.display = "block";
+      }
+      if (errors.overview[0]) {
+        document.getElementById('error_overview-require').style.display = "block";
+      }
+      if (errors.opening_time[0]) {
+        document.getElementById('error_opening_time-require').style.display = "block";
+      }
+      if (errors.closing_time[0]) {
+        document.getElementById('error_closing_time-require').style.display = "block";
+      }
+    }
+
     // 関数：引数に渡されたIDのvalueをimageのsrcに設定する
     function changeImage(id) {
       const src = document.getElementById(id).value;
       const image = document.getElementById('shop_image');
       image.src = src;
+    }
+
+    // 関数：入力必須バリデーション
+    function validateRequire(id, errorId) {
+      const errorMessage = document.getElementById(errorId);
+      const input = document.getElementById(id).value;
+      if (!input) {
+        errorMessage.style.display = "block";
+      } else {
+        errorMessage.style.display = "none";
+      }
     }
   </script>
 @endsection

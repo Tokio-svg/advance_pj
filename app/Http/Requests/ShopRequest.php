@@ -43,7 +43,7 @@ class ShopRequest extends FormRequest
             'name.required' => '名前を入力してください',
             'area_id.required' => '地域を選択してください',
             'genre_id.required' => 'ジャンルを選択してください',
-            'overview.required' => '概要を入力してください',
+            'overview.required' => '紹介文を入力してください',
             'opening_time.required' => '開店時間を選択してください',
             'closing_time.required' => '閉店時間を選択してください',
             'public.required' => '公開情報を選択してください',

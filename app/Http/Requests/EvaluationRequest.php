@@ -24,9 +24,9 @@ class EvaluationRequest extends FormRequest
     public function rules()
     {
         return [
-            'nickname' => 'max:191',
+            'nickname' => 'string|max:191',
             'grade' => 'required|between:1,5',
-            'comment' => 'required|max:120',
+            'comment' => 'required|string|max:120',
         ];
     }
 

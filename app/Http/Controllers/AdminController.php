@@ -131,62 +131,62 @@ class AdminController extends Controller
         ]);
     }
 
-        // 飲食店削除処理
-        public function delete_shop(Request $request)
-        {
-            // 各種パラメータを取得
-            $shop_id = $request->shop_id;
-            $url = $request->url;
+    // 飲食店削除処理
+    public function delete_shop(Request $request)
+    {
+        // 各種パラメータを取得
+        $shop_id = $request->shop_id;
+        $url = $request->url;
 
-            // 削除処理
-            Shop::where('id', $shop_id)->delete();
-            Reservation::where('shop_id', $shop_id)->delete();
-            Favorite::where('shop_id', $shop_id)->delete();
-            Evaluation::where('shop_id', $shop_id)->delete();
-            Schedule::where('shop_id', $shop_id)->delete();
+        // 削除処理
+        Shop::where('id', $shop_id)->delete();
+        Reservation::where('shop_id', $shop_id)->delete();
+        Favorite::where('shop_id', $shop_id)->delete();
+        Evaluation::where('shop_id', $shop_id)->delete();
+        Schedule::where('shop_id', $shop_id)->delete();
 
-            return redirect($url);
+        return redirect($url);
+    }
+
+    // 飲食店新規作成画面表示
+    public function new_shop(Request $request)
+    {
+        return view('admin.admin_shop_create');
+    }
+
+    // 飲食店新規作成処理
+    public function create_shop(Request $request)
+    {
+        // 新規飲食店レコード作成
+        $area_id = Area::first()->id;
+        $genre_id = Genre::first()->id;
+
+        if(!$request->name) {
+            $name = '新規飲食店';
+        } else {
+            $name = $request->name;
         }
 
-        // 飲食店新規作成画面表示
-        public function new_shop(Request $request)
-        {
-            return view('admin.admin_shop_create');
-        }
+        $shop = Shop::create([
+            'name' => $name,
+            'area_id' => $area_id,
+            'genre_id' => $genre_id,
+            'overview' => '概要を記入してください',
+            'image_url' => 'no_image',
+            'public' => 0,
+        ]);
 
-        // 飲食店新規作成処理
-        public function create_shop(Request $request)
-        {
-            // 新規飲食店レコード作成
-            $area_id = Area::first()->id;
-            $genre_id = Genre::first()->id;
+        // 営業日時情報レコード作成
+        Schedule::create([
+            'shop_id' => $shop->id,
+            'opening_time' => '10:00',
+            'closing_time' => '22:00',
+            'day_of_week' => [1,1,1,1,1,1,1,],
+        ]);
 
-            if(!$request->name) {
-                $name = '新規飲食店';
-            } else {
-                $name = $request->name;
-            }
-
-            $shop = Shop::create([
-                'name' => $name,
-                'area_id' => $area_id,
-                'genre_id' => $genre_id,
-                'overview' => '概要を記入してください',
-                'image_url' => 'no_image',
-                'public' => 0,
-            ]);
-
-            // 営業日時情報レコード作成
-            Schedule::create([
-                'shop_id' => $shop->id,
-                'opening_time' => '10:00',
-                'closing_time' => '22:00',
-                'day_of_week' => [1,1,1,1,1,1,1,],
-            ]);
-
-            return view('admin.admin_done', [
-                'shop_name' => $shop->name,
-            ]);
-        }
+        return view('admin.admin_done', [
+            'shop_name' => $shop->name,
+        ]);
+    }
 
 }
