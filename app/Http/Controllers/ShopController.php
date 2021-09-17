@@ -28,6 +28,9 @@ class ShopController extends Controller
         // 各項目検索
         $query = Shop::query();
 
+        // 非公開のレコードを除外
+        $query->whereNotIn('public', [0]);
+
         // 地域名
         if (!empty($inputs['area_id'])) {
             $query->where('area_id', $inputs['area_id']);
@@ -97,7 +100,7 @@ class ShopController extends Controller
     {
         $shop = Shop::with(['area','genre','schedule'])->find($shop_id);
 
-        if (!$shop) {
+        if (!$shop || !$shop->public) {
             abort(404);
         }
 

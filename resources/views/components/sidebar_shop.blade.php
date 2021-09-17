@@ -1,5 +1,4 @@
-<div class="sidebar">
-  <p style="margin-top: 100px;">サイドメニュー</p>
+<div class="sidebar" style="margin-top: 100px;">
   <!-- サイドバーボタン -->
   <div class="sidebar_button shadow">
     <a href="{{ route('shop.top') }}">

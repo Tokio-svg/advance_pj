@@ -1,9 +1,14 @@
 @extends('layouts.layout_admin')
 
-@section('title','店舗管理画面')
+@section('title','飲食店管理画面')
 
 @section('style')
   <link rel="stylesheet" href="{{putSource('/css/admin_style.css')}}">
+  <style>
+    .sidebar_button:nth-of-type(2) {
+      background: rgb(0, 36, 145);
+    }
+  </style>
 @endsection
 
 @section('content')
@@ -13,10 +18,10 @@
     <div class="content_wrap">
       <div class="search_wrap">
         <div class="search_content">
-          <p style="margin-top: 100px;">検索フォーム</p>
+          <h2 class="content_title">検索フォーム</h2>
           <form action="{{ route('admin.shop') }}" method="get">
             <!-- 飲食店名 -->
-            <label for="name">飲食店名</label>
+            <label for="name">店名</label>
             <input type="text" name="name" id="name" value="{{$inputs['name']}}">
             <!-- 地域 -->
             <label for="area">地域</label>
@@ -56,14 +61,14 @@
             </div>
           </form>
           <!-- 検索条件クリア -->
-          <div>
+          <div style="text-align: center;">
             <a href="{{ route('admin.shop') }}">クリア</a>
           </div>
         </div>
       </div>
       <div class="result_wrap">
         <div class="result_content">
-          検索結果
+          <h2 class="content_title">検索結果</h2>
           {{$items->appends(request()->query())->links('vendor.pagination.default_custom')}}
           <table class="result_table">
             <tr>
@@ -72,6 +77,7 @@
               <th>地域</th>
               <th>ジャンル</th>
               <th>登録日</th>
+              <th>公開</th>
               <th></th>
             </tr>
             @foreach($items as $shop)
@@ -81,6 +87,13 @@
                 <td>{{$shop->area->name}}</td>
                 <td>{{$shop->genre->name}}</td>
                 <td>{{$shop->created_at}}</td>
+                <td>
+                  @if(!$shop->public)
+                    ×
+                  @else
+                    ○
+                  @endif
+                </td>
                 <td>
                   <form action="{{ route('admin.shop.delete') }}" method="post" onsubmit="return confirmDelete()">
                     @csrf

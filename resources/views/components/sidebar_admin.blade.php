@@ -1,10 +1,9 @@
-<div class="sidebar">
-  <p style="margin-top: 100px;">サイドメニュー</p>
+<div class="sidebar" style="margin-top: 100px;">
   <!-- サイドバーボタン -->
   <div class="sidebar_button shadow">
     <a href="{{ route('admin.user') }}">
       <div class="sidebar_button-content">
-        <img src="{{putSource('/img/person.png')}}" alt="no image">
+        <img src="{{putSource('/img/person.png')}}" alt="no image" style="filter: invert(100%) sepia(61%) saturate(0%) hue-rotate(229deg) brightness(107%) contrast(101%);">
         <p>ユーザー管理</p>
       </div>
     </a>

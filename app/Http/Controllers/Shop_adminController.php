@@ -22,10 +22,33 @@ class Shop_adminController extends Controller
         $shop_id = Auth::guard('shop')->user()->shop_id;
         $shop = Shop::with(['area','genre'])->find($shop_id);
         $schedule = Schedule::where('shop_id', $shop_id)->first();
+        // お気に入り登録者数
+        $favorites = Favorite::where('shop_id', $shop_id)->count();
+        // 評価情報
+        $count = Evaluation::where('shop_id', $shop_id)->count();
+        $grades = array();
+        if ($count) {
+            // 5段階評価の内訳を取得
+            for($i=1; $i<6; $i++) {
+                $grades[$i] = Evaluation::where('shop_id', $shop_id)->where('grade', $i)->count();
+            }
+            // [0]に総数を格納
+            $grades[0] = $grades[1] + $grades[2] + $grades[3] + $grades[4] + $grades[5];
+            // [6]に平均値を格納
+            $grades[6] = ($grades[1] + ($grades[2] * 2) + ($grades[3] * 3) + ($grades[4] * 4) + ($grades[5] * 5)) / $grades[0];
+        } else {    // 評価レコードが無い場合は配列の要素全てに0を格納する
+            for($i=0; $i<7; $i++) {
+                $grades[$i] = 0;
+            }
+        }
+        $average = $grades[6];
 
         return view('shop.shop_admin', [
             'shop' => $shop,
             'schedule' => $schedule,
+            'favorites' => $favorites,
+            'evaluation_count' => $count,
+            'average' => $average,
         ]);
     }
 

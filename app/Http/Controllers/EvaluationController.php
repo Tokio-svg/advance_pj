@@ -17,7 +17,7 @@ class EvaluationController extends Controller
 
         $shop = Shop::with(['area','genre'])->find($shop_id);
 
-        if (!$shop) {
+        if (!$shop || !$shop->public) {
             abort(404);
         }
 

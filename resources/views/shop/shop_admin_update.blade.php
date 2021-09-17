@@ -5,8 +5,21 @@
 @section('style')
   <link rel="stylesheet" href="{{putSource('/css/admin_style.css')}}">
   <style>
+    #image_url {
+      width: 90%;
+    }
     .dayOfWeek {
       width: 50px;
+    }
+    input[type="checkbox"] {
+      width: 20px;
+    }
+    input[type="radio"] {
+      width: 20px;
+    }
+    textarea {
+      width: 300px;
+      height: 150px;
     }
   </style>
 @endsection
@@ -16,11 +29,11 @@
     @component('components.sidebar_shop')
     @endcomponent
     <div class="content_wrap">
-      <p style="margin-top: 100px;">店舗登録情報変更</p>
+      <h2 class="content_title">登録情報変更</h2>
       <form action="{{ route('shop.update') }}" method="post">
         @csrf
         <div class="shop_info-flex">
-          <div class="shop_info-imagewrap">
+          <div class="shop_info-imagewrap" style="margin-right: 40px;">
             <img id="shop_image" class="shop_image" src="{{$shop->image_url}}" alt="no_image">
             <div>
             <label for="image_url">画像URL</label>
@@ -66,7 +79,6 @@
               <p id="error_overview-require" class="error" style="display: none;">紹介文を入力してください</p>
             </div>
             <div>
-              営業時間
               <label for="opening_time">開店</label>
               <select name="opening_time" id="opening_time" onblur="validateRequire(this.id,'error_opening_time-require')" required>
                 <?php
@@ -86,10 +98,10 @@
                     echo "<option value='" . $i . ":30'" . $selected . ">" . $i . ":30</option>";
                   }
                 ?>
-              </select>~
+              </select>
               <p id="error_opening_time-require" class="error" style="display: none;">開店時間を選択してください</p>
               <div>
-                <label for="closing_time">閉店</label>
+                ~<label for="closing_time">閉店</label>
                 <select name="closing_time" id="closing_time" onblur="validateRequire(this.id,'error_closing_time-require')" required>
                   <?php
                     $time = substr($schedule->closing_time, 0, 5);
@@ -192,11 +204,13 @@
             </div>
           </div>
         </div>
-        <button type="submit">変更</button>
+        <div style="text-align: center;">
+          <button type="submit" class="button_search">変更</button>
+          <p>
+            <a href="{{ route('shop.top')}} ">戻る</a>
+          </p>
+        </div>
       </form>
-      <div>
-        <a href="{{ route('shop.top')}} ">戻る</a>
-      </div>
     </div>
   </main>
 @endsection
