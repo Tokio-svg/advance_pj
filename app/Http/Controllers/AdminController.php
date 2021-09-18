@@ -13,6 +13,8 @@ use App\Models\Evaluation;
 use App\Models\Schedule;
 use Illuminate\Support\Facades\Auth;
 
+use function PHPUnit\Framework\isNull;
+
 class AdminController extends Controller
 {
     // 管理画面トップページ(ユーザー管理画面)
@@ -87,6 +89,7 @@ class AdminController extends Controller
             'genre_id' => $request->input('genre_id'),
             'date_start' => $request->input('date_start'),
             'date_end' => $request->input('date_end'),
+            'public' => $request->input('public'),
         ];
 
         // 各項目検索
@@ -114,6 +117,14 @@ class AdminController extends Controller
 
         if (!empty($inputs['date_end'])) {
             $query->where('created_at', '<=', $inputs['date_end']);
+        }
+
+        // 公開状態
+        if (!empty($inputs['public'])) {
+            if($inputs['public'] == 2) {
+                $inputs['public'] = 0;
+            }
+            $query->where('public', $inputs['public']);
         }
 
         // Shopレコード取得

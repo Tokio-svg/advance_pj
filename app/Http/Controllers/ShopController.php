@@ -76,8 +76,8 @@ class ShopController extends Controller
         }
 
         // 検索フォーム項目用レコード取得
-        $areas = Area::has('shops')->get();
-        $genres = Genre::has('shops')->get();
+        $areas = Area::has('shops')->get(['id','name']);
+        $genres = Genre::has('shops')->get(['id','name']);
 
         // お気に入り操作時のスクロール位置を取得
         if ($request->old()) {

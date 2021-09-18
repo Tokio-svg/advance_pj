@@ -90,7 +90,7 @@ class UserController extends Controller
     {
         $user_id = Auth::user()->id;
         // ログアウト処理
-        Auth::guard('web')->logout();
+        Auth::guard('user')->logout();
         $request->session()->invalidate();
 
         // 削除処理

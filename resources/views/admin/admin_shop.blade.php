@@ -8,6 +8,9 @@
     .sidebar_button:nth-of-type(2) {
       background: rgb(0, 36, 145);
     }
+    input[type="radio"] {
+      width: 20px;
+    }
   </style>
 @endsection
 
@@ -49,11 +52,19 @@
                 @endif
               @endforeach
             </select>
-            <!-- 登録日 -->
             <div>
+              <!-- 登録日 -->
               <label for="date_start">登録日</label>
               <input type="date" name="date_start" id="date_start" value="{{$inputs['date_start']}}">~
               <input type="date" name="date_end" id="date_end" value="{{$inputs['date_end']}}">
+              <!-- 公開情報 -->
+              公開状態：
+              <label for="public_all">指定しない</label>
+              <input type="radio" name="public" id="public_all" value="" checked>
+              <label for="public_true">公開</label>
+              <input type="radio" name="public" id="public_true" value="1">
+              <label for="public_false">非公開</label>
+              <input type="radio" name="public" id="public_false" value="2">
             </div>
             <!-- 検索ボタン -->
             <div style="text-align: center;">

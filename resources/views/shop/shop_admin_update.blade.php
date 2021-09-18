@@ -20,6 +20,10 @@
     textarea {
       width: 300px;
       height: 150px;
+      resize: none;
+    }
+    label {
+      width: 200px;
     }
   </style>
 @endsection
