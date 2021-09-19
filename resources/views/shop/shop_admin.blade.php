@@ -40,7 +40,7 @@
             <th>営業時間</th>
             <td>
               <p>{{substr($schedule->opening_time,0,5)}} ~ {{substr($schedule->closing_time,0,5)}}</p>
-              <table>
+              <table class="schedule_table">
                 <tr><th>日</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th></tr>
                 <tr style="text-align: center;">
                   <?php

@@ -88,5 +88,6 @@ Route::group(['middleware' => 'shop.auth'], function() {
 // テスト用ルーティング（後で消すこと）
 Route::get('/done', [ShopController::class, 'done']);
 Route::get('/thanks', [ShopController::class, 'thanks']);
+Route::get('/done_admin', [ShopController::class, 'done_admin']);
 
 require __DIR__ . '/auth.php';

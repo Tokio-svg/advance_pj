@@ -70,7 +70,8 @@ button {
     margin: auto;
 }
 .back_button {
-    width: 150px;
+    display: block;
+    width: 100px;
     height: 30px;
     background: rgb(53, 96, 246);
     border-radius: 5px;

@@ -141,4 +141,9 @@ class ShopController extends Controller
     {
         return view('thanks');
     }
+    // 飲食店作成完了ページ
+    public function done_admin(Request $request)
+    {
+        return view('admin.admin_done');
+    }
 }

@@ -48,8 +48,8 @@
         </div>
       </form>
     </div>
-    <div>
-      <a href="{{ route('admin.login') }}">ログイン</a>
+    <div style="margin-bottom: 10px;">
+      <a href="{{ route('admin.login') }}" style="font-size: 14px;">ログイン</a>
     </div>
   </main>
 @endsection

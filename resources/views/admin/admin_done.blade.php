@@ -4,6 +4,12 @@
 
 @section('style')
   <link rel="stylesheet" href="{{putSource('/css/thanks_style.css')}}">
+  <style>
+    .thanks_wrap p {
+      font-size: 16px;
+      margin: 0 auto 30px;
+    }
+  </style>
 @endsection
 
 @section('content')

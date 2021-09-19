@@ -154,6 +154,9 @@ input,select {
     color: black;
     background: rgb(238, 238, 238);
 }
+.schedule_table {
+    margin-top: 10px;
+}
 
 /* レスポンシブ対応(break point:768px) */
 @media screen and (max-width: 768px) {

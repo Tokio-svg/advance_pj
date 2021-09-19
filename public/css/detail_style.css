@@ -27,6 +27,7 @@ main,
 }
 .image {
     width: 100%;
+    min-width: 300px;
     background: rgb(255, 232, 232);
 }
 .image img {

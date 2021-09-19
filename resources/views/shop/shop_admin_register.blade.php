@@ -53,7 +53,7 @@
           <button type="submit">登録</button>
         </div>
       </form>
-      <a href="{{ route('admin.user') }}">管理画面に戻る</a>
+      <a href="{{ route('admin.user') }}" style="font-size: 14px;">管理画面に戻る</a>
     </div>
   </main>
 @endsection
