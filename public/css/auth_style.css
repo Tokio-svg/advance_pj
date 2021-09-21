@@ -61,7 +61,7 @@ button {
 }
 .delete_wrap {
     position: absolute;
-    bottom: 30%;
+    bottom: 30px;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;

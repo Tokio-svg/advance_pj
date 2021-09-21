@@ -56,7 +56,7 @@
   </main>
   <!-- ユーザー削除ボタン -->
   <div class="delete_wrap">
-    <a href="{{ route('mypage.top') }}">戻る</a>
+    <a href="{{ route('mypage.top') }}" style="font-size: 14px;">戻る</a>
     <form action="{{ route('mypage.delete') }}" method="post" onsubmit="return confirmDelete()">
       @csrf
       <button type="submit">退会する</button>

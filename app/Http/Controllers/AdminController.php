@@ -53,13 +53,9 @@ class AdminController extends Controller
         // Userレコード取得
         $users = $query->paginate(10);
 
-        // test
-        $admin = Auth::guard('admin')->user()->name;
-
         return view('admin.admin', [
             'items' => $users,
             'inputs' => $inputs,
-            'admin' => $admin,
         ]);
     }
 

@@ -88,7 +88,10 @@ select {
     color: black;
     font-size: 14px;
 }
-
+.card_evaluation img {
+    width: 20px;
+    height: 20px;
+}
 /* レスポンシブ対応(break point:768px) */
 @media screen and (max-width: 768px) {
     .header_content {
@@ -139,19 +142,28 @@ select {
     .card_name {
         font-size: 14px;
         margin-top: 0px;
+        width: 50%;
     }
     .card_tag {
         margin: 0px 0 5px;
     }
     .card_tag a {
-        font-size: 11px;
+        font-size: 10px;
         display: block;
         margin: 3px;
     }
     .card_detail {
-        width: 80px;
+        width: 60px;
         height: 25px;
         line-height: 25px;
+        font-size: 10px;
+    }
+    .card_evaluation {
+        font-size: 10px;
+    }
+    .card_evaluation img {
+        width: 12px;
+        height: 12px;
     }
     .heart {
         width: 20px;

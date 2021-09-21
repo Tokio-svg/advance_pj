@@ -158,6 +158,3 @@ input,select {
     margin-top: 10px;
 }
 
-/* レスポンシブ対応(break point:768px) */
-@media screen and (max-width: 768px) {
-}

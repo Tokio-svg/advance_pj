@@ -27,7 +27,7 @@
   <div class="sidebar_button shadow">
     <a href="{{ route('shop.evaluation') }}">
       <div class="sidebar_button-content">
-        <img src="{{putSource('/img/star_5.png')}}" alt="no image">
+        <img src="{{putSource('/img/star_5.png')}}" alt="no image" style="margin: 5px auto;">
         <p>評価情報</p>
       </div>
     </a>
