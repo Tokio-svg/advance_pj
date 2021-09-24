@@ -17,12 +17,12 @@ class EvaluationController extends Controller
 
         $shop = Shop::with(['area','genre'])->find($shop_id);
 
-        if (!$shop) {
+        if (!$shop || !$shop->public) {
             abort(404);
         }
 
         // 既に評価を投稿している場合は評価レコードを取得する
-        $evaluation = Evaluation::where('user_id', $user->id)->first();
+        $evaluation = Evaluation::where('user_id', $user->id)->where('shop_id', $shop_id)->first();
 
         return view('evaluation', [
             'user' => $user,

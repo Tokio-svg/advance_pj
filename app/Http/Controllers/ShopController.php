@@ -28,6 +28,9 @@ class ShopController extends Controller
         // 各項目検索
         $query = Shop::query();
 
+        // 非公開のレコードを除外
+        $query->whereNotIn('public', [0]);
+
         // 地域名
         if (!empty($inputs['area_id'])) {
             $query->where('area_id', $inputs['area_id']);
@@ -73,8 +76,8 @@ class ShopController extends Controller
         }
 
         // 検索フォーム項目用レコード取得
-        $areas = Area::has('shops')->get();
-        $genres = Genre::has('shops')->get();
+        $areas = Area::has('shops')->get(['id','name']);
+        $genres = Genre::has('shops')->get(['id','name']);
 
         // お気に入り操作時のスクロール位置を取得
         if ($request->old()) {
@@ -97,7 +100,7 @@ class ShopController extends Controller
     {
         $shop = Shop::with(['area','genre','schedule'])->find($shop_id);
 
-        if (!$shop) {
+        if (!$shop || !$shop->public) {
             abort(404);
         }
 
@@ -137,5 +140,10 @@ class ShopController extends Controller
     public function thanks(Request $request)
     {
         return view('thanks');
+    }
+    // 飲食店作成完了ページ
+    public function done_admin(Request $request)
+    {
+        return view('admin.admin_done');
     }
 }

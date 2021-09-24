@@ -67,42 +67,44 @@ class ShopControllerTest extends TestCase
         ]);
         $this->actingAs($user); // ログイン
 
+        // ダミー用User作成
+        $dummy = User::create([  // ユーザーを作成
+            'name' => 'bbb',
+            'email' => 'ddd@ccc.com',
+            'password' => 'test12345'
+        ]);
+
         // favoriteレコードを2件挿入
-        // user_id = $user->id; shop_id = 1;
+        // user_id = $user->id; shop_id = 存在するshopレコードの最も若いid;
+        $shop = Shop::first();
         $favorite = Favorite::create([
             'user_id' => $user->id,
-            'shop_id' => 1,
+            'shop_id' => $shop->id,
         ]);
-        // user_id = 1000; shop_id = 2;
-        $not_exist_id = 1000;
+        // user_id = $dummy->id; shop_id = 存在するshopレコードの最も若いid;
         Favorite::create([
-            'user_id' => $not_exist_id,
-            'shop_id' => 2,
+            'user_id' => $dummy->id,
+            'shop_id' => $shop->id,
         ]);
-        $this->assertNotEquals($not_exist_id, $user->id);   // テスト用IDがユーザーIDと異なることを確認
+        $this->assertNotEquals($dummy->id, $user->id);   // テスト用IDがユーザーIDと異なることを確認
 
         $response = $this->get('/');
         // id = 1の飲食店のお気に入りレコードが取得されていることを確認
         $this->assertEquals($favorite->id, $response['shops'][0]->favorites[0]->id);
-        // id = 2の飲食店のお気に入りレコード(user_id = $not_exist_id)が取得されていないことを確認
+        // id = 2の飲食店のお気に入りレコード(user_id = $dummy->id)が取得されていないことを確認
         $this->assertEmpty($response['shops'][1]->favorites);
     }
 
     // 飲食店詳細ページ
     public function test_detail()
     {
-        // テスト用のshopレコードを作成
-        $shop = Shop::create([
-            'name' => 'test_shop',
-            'area_id' => 1,
-            'genre_id' => 1,
-            'overview' => 'test_text',
-            'image_url' => 'test_url',
-        ]);
-        // テスト用の飲食店詳細ページを表示
+        // id番号が最も若いshopレコード情報を取得
+        $shop = Shop::first();
+
+        // $shopの飲食店詳細ページを表示
         $response = $this->get("/detail/{$shop->id}");
         $response->assertStatus(200);
-        $response->assertSee('test_shop');
+        $response->assertSee($shop->name);
 
         // idを指定せずにアクセス
         $response = $this->get('/detail');

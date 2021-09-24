@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Shop;
 
 // お気に入り登録、解除処理のテスト
 class FavoriteControllerTest extends TestCase
@@ -37,7 +38,7 @@ class FavoriteControllerTest extends TestCase
         ]);
         $this->actingAs($user); // ログイン
 
-        $shop_id = 1;   // 登録対象のshopのidを1とする
+        $shop_id = Shop::first()->id;   // 登録対象のshopのidを存在する中で最も若いレコードのidとする
         $url = '/'; // 遷移元のURLを'/'とする
         $position = 0;   // 遷移元のスクロール位置を0とする
 

@@ -4,6 +4,14 @@
 
 @section('style')
   <link rel="stylesheet" href="{{putSource('/css/admin_style.css')}}">
+  <style>
+    input,select {
+      width: 200px;
+    }
+    .sidebar_button:nth-of-type(2) {
+      background: rgb(0, 36, 145);
+    }
+  </style>
 @endsection
 
 @section('content')
@@ -13,7 +21,7 @@
     <div class="content_wrap">
       <div class="search_wrap">
         <div class="search_content">
-          <p style="margin-top: 100px;">検索フォーム</p>
+          <h2 class="content_title">検索フォーム</h2>
           <form action="{{ route('shop.reservation') }}" method="get">
             <!-- ユーザーネーム -->
             <div>
@@ -23,26 +31,22 @@
               <label for="email">メールアドレス</label>
               <input type="text" name="email" id="email" value="{{$inputs['email']}}">
             </div>
-            <!-- 予約日 -->
             <div>
+              <!-- 予約日 -->
               <label for="date_start">予約日</label>
               <input type="date" name="date_start" id="date_start" value="{{$inputs['date_start']}}">~
               <input type="date" name="date_end" id="date_end" value="{{$inputs['date_end']}}">
-            </div>
-            <!-- 予約時間 -->
-            <div>
+              <!-- 予約時間 -->
               <label for="time_start">予約時間</label>
               <input type="time" name="time_start" id="time_start" value="{{$inputs['time_start']}}">~
               <input type="time" name="time_end" id="time_end" value="{{$inputs['time_end']}}">
             </div>
-            <!-- 人数 -->
             <div>
+              <!-- 人数 -->
               <label for="number_start">人数</label>
               <input type="number" name="number_start" id="number_start" value="{{$inputs['number_start']}}">~
               <input type="number" name="number_end" id="number_end" value="{{$inputs['number_end']}}">
-            </div>
-            <!-- 登録日 -->
-            <div>
+              <!-- 登録日 -->
               <label for="create_start">登録日</label>
               <input type="date" name="create_start" id="create_start" value="{{$inputs['create_start']}}">~
               <input type="date" name="create_end" id="create_end" value="{{$inputs['create_end']}}">
@@ -53,14 +57,14 @@
             </div>
           </form>
           <!-- 検索条件クリア -->
-          <div>
+          <div style="text-align: center;">
             <a href="{{ route('shop.reservation') }}">クリア</a>
           </div>
         </div>
       </div>
       <div class="result_wrap">
         <div class="result_content">
-          検索結果
+          <h2 class="content_title">検索結果</h2>
           {{$items->appends(request()->query())->links('vendor.pagination.default_custom')}}
           <table class="result_table">
             <tr>

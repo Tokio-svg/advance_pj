@@ -4,6 +4,11 @@
 
 @section('style')
   <link rel="stylesheet" href="{{putSource('/css/admin_style.css')}}">
+  <style>
+    .sidebar_button:nth-of-type(1) {
+      background: rgb(0, 36, 145);
+    }
+  </style>
 @endsection
 
 @section('content')
@@ -13,7 +18,7 @@
     <div class="content_wrap">
       <div class="search_wrap">
         <div class="search_content">
-          <p style="margin-top: 100px;">検索フォーム</p>
+          <h2 class="content_title">検索フォーム</h2>
           <form action="{{ route('admin.user') }}" method="get">
             <!-- ユーザーネーム -->
             <div>
@@ -35,14 +40,14 @@
             </div>
           </form>
           <!-- 検索条件クリア -->
-          <div>
+          <div style="text-align: center;">
             <a href="{{ route('admin.user') }}">クリア</a>
           </div>
         </div>
       </div>
       <div class="result_wrap">
         <div class="result_content">
-          検索結果
+          <h2 class="content_title">検索結果</h2>
           {{$items->appends(request()->query())->links('vendor.pagination.default_custom')}}
           <table class="result_table">
             <tr>

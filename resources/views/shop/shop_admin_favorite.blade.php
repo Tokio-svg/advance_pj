@@ -4,6 +4,11 @@
 
 @section('style')
   <link rel="stylesheet" href="{{putSource('/css/admin_style.css')}}">
+  <style>
+    .sidebar_button:nth-of-type(3) {
+      background: rgb(0, 36, 145);
+    }
+  </style>
 @endsection
 
 @section('content')
@@ -11,12 +16,9 @@
     @component('components.sidebar_shop')
     @endcomponent
     <div class="content_wrap">
-      <div style="margin-top: 100px;">
-        <p>お気に入り登録者数：{{$items->count()}}</p>
-      </div>
       <div class="search_wrap">
         <div class="search_content">
-          <p>検索フォーム</p>
+          <h2 class="content_title">検索フォーム</h2>
           <form action="{{ route('shop.favorite') }}" method="get">
             <!-- ユーザーネーム -->
             <div>
@@ -38,14 +40,14 @@
             </div>
           </form>
           <!-- 検索条件クリア -->
-          <div>
+          <div style="text-align: center;">
             <a href="{{ route('shop.favorite') }}">クリア</a>
           </div>
         </div>
       </div>
       <div class="result_wrap">
         <div class="result_content">
-          検索結果
+          <h2 class="content_title">検索結果</h2>
           {{$items->appends(request()->query())->links('vendor.pagination.default_custom')}}
           <table class="result_table">
             <tr>

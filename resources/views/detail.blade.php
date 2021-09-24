@@ -34,13 +34,9 @@
       </tr>
       <tr>
         <?php
-          echo "<td>" . put_schedule_mark($shop->schedule->sunday) . "</td>";
-          echo "<td>" . put_schedule_mark($shop->schedule->monday) . "</td>";
-          echo "<td>" . put_schedule_mark($shop->schedule->tuesday) . "</td>";
-          echo "<td>" . put_schedule_mark($shop->schedule->wednesday) . "</td>";
-          echo "<td>" . put_schedule_mark($shop->schedule->thursday) . "</td>";
-          echo "<td>" . put_schedule_mark($shop->schedule->friday) . "</td>";
-          echo "<td>" . put_schedule_mark($shop->schedule->saturday) . "</td>";
+          for($i=0; $i<7; $i++) {
+            echo "<td>" . put_schedule_mark($shop->schedule->day_of_week[$i]) . "</td>";
+          }
         ?>
       </tr>
     </table>
@@ -300,71 +296,21 @@
   // 関数：曜日バリデーション
   function dayCheck(value) {
     // dayに定休日情報を取得
-    let day = {};
+    let day = [];
     <?php
-      echo "day.sunday = " . $shop->schedule->sunday . ";";
-      echo "day.monday = " . $shop->schedule->monday . ";";
-      echo "day.tuesday = " . $shop->schedule->tuesday . ";";
-      echo "day.wednesday = " . $shop->schedule->wednesday . ";";
-      echo "day.thursday = " . $shop->schedule->thursday . ";";
-      echo "day.friday = " . $shop->schedule->friday . ";";
-      echo "day.saturday = " . $shop->schedule->saturday . ";";
+      for ($i=0; $i<7; $i++) {
+        echo "day.push(" . $shop->schedule->day_of_week[$i] . ");";
+      }
     ?>
     // 入力値の曜日を取得
     const date = new Date(value);
-    const dayOfWeek = date.getDay();
-    const dayOfWeekStr = [ "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday" ][dayOfWeek];
+    const index = date.getDay();
 
-    // 選択した曜日が定休日かどうかを判定
-    let display = false;
-    switch (dayOfWeekStr) {
-      case 'sunday':
-        if (day.sunday === 0) {
-          display = true;
-        }
-      break;
-
-      case 'monday':
-        if (day.monday === 0) {
-          display = true;
-        }
-      break;
-
-      case 'tuesday':
-        if (day.tuesday === 0) {
-          display = true;
-        }
-      break;
-
-      case 'wednesday':
-        if (day.wednesday === 0) {
-          display = true;
-        }
-      break;
-
-      case 'thursday':
-        if (day.thursday === 0) {
-          display = true;
-        }
-      break;
-
-      case 'friday':
-        if (day.friday === 0) {
-          display = true;
-        }
-      break;
-
-      case 'saturday':
-        if (day.saturday === 0) {
-          display = true;
-        }
-      break;
-
-      default:
-    }
+    // openに営業情報を取得
+    const open = day[index];
 
     // 定休日の場合はエラーメッセージを表示
-    if (display === true) {
+    if (open === 0) {
       document.getElementById('error_date-close').style.display = "block";
       document.getElementById('date').value = ""; // 入力フォームの値をリセット
     } else {

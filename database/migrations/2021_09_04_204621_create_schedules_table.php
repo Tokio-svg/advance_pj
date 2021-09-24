@@ -19,13 +19,7 @@ class CreateSchedulesTable extends Migration
             $table->unsignedBigInteger('shop_id');
             $table->time('opening_time');
             $table->time('closing_time');
-            $table->boolean('sunday');
-            $table->boolean('monday');
-            $table->boolean('tuesday');
-            $table->boolean('wednesday');
-            $table->boolean('thursday');
-            $table->boolean('friday');
-            $table->boolean('saturday');
+            $table->json('day_of_week');    // 営業日情報配列(0:日曜日～6:土曜日)
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
 

@@ -4,6 +4,14 @@
 
 @section('style')
   <link rel="stylesheet" href="{{putSource('/css/admin_style.css')}}">
+  <style>
+    .sidebar_button:nth-of-type(4) {
+      background: rgb(0, 36, 145);
+    }
+    td {
+      max-width: 300px;
+    }
+  </style>
 @endsection
 
 @section('content')
@@ -12,8 +20,8 @@
     @endcomponent
     <div class="content_wrap">
       <div class="search_wrap">
-        <div class="search_content" style="margin-top: 100px;">
-          <p>検索フォーム</p>
+        <div class="search_content">
+          <h2 class="content_title">検索フォーム</h2>
           <form action="{{ route('shop.evaluation') }}" method="get">
             <div>
               <!-- ユーザーネーム -->
@@ -66,14 +74,14 @@
             </div>
           </form>
           <!-- 検索条件クリア -->
-          <div>
+          <div style="text-align: center;">
             <a href="{{ route('shop.evaluation') }}">クリア</a>
           </div>
         </div>
       </div>
       <div class="result_wrap">
         <div class="result_content">
-          検索結果
+          <h2 class="content_title">検索結果</h2>
           {{$items->appends(request()->query())->links('vendor.pagination.default_custom')}}
           <table class="result_table">
             <tr>
@@ -88,7 +96,19 @@
                 <td>{{$evaluation->user->name}}</td>
                 <td>{{$evaluation->user->email}}</td>
                 <td>{{$evaluation->grade}}</td>
-                <td>{{$evaluation->comment}}</td>
+                <td>
+                  <p id="comment_{{$evaluation->id}}" onmouseover="exchangeText(this.id)" onmouseout="exchangeText(this.id)">
+                    <?php
+                    if (mb_strlen($evaluation->comment) >= 25) {
+                      $short = mb_substr($evaluation->comment, 0, 25);
+                      echo $short . '...';
+                    } else {
+                      echo $evaluation->comment;
+                    }
+                    ?>
+                  </p>
+                  <div style="display: none;">{{$evaluation->comment}}</div>
+                </td>
                 <td>{{$evaluation->created_at}}</td>
               </tr>
             @endforeach
@@ -106,6 +126,16 @@
       if (!window.confirm("本当に削除してもよろしいですか？")) {
         return false;
       }
+    }
+
+    // 関数：引数のidを持つ要素と次の要素のtextContentを入れ替える
+    function exchangeText(id) {
+      const element = document.getElementById(id);
+      const tmp = element.textContent;
+      const nextElement = element.nextElementSibling;
+
+      element.textContent = nextElement.textContent;
+      nextElement.textContent = tmp;
     }
   </script>
 @endsection

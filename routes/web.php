@@ -60,6 +60,8 @@ Route::group(['middleware' => 'admin.auth'], function() {
     // 店舗管理
     Route::get('shop', [AdminController::class, 'shop'])->name('shop');
     Route::post('shop/delete', [AdminController::class, 'delete_shop'])->name('shop.delete');
+    Route::get('shop/create', [AdminController::class, 'new_shop'])->name('shop.new');
+    Route::post('shop/create', [AdminController::class, 'create_shop'])->name('shop.create');
   });
 
 });
@@ -71,6 +73,8 @@ Route::group(['middleware' => 'shop.auth'], function() {
   Route::group(['prefix' => 'shop_admin', 'as' => 'shop.'], function () {
     // 飲食店情報管理
     Route::get('', [Shop_adminController::class, 'index'])->name('top');
+    Route::get('change', [Shop_adminController::class, 'change'])->name('change');
+    Route::post('update', [Shop_adminController::class, 'update'])->name('update');
     // 予約情報管理
     Route::get('reservation', [Shop_adminController::class, 'reservation'])->name('reservation');
     // お気に入り情報管理
@@ -84,5 +88,6 @@ Route::group(['middleware' => 'shop.auth'], function() {
 // テスト用ルーティング（後で消すこと）
 Route::get('/done', [ShopController::class, 'done']);
 Route::get('/thanks', [ShopController::class, 'thanks']);
+Route::get('/done_admin', [ShopController::class, 'done_admin']);
 
 require __DIR__ . '/auth.php';

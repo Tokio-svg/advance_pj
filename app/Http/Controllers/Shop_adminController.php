@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Shop;
 use App\Models\Reservation;
 use App\Models\Favorite;
 use App\Models\Evaluation;
+use App\Models\Genre;
+use App\Models\Schedule;
+use App\Http\Requests\ShopRequest;
 
 class Shop_adminController extends Controller
 {
@@ -15,12 +19,99 @@ class Shop_adminController extends Controller
     public function index(Request $request)
     {
         // 店舗情報取得
-        $shop_id = Auth::guard('shop')->user()->id;
+        $shop_id = Auth::guard('shop')->user()->shop_id;
         $shop = Shop::with(['area','genre'])->find($shop_id);
+        $schedule = Schedule::where('shop_id', $shop_id)->first();
+        // お気に入り登録者数
+        $favorites = Favorite::where('shop_id', $shop_id)->count();
+        // 評価情報
+        $count = Evaluation::where('shop_id', $shop_id)->count();
+        $grades = array();
+        if ($count) {
+            // 5段階評価の内訳を取得
+            for($i=1; $i<6; $i++) {
+                $grades[$i] = Evaluation::where('shop_id', $shop_id)->where('grade', $i)->count();
+            }
+            // [0]に総数を格納
+            $grades[0] = $grades[1] + $grades[2] + $grades[3] + $grades[4] + $grades[5];
+            // [6]に平均値を格納
+            $grades[6] = ($grades[1] + ($grades[2] * 2) + ($grades[3] * 3) + ($grades[4] * 4) + ($grades[5] * 5)) / $grades[0];
+        } else {    // 評価レコードが無い場合は配列の要素全てに0を格納する
+            for($i=0; $i<7; $i++) {
+                $grades[$i] = 0;
+            }
+        }
+        $average = $grades[6];
 
         return view('shop.shop_admin', [
             'shop' => $shop,
+            'schedule' => $schedule,
+            'favorites' => $favorites,
+            'evaluation_count' => $count,
+            'average' => $average,
         ]);
+    }
+
+    // 登録情報変更画面表示
+    public function change(Request $request)
+    {
+        // 店舗情報取得
+        $shop_id = Auth::guard('shop')->user()->shop_id;
+        $shop = Shop::with(['area','genre'])->find($shop_id);
+        $schedule = Schedule::where('shop_id', $shop_id)->first();
+
+        // 地域、ジャンル選択項目取得
+        $areas = Area::get(['id','name']);
+        $genres = Genre::get(['id','name']);
+
+        return view('shop.shop_admin_update', [
+            'shop' => $shop,
+            'schedule' => $schedule,
+            'areas' => $areas,
+            'genres' => $genres,
+        ]);
+    }
+
+    // 登録情報変更処理
+    public function update(ShopRequest $request)
+    {
+        // 店舗情報取得
+        $shop_id = Auth::guard('shop')->user()->shop_id;
+        $shop = Shop::find($shop_id);
+
+        // 営業日時情報取得
+        $schedule = Schedule::where('shop_id', $shop_id)->first();
+
+        if (!$shop || !$schedule) {
+            abort(404);
+        }
+
+        // レコード更新
+        $shop->fill([
+            'name' => $request->name,
+            'area_id' => $request->area_id,
+            'genre_id' => $request->genre_id,
+            'overview' => $request->overview,
+            'image_url' => $request->image_url,
+            'public' => $request->public,
+        ])->save();
+
+        $day_of_week = [$this->convert_day($request->sun), $this->convert_day($request->mon), $this->convert_day($request->tue), $this->convert_day($request->wed), $this->convert_day($request->thu), $this->convert_day($request->fri), $this->convert_day($request->sat)];
+
+        $schedule->fill([
+            'opening_time' => $request->opening_time,
+            'closing_time' => $request->closing_time,
+            'day_of_week' => $day_of_week,
+        ])->save();
+
+        return redirect(route('shop.top'));
+    }
+
+    public function convert_day($value) {
+        if (!$value) {
+            return 0;
+        }
+        return 1;
     }
 
     // 予約情報管理画面
@@ -94,7 +185,7 @@ class Shop_adminController extends Controller
         }
 
         // 予約情報取得
-        $shop_id = Auth::guard('shop')->user()->id;
+        $shop_id = Auth::guard('shop')->user()->shop_id;
         $reservations = $query->with('user')->where('shop_id', $shop_id)->paginate(10);
 
         return view('shop.shop_admin_reservation', [
@@ -141,7 +232,7 @@ class Shop_adminController extends Controller
         }
 
         // お気に入り情報取得
-        $shop_id = Auth::guard('shop')->user()->id;
+        $shop_id = Auth::guard('shop')->user()->shop_id;
         $favorites = $query->with('user')->where('shop_id', $shop_id)->paginate(10);
 
         return view('shop.shop_admin_favorite', [
@@ -205,7 +296,7 @@ class Shop_adminController extends Controller
         }
 
         // 評価情報取得
-        $shop_id = Auth::guard('shop')->user()->id;
+        $shop_id = Auth::guard('shop')->user()->shop_id;
         $evaluations = $query->with('user')->where('shop_id', $shop_id)->paginate(10);
 
         return view('shop.shop_admin_evaluation', [

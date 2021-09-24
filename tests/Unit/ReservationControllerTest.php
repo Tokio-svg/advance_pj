@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Reservation;
-use Illuminate\Support\Facades\Log;
+use App\Models\Shop;
 
 class ReservationControllerTest extends TestCase
 {
@@ -50,9 +50,10 @@ class ReservationControllerTest extends TestCase
         ]);
         $this->actingAs($user); // ログイン
 
-        $shop_id = 1;   // 登録対象のshopのidを1とする
+        $shop = Shop::first();  // 登録対象をidが最も若いshopレコードとする
+        $shop_id = $shop->id;
         $url = '/'; // 遷移元のURLを'/'とする
-        $date = '2021-01-01'; // 日付を2021-01-01とする
+        $date = '2121-01-01'; // 日付を2121-01-01とする
         $time = '12:00';    // 時間を12:00とする
         $number = 1;    // 人数を1とする
 

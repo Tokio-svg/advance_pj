@@ -13,6 +13,8 @@ use App\Models\Evaluation;
 use App\Models\Schedule;
 use Illuminate\Support\Facades\Auth;
 
+use function PHPUnit\Framework\isNull;
+
 class AdminController extends Controller
 {
     // 管理画面トップページ(ユーザー管理画面)
@@ -51,13 +53,9 @@ class AdminController extends Controller
         // Userレコード取得
         $users = $query->paginate(10);
 
-        // test
-        $admin = Auth::guard('admin')->user()->name;
-
         return view('admin.admin', [
             'items' => $users,
             'inputs' => $inputs,
-            'admin' => $admin,
         ]);
     }
 
@@ -87,6 +85,7 @@ class AdminController extends Controller
             'genre_id' => $request->input('genre_id'),
             'date_start' => $request->input('date_start'),
             'date_end' => $request->input('date_end'),
+            'public' => $request->input('public'),
         ];
 
         // 各項目検索
@@ -116,6 +115,14 @@ class AdminController extends Controller
             $query->where('created_at', '<=', $inputs['date_end']);
         }
 
+        // 公開状態
+        if (!empty($inputs['public'])) {
+            if($inputs['public'] == 2) {
+                $inputs['public'] = 0;
+            }
+            $query->where('public', $inputs['public']);
+        }
+
         // Shopレコード取得
         $shops = $query->with(['area','genre'])->paginate(10);
 
@@ -131,21 +138,62 @@ class AdminController extends Controller
         ]);
     }
 
-        // ユーザー削除処理
-        public function delete_shop(Request $request)
-        {
-            // 各種パラメータを取得
-            $shop_id = $request->shop_id;
-            $url = $request->url;
+    // 飲食店削除処理
+    public function delete_shop(Request $request)
+    {
+        // 各種パラメータを取得
+        $shop_id = $request->shop_id;
+        $url = $request->url;
 
-            // 削除処理
-            Shop::where('id', $shop_id)->delete();
-            Reservation::where('shop_id', $shop_id)->delete();
-            Favorite::where('shop_id', $shop_id)->delete();
-            Evaluation::where('shop_id', $shop_id)->delete();
-            Schedule::where('shop_id', $shop_id)->delete();
+        // 削除処理
+        Shop::where('id', $shop_id)->delete();
+        Reservation::where('shop_id', $shop_id)->delete();
+        Favorite::where('shop_id', $shop_id)->delete();
+        Evaluation::where('shop_id', $shop_id)->delete();
+        Schedule::where('shop_id', $shop_id)->delete();
 
-            return redirect($url);
+        return redirect($url);
+    }
+
+    // 飲食店新規作成画面表示
+    public function new_shop(Request $request)
+    {
+        return view('admin.admin_shop_create');
+    }
+
+    // 飲食店新規作成処理
+    public function create_shop(Request $request)
+    {
+        // 新規飲食店レコード作成
+        $area_id = Area::first()->id;
+        $genre_id = Genre::first()->id;
+
+        if(!$request->name) {
+            $name = '新規飲食店';
+        } else {
+            $name = $request->name;
         }
+
+        $shop = Shop::create([
+            'name' => $name,
+            'area_id' => $area_id,
+            'genre_id' => $genre_id,
+            'overview' => '概要を記入してください',
+            'image_url' => 'no_image',
+            'public' => 0,
+        ]);
+
+        // 営業日時情報レコード作成
+        Schedule::create([
+            'shop_id' => $shop->id,
+            'opening_time' => '10:00',
+            'closing_time' => '22:00',
+            'day_of_week' => [1,1,1,1,1,1,1,],
+        ]);
+
+        return view('admin.admin_done', [
+            'shop_name' => $shop->name,
+        ]);
+    }
 
 }

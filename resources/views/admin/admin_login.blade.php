@@ -48,8 +48,8 @@
         </div>
       </form>
     </div>
-    <div>
-      <a href="{{ route('admin.register') }}">新規登録</a>
+    <div style="margin-bottom: 10px;">
+      <a href="{{ route('admin.register') }}" style="font-size: 14px;">新規登録</a>
     </div>
   </main>
 @endsection

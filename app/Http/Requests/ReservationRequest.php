@@ -60,52 +60,14 @@ class ReservationRequest extends FormRequest
         // shop_idカラムに$shop_idを持つScheduleレコードを取得
         $schedule = Schedule::where('shop_id', $shop_id)->first();
 
-        // date入力フォームの値から曜日を取得
+        // date入力フォームの値から曜日番号を取得
         $datetime = new DateTime($this->input('date'));
-        $day_of_week = $datetime->format('l');
+        $index = $datetime->format('w');
 
-        // 入力した日付の曜日が営業日外なら$closeをfalseからtrueにする
-        $close = false;
-        switch ($day_of_week) {
-            case 'Sunday':
-                if ($schedule->sunday === 0) {
-                    $close = true;
-                }
-                break;
-            case 'Monday':
-                if ($schedule->monday === 0) {
-                    $close = true;
-                }
-                break;
-            case 'Tuesday':
-                if ($schedule->tuesday === 0) {
-                    $close = true;
-                }
-                break;
-            case 'Wednesday':
-                if ($schedule->wednesday === 0) {
-                    $close = true;
-                }
-                break;
-            case 'Thursday':
-                if ($schedule->thursday === 0) {
-                    $close = true;
-                }
-                break;
-            case 'Friday':
-                if ($schedule->friday === 0) {
-                    $close = true;
-                }
-                break;
-            case 'Saturday':
-                if ($schedule->saturday === 0) {
-                    $close = true;
-                }
-                break;
-        }
+        $open = $schedule->day_of_week[$index];
 
-        // $closeがtrueならエラーメッセージと共にバリデーションエラーを返す
-        if ($close === true) {
+        // $openが0ならエラーメッセージと共にバリデーションエラーを返す
+        if ($open === 0) {
             throw ValidationException::withMessages([
                 'date' => '選択した日付は定休日です',
             ]);

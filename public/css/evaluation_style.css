@@ -105,6 +105,9 @@ main p {
     margin: 10px auto;
     padding: 10px;
 }
+#comment_confirm {
+    line-height: 1.1em;
+}
 .evaluation_confirm {
     background: rgb(85, 128, 247);
     padding: 20px;
