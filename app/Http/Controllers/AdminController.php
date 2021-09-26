@@ -117,10 +117,13 @@ class AdminController extends Controller
 
         // 公開状態
         if (!empty($inputs['public'])) {
+
             if($inputs['public'] == 2) {
-                $inputs['public'] = 0;
+                $public = 0;
+            } else {
+                $public = $inputs['public'];
             }
-            $query->where('public', $inputs['public']);
+            $query->where('public', $public);
         }
 
         // Shopレコード取得

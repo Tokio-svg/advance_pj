@@ -60,11 +60,23 @@
               <!-- 公開情報 -->
               公開状態：
               <label for="public_all">指定しない</label>
-              <input type="radio" name="public" id="public_all" value="" checked>
+              @if ($inputs['public'] === null)
+                <input type="radio" name="public" id="public_all" value="" checked>
+              @else
+                <input type="radio" name="public" id="public_all" value="">
+              @endif
               <label for="public_true">公開</label>
-              <input type="radio" name="public" id="public_true" value="1">
+              @if ($inputs['public'] === '1')
+                <input type="radio" name="public" id="public_true" value="1" checked>
+              @else
+                <input type="radio" name="public" id="public_true" value="1">
+              @endif
               <label for="public_false">非公開</label>
-              <input type="radio" name="public" id="public_false" value="2">
+              @if ($inputs['public'] === '2')
+                <input type="radio" name="public" id="public_false" value="2" checked>
+              @else
+                <input type="radio" name="public" id="public_false" value="2">
+              @endif
             </div>
             <!-- 検索ボタン -->
             <div style="text-align: center;">
