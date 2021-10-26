@@ -6,9 +6,7 @@ jobs:
     steps:
       - checkout
       - run: sudo composer self-update --1
-      - run: composer update -n --prefer-dist
-      - run: npm ci
-      - run: npm run dev
+      - run: composer install -n --prefer-dist
       - run:
           name: php test
           command: .\vendor\bin\phpunit tests\Unit\ShopControllerTest.php
